@@ -1,129 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>Chicken&#8217;s Blog ^_^</title>
-  <meta name="author" content="codeforfoods">
-
-  
-  <meta name="description" content="Duy testing heighlight this is ruby code1
-2
-3
-if a == 5 do # some stuff
-end ">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://code-for-food.github.io">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Chicken's Blog ^_^" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
-  
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-56334390-1']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
-</head>
-
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">Chicken&#8217;s Blog ^_^</a></h1>
-  
-    <h2>(Just code for food)</h2>
-  
-</hgroup>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="https://www.google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:code-for-food.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/about-me">About Me</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
-      
-  <header>
+  <title><![CDATA[Chicken's Blog ^_^]]></title>
+  <link href="http://code-for-food.github.io/atom.xml" rel="self"/>
+  <link href="http://code-for-food.github.io/"/>
+  <updated>2014-11-06T09:49:49+07:00</updated>
+  <id>http://code-for-food.github.io/</id>
+  <author>
+    <name><![CDATA[codeforfoods]]></name>
     
-      <h1 class="entry-title"><a href="/blog/2014/11/06/duyphan-testing/">DuyPHan Testing</a></h1>
-    
-    
-  
-
-
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
 
   
-
-
-<span class="byline author vcard"> * source: <span class="fn">
-
-
-
-	<a href="http://my.com">my</a>
-	
-
-</span></span>
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-11-06T09:44:11+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>9:44 am</span></time>
-        
-           | <a href="/blog/2014/11/06/duyphan-testing/#disqus_thread"
-             data-disqus-identifier="http://code-for-food.github.io/blog/2014/11/06/duyphan-testing/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Duy testing <code>heighlight</code></p>
+  <entry>
+    <title type="html"><![CDATA[DuyPHan Testing]]></title>
+    <link href="http://code-for-food.github.io/blog/2014/11/06/duyphan-testing/"/>
+    <updated>2014-11-06T09:44:11+07:00</updated>
+    <id>http://code-for-food.github.io/blog/2014/11/06/duyphan-testing</id>
+    <content type="html"><![CDATA[<p>Duy testing <code>heighlight</code></p>
 
 <p><img src="https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-xap1/v/t1.0-9/10568840_736557873067687_439032230186867865_n.jpg?oh=6622654d4fd2179e8fc8e226fa5b1de2&oe=54E8031A&__gda__=1424936275_f9590ef119797c62503a9816e69e036e"></p>
 
@@ -135,54 +30,15 @@ end ">
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/06/7-characteristics-that-separate-a-boss-from-a-leader/">7 Characteristics That Separate a Boss From a Leader</a></h1>
-    
-    
-  
-
-
-
-  
-
-
-<span class="byline author vcard"> * source: <span class="fn">
-
-
-
-	<a href="https://www.facebook.com/ArchiDesiign/posts/414950071993587">Internet</a>
-	
-
-</span></span>
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-11-06T08:11:12+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:11 am</span></time>
-        
-           | <a href="/blog/2014/11/06/7-characteristics-that-separate-a-boss-from-a-leader/#disqus_thread"
-             data-disqus-identifier="http://code-for-food.github.io/blog/2014/11/06/7-characteristics-that-separate-a-boss-from-a-leader/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>While a leader can be a boss, not every boss is a leader. Although leaders and</p>
+  <entry>
+    <title type="html"><![CDATA[7 Characteristics That Separate a Boss From a Leader]]></title>
+    <link href="http://code-for-food.github.io/blog/2014/11/06/7-characteristics-that-separate-a-boss-from-a-leader/"/>
+    <updated>2014-11-06T08:11:12+07:00</updated>
+    <id>http://code-for-food.github.io/blog/2014/11/06/7-characteristics-that-separate-a-boss-from-a-leader</id>
+    <content type="html"><![CDATA[<p>While a leader can be a boss, not every boss is a leader. Although leaders and</p>
 
 <p>While a boss is mostly concerned with outcomes, a leader feels responsible for the process of that outcome and the people who see it out. Check out some major points that distinguish a leader from a boss:</p>
 
@@ -237,54 +93,15 @@ end ">
 <p>During your life, you will face two kinds of managers: leaders and bosses. It does not matter how high the position of these individuals; bossy people are more likely to fail while those who lead will succeed.</p>
 
 <p>Maybe the things I mentioned above do not make any sense for you now, but eventually, you will experience the difference and garner a greater understanding of which manager you prefer for your own professional life.</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/04/api-documentation-made-beautiful-with-apiary-dot-io/">API Documentation Made Beautiful With Apiary.io</a></h1>
-    
-    
-  
-
-
-
-  
-
-
-<span class="byline author vcard"> * source: <span class="fn">
-
-
-
-	<a href="http://www.itworld.com/article/2700666/development/api-documentation-made-beautiful-with-apiary-io.html">itworld</a>
-	
-
-</span></span>
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-11-04T22:19:17+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:19 pm</span></time>
-        
-           | <a href="/blog/2014/11/04/api-documentation-made-beautiful-with-apiary-dot-io/#disqus_thread"
-             data-disqus-identifier="http://code-for-food.github.io/blog/2014/11/04/api-documentation-made-beautiful-with-apiary-dot-io/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h5>Apiary is a free, hosted API documentation repository</h5>
+  <entry>
+    <title type="html"><![CDATA[API Documentation Made Beautiful With Apiary.io]]></title>
+    <link href="http://code-for-food.github.io/blog/2014/11/04/api-documentation-made-beautiful-with-apiary-dot-io/"/>
+    <updated>2014-11-04T22:19:17+07:00</updated>
+    <id>http://code-for-food.github.io/blog/2014/11/04/api-documentation-made-beautiful-with-apiary-dot-io</id>
+    <content type="html"><![CDATA[<h5>Apiary is a free, hosted API documentation repository</h5>
 
 <p>The least exciting part of any software project I work on is the documentation. With APIs in particular, documentation can be time consuming because it needs to provide enough detail for any consumer to understand and interface with it. For that reason, proper documentation of an API is even more crucial.</p>
 
@@ -301,54 +118,15 @@ end ">
 <p>So far we&rsquo;ve been pretty happy using Apiary. There are some helpful features to the system that can aid your efforts such as reusable request and response models, but it&rsquo;s no silver bullet. Good documentation takes time and it&rsquo;s probably not possible to completely avoid that.</p>
 
 <p>The only real complaint I have with the system so far is that your entire API document is constructed in a single, loooong page. This works OK for reading because things collapse and there is a table of contents, but for editing, it can be a mess. Aside from that it&rsquo;s been a great collaboration and organization tool. It&rsquo;s unlikely that my API would be as well documented as it is in Apiary if I had chosen to write it in some other way.</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/04/cors-on-apache/">CORS on Apache</a></h1>
-    
-    
-  
-
-
-
-  
-
-
-<span class="byline author vcard"> * source: <span class="fn">
-
-
-
-	<a href="http://codeforfoods.net">codeforfoods</a>
-	
-
-</span></span>
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-11-04T08:32:41+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:32 am</span></time>
-        
-           | <a href="/blog/2014/11/04/cors-on-apache/#disqus_thread"
-             data-disqus-identifier="http://code-for-food.github.io/blog/2014/11/04/cors-on-apache/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>To add the CORS authorization to the header using Apache, simply add the following line inside either the <code>&lt;Directory&gt;</code>, <code>&lt;Location&gt;</code>, <code>&lt;Files&gt;</code> or <code>&lt;VirtualHost&gt;</code> sections of your server config (usually located in a *.conf file, such as <code>httpd.conf</code> or <code>apache.conf</code>), or within a <code>.htaccess</code> file:</p>
+  <entry>
+    <title type="html"><![CDATA[CORS on Apache]]></title>
+    <link href="http://code-for-food.github.io/blog/2014/11/04/cors-on-apache/"/>
+    <updated>2014-11-04T08:32:41+07:00</updated>
+    <id>http://code-for-food.github.io/blog/2014/11/04/cors-on-apache</id>
+    <content type="html"><![CDATA[<p>To add the CORS authorization to the header using Apache, simply add the following line inside either the <code>&lt;Directory&gt;</code>, <code>&lt;Location&gt;</code>, <code>&lt;Files&gt;</code> or <code>&lt;VirtualHost&gt;</code> sections of your server config (usually located in a *.conf file, such as <code>httpd.conf</code> or <code>apache.conf</code>), or within a <code>.htaccess</code> file:</p>
 
 <pre><code>    Header set Access-Control-Allow-Origin "*"
 </code></pre>
@@ -368,54 +146,15 @@ end ">
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>http://enable-cors.org/server_apache.html</span></code></pre></td></tr></table></div></figure>
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/03/aws-adding-a-note-to-an-elastic-load-balancer/">[Aws] - Adding a Ec2 Node to an Elastic Load Balancer</a></h1>
-    
-    
-  
-
-
-
-  
-
-
-<span class="byline author vcard"> * source: <span class="fn">
-
-
-
-	<a href="http://codeforfoods.net">codeforfoods</a>
-	
-
-</span></span>
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-11-03T21:42:35+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>9:42 pm</span></time>
-        
-           | <a href="/blog/2014/11/03/aws-adding-a-note-to-an-elastic-load-balancer/#disqus_thread"
-             data-disqus-identifier="http://code-for-food.github.io/blog/2014/11/03/aws-adding-a-note-to-an-elastic-load-balancer/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Installing</h3>
+  <entry>
+    <title type="html"><![CDATA[[Aws] - Adding a Ec2 Node to an Elastic Load Balancer]]></title>
+    <link href="http://code-for-food.github.io/blog/2014/11/03/aws-adding-a-note-to-an-elastic-load-balancer/"/>
+    <updated>2014-11-03T21:42:35+07:00</updated>
+    <id>http://code-for-food.github.io/blog/2014/11/03/aws-adding-a-note-to-an-elastic-load-balancer</id>
+    <content type="html"><![CDATA[<h3>Installing</h3>
 
 <ul>
 <li><p>Install <code>Python</code></p>
@@ -446,7 +185,7 @@ end ">
 <ul>
 <li><p>Install <code>jq</code> <a href="http://xmodulo.com/how-to-parse-json-string-via-command-line-on-linux.html">http://xmodulo.com/how-to-parse-json-string-via-command-line-on-linux.html</a>.</p>
 
-<p>  <code>jq</code> is tool for parser, filter, map, and transform JSON-structured data effortlessly by command-line. We used it for parser the json data which retured form AWS CLI. <a href="/blog/2014/11/03/command-line-json-processor/">Read more on my post</a></p>
+<p>  <code>jq</code> is tool for parser, filter, map, and transform JSON-structured data effortlessly by command-line. We used it for parser the json data which retured form AWS CLI. <a href="http://code-for-food.github.io/blog/2014/11/03/command-line-json-processor/">Read more on my post</a></p>
 
 <pre><code>  brew install jq 
 </code></pre></li>
@@ -582,54 +321,15 @@ end ">
 
 <pre><code>./add-node-2-elb.sh 123.456.789.910 web staging 
 </code></pre>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/03/command-line-json-processor/">Command-line JSON Processor</a></h1>
-    
-    
-  
-
-
-
-  
-
-
-<span class="byline author vcard"> * source: <span class="fn">
-
-
-
-	<a href="http://codeforfoods.net">codeforfoods</a>
-	
-
-</span></span>
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-11-03T11:23:05+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>11:23 am</span></time>
-        
-           | <a href="/blog/2014/11/03/command-line-json-processor/#disqus_thread"
-             data-disqus-identifier="http://code-for-food.github.io/blog/2014/11/03/command-line-json-processor/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><code>jq</code> is a command-line JSON processor.</p>
+  <entry>
+    <title type="html"><![CDATA[Command-line JSON Processor]]></title>
+    <link href="http://code-for-food.github.io/blog/2014/11/03/command-line-json-processor/"/>
+    <updated>2014-11-03T11:23:05+07:00</updated>
+    <id>http://code-for-food.github.io/blog/2014/11/03/command-line-json-processor</id>
+    <content type="html"><![CDATA[<p><code>jq</code> is a command-line JSON processor.</p>
 
 <p>If you want to learn to use jq, read the documentation at <a href="http://stedolan.github.io/jq">http://stedolan.github.io/jq</a>. This documentation is generated from the docs/ folder of this repository. You can also try it online at <a href="http://jqplay.org">http://jqplay.org</a>.</p>
 
@@ -661,54 +361,15 @@ end ">
 
 
 <p>Next post, I&rsquo;d like to use this for parser the <code>aws</code> result. (coming soon.)</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/03/nodejs-cooking/">Nodejs Cooking</a></h1>
-    
-    
-  
-
-
-
-  
-
-
-<span class="byline author vcard"> * source: <span class="fn">
-
-
-
-	<a href="http://codeforfoods.net">codeforfoods</a>
-	
-
-</span></span>
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-11-03T09:47:33+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>9:47 am</span></time>
-        
-           | <a href="/blog/2014/11/03/nodejs-cooking/#disqus_thread"
-             data-disqus-identifier="http://code-for-food.github.io/blog/2014/11/03/nodejs-cooking/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
+  <entry>
+    <title type="html"><![CDATA[Nodejs Cooking]]></title>
+    <link href="http://code-for-food.github.io/blog/2014/11/03/nodejs-cooking/"/>
+    <updated>2014-11-03T09:47:33+07:00</updated>
+    <id>http://code-for-food.github.io/blog/2014/11/03/nodejs-cooking</id>
+    <content type="html"><![CDATA[<ul>
 <li><p>This project is Chef-Solo, this help to setup development base on Nodejs and Mysql</p></li>
 <li><p>This also includes a demo about Simple API which using Express and Mysql</p></li>
 </ul>
@@ -1029,127 +690,7 @@ end ">
 <li>Email: <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#58;&#x63;&#x6f;&#x64;&#x65;&#x2e;&#102;&#x6f;&#x72;&#x2e;&#102;&#111;&#x6f;&#x64;&#46;&#x31;&#52;&#64;&#x67;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#x6f;&#x6d;">&#99;&#111;&#100;&#101;&#x2e;&#102;&#x6f;&#114;&#x2e;&#x66;&#111;&#x6f;&#100;&#x2e;&#x31;&#52;&#x40;&#103;&#109;&#97;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;</a></li>
 </ul>
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
-<aside class="sidebar">
-  
-    <section class="gravatar-section first odd">
-  <h1>We are</h1>
-  <div class="bio">
-    <div class="messages">
-      <p><a href="https://codeforfoods.net"><strong>@CodeForFoods</strong></a></p>
-      <p>we are web developers</p>
-      <p>in Viet Name</p>
-      <a href="/about-us">More</a>
-    </div>
-  </div>
-  <div class="gravatar">
-    <img src="https://avatars3.githubusercontent.com/u/9510217?v=2&s=400" alt="Github avarta of code for food" title="Github avarta of code for food">
-  </div>
-</section><section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2014/11/06/duyphan-testing/">DuyPHan Testing</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/06/7-characteristics-that-separate-a-boss-from-a-leader/">7 Characteristics That Separate a Boss From a Leader</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/04/api-documentation-made-beautiful-with-apiary-dot-io/">API Documentation Made Beautiful With Apiary.io</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/04/cors-on-apache/">CORS on Apache</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/03/aws-adding-a-note-to-an-elastic-load-balancer/">[Aws] - Adding a Ec2 Node to an Elastic Load Balancer</a>
-      </li>
-    
-  </ul>
-</section>
-
-
-<section class="googleplus">
-  <h1>
-    <a href="https://plus.google.com/code.for.food.14?rel=author">
-      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
-      Google+
-    </a>
-  </h1>
-</section>
-
-
-
-  
-</aside>
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - codeforfoods -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
-</footer>
-  
-
-<script type="text/javascript">
-      var disqus_shortname = 'codeforfoods';
-      
-        
-        var disqus_script = 'count.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id; js.async = true;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
-</html>
+</feed>
