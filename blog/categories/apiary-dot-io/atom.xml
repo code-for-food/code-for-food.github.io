@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: apiary.io | Chicken's Blog ^_^]]></title>
-  <link href="http://code-for-food.github.io/blog/categories/apiary-dot-io/atom.xml" rel="self"/>
-  <link href="http://code-for-food.github.io/"/>
-  <updated>2014-11-06T09:53:48+07:00</updated>
-  <id>http://code-for-food.github.io/</id>
+  <link href="http://codeforfoods.net/blog/categories/apiary-dot-io/atom.xml" rel="self"/>
+  <link href="http://codeforfoods.net/"/>
+  <updated>2014-11-06T10:03:20+07:00</updated>
+  <id>http://codeforfoods.net/</id>
   <author>
     <name><![CDATA[codeforfoods]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[API Documentation Made Beautiful With Apiary.io]]></title>
-    <link href="http://code-for-food.github.io/blog/2014/11/04/api-documentation-made-beautiful-with-apiary-dot-io/"/>
+    <link href="http://codeforfoods.net/blog/2014/11/04/api-documentation-made-beautiful-with-apiary-dot-io/"/>
     <updated>2014-11-04T22:19:17+07:00</updated>
-    <id>http://code-for-food.github.io/blog/2014/11/04/api-documentation-made-beautiful-with-apiary-dot-io</id>
+    <id>http://codeforfoods.net/blog/2014/11/04/api-documentation-made-beautiful-with-apiary-dot-io</id>
     <content type="html"><![CDATA[<h5>Apiary is a free, hosted API documentation repository</h5>
 
 <p>The least exciting part of any software project I work on is the documentation. With APIs in particular, documentation can be time consuming because it needs to provide enough detail for any consumer to understand and interface with it. For that reason, proper documentation of an API is even more crucial.</p>

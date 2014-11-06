@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Magazine | Chicken's Blog ^_^]]></title>
-  <link href="http://code-for-food.github.io/blog/categories/magazine/atom.xml" rel="self"/>
-  <link href="http://code-for-food.github.io/"/>
-  <updated>2014-11-06T09:53:48+07:00</updated>
-  <id>http://code-for-food.github.io/</id>
+  <link href="http://codeforfoods.net/blog/categories/magazine/atom.xml" rel="self"/>
+  <link href="http://codeforfoods.net/"/>
+  <updated>2014-11-06T10:03:20+07:00</updated>
+  <id>http://codeforfoods.net/</id>
   <author>
     <name><![CDATA[codeforfoods]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[7 Characteristics That Separate a Boss From a Leader]]></title>
-    <link href="http://code-for-food.github.io/blog/2014/11/06/7-characteristics-that-separate-a-boss-from-a-leader/"/>
+    <link href="http://codeforfoods.net/blog/2014/11/06/7-characteristics-that-separate-a-boss-from-a-leader/"/>
     <updated>2014-11-06T08:11:12+07:00</updated>
-    <id>http://code-for-food.github.io/blog/2014/11/06/7-characteristics-that-separate-a-boss-from-a-leader</id>
+    <id>http://codeforfoods.net/blog/2014/11/06/7-characteristics-that-separate-a-boss-from-a-leader</id>
     <content type="html"><![CDATA[<p>While a leader can be a boss, not every boss is a leader. Although leaders and</p>
 
 <p>While a boss is mostly concerned with outcomes, a leader feels responsible for the process of that outcome and the people who see it out. Check out some major points that distinguish a leader from a boss:</p>
