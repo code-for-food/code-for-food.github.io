@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Flood | Chicken's Blog ^_^]]></title>
+  <link href="http://codeforfoods.net/blog/categories/flood/atom.xml" rel="self"/>
+  <link href="http://codeforfoods.net/"/>
+  <updated>2014-11-19T00:13:52+07:00</updated>
+  <id>http://codeforfoods.net/</id>
+  <author>
+    <name><![CDATA[codeforfoods]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Let Flood Test Your Site With Flood.io]]></title>
+    <link href="http://codeforfoods.net/blog/2014/11/18/let-flood-test-your-site-with-flood-dot-io/"/>
+    <updated>2014-11-18T23:45:08+07:00</updated>
+    <id>http://codeforfoods.net/blog/2014/11/18/let-flood-test-your-site-with-flood-dot-io</id>
+    <content type="html"><![CDATA[<p>Flood IO is a cloud based load testing platform for <a href="https://flood.io/help/floods/jmeter.apache.org">JMeter</a> and <a href="https://flood.io/help/floods/gatling-tool.org">Gatling</a> that lets you scale out your tests across the globe using our on demand or your own hosted AWS infrastructure. In this article we introduce you to JMeter and how to run your first Flood test.</p>
+
+<p>In this article, I&rsquo;d like to use <code>JMeter</code> as testing scripts</p>
+
+<h3>Getting JMeter</h3>
+
+<p>JMeter can be downloaded <a href="http://jmeter.apache.org/download_jmeter.cgi">here</a> and typically you can start JMeter using the <code>jmeter.cmd</code> or <code>jmeter.sh</code> scripts located in the downloaded archive <code>bin</code> directory.</p>
+
+<p><img class="<a" src="href="https://s3.amazonaws.com/flood-io-support/jmeter-example.jmx_UserstimkoopmansGitfloodflood-sitepublicjmeter-example.jmx_-_Apache_JMeter_2.11_r1554548_2014-10-06_17-37-40.jpg">https://s3.amazonaws.com/flood-io-support/jmeter-example.jmx_UserstimkoopmansGitfloodflood-sitepublicjmeter-example.jmx_-_Apache_JMeter_2.11_r1554548_2014-10-06_17-37-40.jpg</a>&#8221;></p>
+
+<h3>Creating a Test Plan</h3>
+
+<p>Once you have created a <a href="https://flood.io/jmeter-example.jmx">basic test plan</a> and saved it locally as a <code>.jmx</code> file, you can upload this to Flood IO to create your first Flood test.</p>
+
+<h3>Creating a Flood Test</h3>
+
+<p>After you login to Flood IO you can click the &ldquo;+&rdquo; icon or from your <a href="https://flood.io/dashboard/floods">Floods dashboard</a> you can click the &ldquo;Create Flood&rdquo; button to create a new Flood.</p>
+
+<p><img class="<a" src="href="https://s3.amazonaws.com/flood-io-support/Flood_IO_2014-10-06_17-36-50.jpg">https://s3.amazonaws.com/flood-io-support/Flood_IO_2014-10-06_17-36-50.jpg</a>&#8221;></p>
+
+<p>In the new Flood form, add the <code>.jmx</code> test plan you created using JMeter to the Files input and select a Grid to run your Flood test on. You can optionally set the &ldquo;Name&rdquo; or &ldquo;Tags&rdquo; to help identify the test in your dashboard.</p>
+
+<p><img class="<a" src="href="https://s3.amazonaws.com/flood-io-support/Flood_IO_2014-10-06_17-49-17.jpg">https://s3.amazonaws.com/flood-io-support/Flood_IO_2014-10-06_17-49-17.jpg</a>&#8221;></p>
+
+<h3>Start your Flood Test</h3>
+
+<p>Read about more [advanced settings] or simply click the &ldquo;Start Flood&rdquo; button to launch your test.</p>
+
+<p><img class="<a" src="href="https://s3.amazonaws.com/flood-io-support/Flood_IO_2014-10-06_17-53-22.jpg">https://s3.amazonaws.com/flood-io-support/Flood_IO_2014-10-06_17-53-22.jpg</a>&#8221;></p>
+
+<p>You will be redirected to a Flood report which will show you results in real time from the test you just executed on the chosen Grid.</p>
+
+<h3>The results in real time</h3>
+
+<ul>
+<li>Summary about AVG Response Time, Concurence Users and Transaction Rate</li>
+</ul>
+
+
+<p><img class="<a" src="href="https://lh3.googleusercontent.com/-cbQyegUkAt8/VGt77yF3o_I/AAAAAAAAADE/zIceQUvDRnY/w957-h199-no/Flood_IO.png">https://lh3.googleusercontent.com/-cbQyegUkAt8/VGt77yF3o_I/AAAAAAAAADE/zIceQUvDRnY/w957-h199-no/Flood_IO.png</a>&#8221;></p>
+
+<ul>
+<li>Summary report by chart</li>
+</ul>
+
+
+<p><img class="<a" src="href="https://lh3.googleusercontent.com/-LdsF3ANppGY/VGt8J5PJa3I/AAAAAAAAADM/dN75wBnBQ7M/w958-h404-no/Flood_IO.png">https://lh3.googleusercontent.com/-LdsF3ANppGY/VGt8J5PJa3I/AAAAAAAAADM/dN75wBnBQ7M/w958-h404-no/Flood_IO.png</a>&#8221;></p>
+
+<ul>
+<li>Detail transaction</li>
+</ul>
+
+
+<p><img class="<a" src="href="https://lh3.googleusercontent.com/-NLjHvr3TwME/VGt8m92lEoI/AAAAAAAAADc/9o8vDRsEzBE/w957-h384-no/Flood_IO.png">https://lh3.googleusercontent.com/-NLjHvr3TwME/VGt8m92lEoI/AAAAAAAAADc/9o8vDRsEzBE/w957-h384-no/Flood_IO.png</a>&#8221;></p>
+
+<ul>
+<li>You can trace your http connection</li>
+</ul>
+
+
+<p><img class="<a" src="href="https://lh3.googleusercontent.com/ItYy1EO4CTEt8fFFxFNKxkwdgR9uey33boD5RZ_MyA=w400-h207-p-no">https://lh3.googleusercontent.com/ItYy1EO4CTEt8fFFxFNKxkwdgR9uey33boD5RZ_MyA=w400-h207-p-no</a>&#8221;></p>
+]]></content>
+  </entry>
+  
+</feed>
