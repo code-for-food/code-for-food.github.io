@@ -1,76 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://code-for-food.github.io/blog/2014/11/19/rails-get-youtube-download-link/</loc>
-    <lastmod>2014-11-19T08:39:56+07:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://code-for-food.github.io/blog/2014/11/18/let-flood-test-your-site-with-flood-dot-io/</loc>
+    <loc>http://codeforfoods.net/blog/2014/11/18/let-flood-test-your-site-with-flood-dot-io/</loc>
     <lastmod>2014-11-18T23:45:08+07:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://code-for-food.github.io/blog/2014/11/07/php-cooking/</loc>
+    <loc>http://codeforfoods.net/blog/2014/11/07/php-cooking/</loc>
     <lastmod>2014-11-07T11:03:51+07:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://code-for-food.github.io/blog/2014/11/06/how-to-switch-careers/</loc>
+    <loc>http://codeforfoods.net/blog/2014/11/06/how-to-switch-careers/</loc>
     <lastmod>2014-11-06T11:12:00+07:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://code-for-food.github.io/blog/2014/11/06/7-characteristics-that-separate-a-boss-from-a-leader/</loc>
+    <loc>http://codeforfoods.net/blog/2014/11/06/7-characteristics-that-separate-a-boss-from-a-leader/</loc>
     <lastmod>2014-11-06T08:11:12+07:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://code-for-food.github.io/blog/2014/11/04/api-documentation-made-beautiful-with-apiary-dot-io/</loc>
+    <loc>http://codeforfoods.net/blog/2014/11/04/api-documentation-made-beautiful-with-apiary-dot-io/</loc>
     <lastmod>2014-11-04T22:19:17+07:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://code-for-food.github.io/blog/2014/11/04/cors-on-apache/</loc>
+    <loc>http://codeforfoods.net/blog/2014/11/04/cors-on-apache/</loc>
     <lastmod>2014-11-04T08:32:41+07:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://code-for-food.github.io/blog/2014/11/03/aws-adding-a-note-to-an-elastic-load-balancer/</loc>
+    <loc>http://codeforfoods.net/blog/2014/11/03/aws-adding-a-note-to-an-elastic-load-balancer/</loc>
     <lastmod>2014-11-03T21:42:35+07:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://code-for-food.github.io/blog/2014/11/03/command-line-json-processor/</loc>
+    <loc>http://codeforfoods.net/blog/2014/11/03/command-line-json-processor/</loc>
     <lastmod>2014-11-03T11:23:05+07:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://code-for-food.github.io/blog/2014/11/03/nodejs-cooking/</loc>
+    <loc>http://codeforfoods.net/blog/2014/11/03/nodejs-cooking/</loc>
     <lastmod>2014-11-03T09:47:33+07:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://code-for-food.github.io/blog/archives/</loc>
-    <lastmod>2014-11-19T09:09:27+07:00</lastmod>
+    <loc>http://codeforfoods.net/blog/archives/</loc>
+    <lastmod>2014-11-19T17:19:19+07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://code-for-food.github.io/</loc>
-    <lastmod>2014-11-19T09:09:27+07:00</lastmod>
+    <loc>http://codeforfoods.net/</loc>
+    <lastmod>2014-11-19T17:19:19+07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://code-for-food.github.io/about-me/</loc>
-    <lastmod>2014-11-19T09:09:27+07:00</lastmod>
+    <loc>http://codeforfoods.net/about-me/</loc>
+    <lastmod>2014-11-19T17:19:19+07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://code-for-food.github.io/about-us/</loc>
-    <lastmod>2014-11-19T09:09:27+07:00</lastmod>
+    <loc>http://codeforfoods.net/about-us/</loc>
+    <lastmod>2014-11-19T17:19:19+07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
