@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Test | Chicken's Blog ^_^]]></title>
-  <link href="http://codeforfoods.net/blog/categories/test/atom.xml" rel="self"/>
-  <link href="http://codeforfoods.net/"/>
-  <updated>2014-11-26T21:25:19+07:00</updated>
-  <id>http://codeforfoods.net/</id>
+  <title><![CDATA[Category: Test | My Octopress Blog]]></title>
+  <link href="http://yoursite.com/blog/categories/test/atom.xml" rel="self"/>
+  <link href="http://yoursite.com/"/>
+  <updated>2014-11-27T16:56:49+07:00</updated>
+  <id>http://yoursite.com/</id>
   <author>
-    <name><![CDATA[codeforfoods]]></name>
+    <name><![CDATA[Your Name]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Let Flood Test Your Site With Flood.io]]></title>
-    <link href="http://codeforfoods.net/blog/2014/11/18/let-flood-test-your-site-with-flood-dot-io/"/>
+    <link href="http://yoursite.com/blog/2014/11/18/let-flood-test-your-site-with-flood-dot-io/"/>
     <updated>2014-11-18T23:45:08+07:00</updated>
-    <id>http://codeforfoods.net/blog/2014/11/18/let-flood-test-your-site-with-flood-dot-io</id>
+    <id>http://yoursite.com/blog/2014/11/18/let-flood-test-your-site-with-flood-dot-io</id>
     <content type="html"><![CDATA[<p>Flood IO is a cloud based load testing platform for <a href="https://flood.io/help/floods/jmeter.apache.org">JMeter</a> and <a href="https://flood.io/help/floods/gatling-tool.org">Gatling</a> that lets you scale out your tests across the globe using our on demand or your own hosted AWS infrastructure. In this article we introduce you to JMeter and how to run your first Flood test.</p>
 
 <p>In this article, I&rsquo;d like to use <code>JMeter</code> as testing scripts</p>
