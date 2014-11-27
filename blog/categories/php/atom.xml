@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Php | My Octopress Blog]]></title>
-  <link href="http://yoursite.com/blog/categories/php/atom.xml" rel="self"/>
-  <link href="http://yoursite.com/"/>
-  <updated>2014-11-27T16:56:49+07:00</updated>
-  <id>http://yoursite.com/</id>
+  <title><![CDATA[Category: Php | Chicken's Blog ^_^]]></title>
+  <link href="http://codeforfoods.net/blog/categories/php/atom.xml" rel="self"/>
+  <link href="http://codeforfoods.net/"/>
+  <updated>2014-11-27T17:02:40+07:00</updated>
+  <id>http://codeforfoods.net/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[codeforfoods]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Php-cooking]]></title>
-    <link href="http://yoursite.com/blog/2014/11/07/php-cooking/"/>
+    <link href="http://codeforfoods.net/blog/2014/11/07/php-cooking/"/>
     <updated>2014-11-07T11:03:51+07:00</updated>
-    <id>http://yoursite.com/blog/2014/11/07/php-cooking</id>
+    <id>http://codeforfoods.net/blog/2014/11/07/php-cooking</id>
     <content type="html"><![CDATA[<p>This article would help you to setup Chef for PHP stuff step by step</p>
 
 <h4>Step 1 - Install required tools</h4>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Aws | My Octopress Blog]]></title>
-  <link href="http://yoursite.com/blog/categories/aws/atom.xml" rel="self"/>
-  <link href="http://yoursite.com/"/>
-  <updated>2014-11-27T16:56:49+07:00</updated>
-  <id>http://yoursite.com/</id>
+  <title><![CDATA[Category: Aws | Chicken's Blog ^_^]]></title>
+  <link href="http://codeforfoods.net/blog/categories/aws/atom.xml" rel="self"/>
+  <link href="http://codeforfoods.net/"/>
+  <updated>2014-11-27T17:02:40+07:00</updated>
+  <id>http://codeforfoods.net/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[codeforfoods]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[[Aws] - Adding a Ec2 Node to an Elastic Load Balancer]]></title>
-    <link href="http://yoursite.com/blog/2014/11/03/aws-adding-a-note-to-an-elastic-load-balancer/"/>
+    <link href="http://codeforfoods.net/blog/2014/11/03/aws-adding-a-note-to-an-elastic-load-balancer/"/>
     <updated>2014-11-03T21:42:35+07:00</updated>
-    <id>http://yoursite.com/blog/2014/11/03/aws-adding-a-note-to-an-elastic-load-balancer</id>
+    <id>http://codeforfoods.net/blog/2014/11/03/aws-adding-a-note-to-an-elastic-load-balancer</id>
     <content type="html"><![CDATA[<h3>Installing</h3>
 
 <ul>
