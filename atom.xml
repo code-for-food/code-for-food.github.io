@@ -4,7 +4,7 @@
   <title><![CDATA[Chicken's Blog ^_^]]></title>
   <link href="http://codeforfoods.net/atom.xml" rel="self"/>
   <link href="http://codeforfoods.net/"/>
-  <updated>2014-11-27T17:02:40+07:00</updated>
+  <updated>2014-11-27T17:11:27+07:00</updated>
   <id>http://codeforfoods.net/</id>
   <author>
     <name><![CDATA[codeforfoods]]></name>
@@ -12,6 +12,166 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Crytal: Syntax and Semantics Part 1]]></title>
+    <link href="http://codeforfoods.net/blog/2014/11/27/crytal-syntax-and-semantics-part-1/"/>
+    <updated>2014-11-27T17:05:09+07:00</updated>
+    <id>http://codeforfoods.net/blog/2014/11/27/crytal-syntax-and-semantics-part-1</id>
+    <content type="html"><![CDATA[<h3>1. Comments</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># This is a comment</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.Local variables</h3>
+
+<p>Local variables start with lowercase letters. They are declared when you first assign them a value.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>name = "Crystal"
+</span><span class='line'>age = 1</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Their type is inferred from their usage, not only from their initializer. In general, they are just value holders associated with the type that the programmer expects them to have according to their location and usage on the program.</p>
+
+<p>For example, reassinging a variable with a different expression makes it have that expression’s type:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>var = "Hello"
+</span><span class='line'># At this point 'var' is a String
+</span><span class='line'>
+</span><span class='line'>var = 1
+</span><span class='line'># At this point 'var' is an Int32</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Underscores are allowed at the beginning of a variable name, but these names are reserved for the compiler, so their use is not recommended (and it also makes the code uglier to read).</p>
+
+<h3>3.Global variables</h3>
+
+<p>Global variables start with a dollar sign ($). They are declared when you first assign them a value.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$year = 2014</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Their type is the combined type of all expressions that were assigned to them. Additionally, if you program reads a global variable before it was ever assigned a value it will also have the Nil type.</p>
+
+<h3>4.Assignment</h3>
+
+<p>Assignment is done with the equal (=) character.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Assigns to a local variable
+</span><span class='line'>local = 1
+</span><span class='line'>
+</span><span class='line'># Assigns to an instance variable
+</span><span class='line'>@instance = 2
+</span><span class='line'>
+</span><span class='line'># Assigns to a class variable
+</span><span class='line'>@@class = 3
+</span><span class='line'>
+</span><span class='line'># Assigns to a global variable
+</span><span class='line'>$global = 4</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Some syntax sugar that contains the = character is available:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>local += 1  # same as: local = local + 1
+</span><span class='line'>
+</span><span class='line'># The above is valid with these operators:
+</span><span class='line'># +, -, *, /, %, |, &, ^, **, &lt;&lt;, &gt;&gt;
+</span><span class='line'>
+</span><span class='line'>local ||= 1 # same as: local || (local = 1)
+</span><span class='line'>local &&= 1 # same as: local && (local = 1)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A method invocation that ends with = has syntax sugar:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># A setter
+</span><span class='line'>person.name=("John")
+</span><span class='line'>
+</span><span class='line'># The above can be written as:
+</span><span class='line'>person.name = "John"
+</span><span class='line'>
+</span><span class='line'># An indexed assignment
+</span><span class='line'>objects.[]=(2, 3)
+</span><span class='line'>
+</span><span class='line'># The above can be written as:
+</span><span class='line'>objects[2] = 3
+</span><span class='line'>
+</span><span class='line'># Not assignment-related, but also syntax sugar:
+</span><span class='line'>objects.[](2, 3)
+</span><span class='line'>
+</span><span class='line'># The above can be written as:
+</span><span class='line'>objects[2, 3]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The = operator syntax sugar is also available to setters and indexers. Note that || and &amp;&amp; use the []? method to check for key prescence.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>person.age += 1        # same as: person.age = person.age + 1
+</span><span class='line'>
+</span><span class='line'>person.name ||= "John" # same as: person.name || (person.name = "John")
+</span><span class='line'>person.name &&= "John" # same as: person.name && (person.name = "John")
+</span><span class='line'>
+</span><span class='line'>objects[1] += 2        # same as: objects[1] = objects[1] + 2
+</span><span class='line'>
+</span><span class='line'>objects[1] ||= 2       # same as: objects[1]? || (objects[1] = 2)
+</span><span class='line'>objects[1] &&= 2       # same as: objects[1]? && (objects[1] = 2)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I will present about control expressions in part 2.
+Thanks!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Crystal: Getting Started]]></title>
@@ -61,7 +221,7 @@
 
 
 <p>That&rsquo;s all! Hope you guys love it :D
-I will have anather post about syntax and semantics :)
+I will have another post about syntax and semantics :)
 Thanks</p>
 ]]></content>
   </entry>
@@ -1504,7 +1664,7 @@ After having listed all known skills and talents, identify what skills will best
 <p>Welcome any comments, please contact me via</p>
 
 <ul>
-<li>Email: <a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#x3a;&#99;&#x6f;&#x64;&#101;&#46;&#x66;&#111;&#114;&#46;&#x66;&#111;&#111;&#x64;&#x2e;&#x31;&#x34;&#64;&#x67;&#109;&#x61;&#105;&#108;&#46;&#99;&#111;&#109;">&#99;&#x6f;&#100;&#x65;&#46;&#x66;&#111;&#114;&#x2e;&#102;&#x6f;&#x6f;&#100;&#x2e;&#49;&#x34;&#x40;&#103;&#109;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a></li>
+<li>Email: <a href="&#x6d;&#97;&#x69;&#108;&#116;&#111;&#x3a;&#x63;&#111;&#100;&#x65;&#46;&#x66;&#x6f;&#x72;&#46;&#102;&#111;&#x6f;&#x64;&#x2e;&#x31;&#x34;&#64;&#x67;&#x6d;&#97;&#105;&#x6c;&#46;&#99;&#111;&#109;">&#99;&#111;&#100;&#101;&#x2e;&#x66;&#x6f;&#114;&#46;&#x66;&#x6f;&#x6f;&#100;&#x2e;&#49;&#52;&#64;&#x67;&#x6d;&#x61;&#105;&#108;&#46;&#x63;&#111;&#109;</a></li>
 </ul>
 
 ]]></content>
