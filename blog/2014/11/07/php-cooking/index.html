@@ -1,0 +1,922 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Php-cooking - Chicken&#8217;s Blog ^_^</title>
+  <meta name="author" content="codeforfoods">
+
+  
+  <meta name="description" content="This article would help you to setup Chef for PHP stuff step by step Step 1 - Install required tools Ruby 1
+https://www.ruby-lang.org/en/installation &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://codeforfoods.net/blog/2014/11/07/php-cooking">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Chicken's Blog ^_^" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+<!-- Social media content metadata -->
+
+  
+
+
+<meta property="fb:app_id" content="288370854684839">
+<meta property="fb:admins" content="e07c912da747a77dbbbcd27b351a10df">
+<meta property="og:url" value="http://codeforfoods.net/blog/2014/11/07/php-cooking/">
+<meta property="og:type" content="website" />
+
+  <meta property="og:title" value="php-cooking">
+  <meta property="og:description" value="This article would help you to setup Chef for PHP stuff step by step Step 1 - Install required tools Ruby 1
+https://www.ruby-lang.org/en/installation &hellip;">
+
+  <meta property="og:image" content="https://lh6.googleusercontent.com/-yoM7_7UiHBY/VFxCYAUZpJI/AAAAAAAAABs/xbd3d4fabn8/s184/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png" />
+
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-56334390-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Chicken&#8217;s Blog ^_^</a></h1>
+  
+    <h2>(Just code for food)</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:codeforfoods.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/about-me">About Me</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- codeforfoods-footer -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-4773765193389725"
+     data-ad-slot="7439101090"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  <header>
+    
+      <h1 class="entry-title">Php-cooking</h1>
+    
+    
+  
+
+
+
+  
+
+
+<span class="byline author vcard"> * source: <span class="fn">
+
+
+
+	<a href="http://codeforfoods.net">codeforfoods</a>
+	
+
+</span></span>
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-11-07T11:03:51+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>11:03 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://codeforfoods.net">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This article would help you to setup Chef for PHP stuff step by step</p>
+
+<h4>Step 1 - Install required tools</h4>
+
+<ul>
+<li>Ruby</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>https://www.ruby-lang.org/en/installation/</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Knife Solo</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem install knife-solo</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>librarian-chef</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem install librarian-chef</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Step 2 - Setup</h4>
+
+<ul>
+<li><p>Create new directory for your project</p>
+
+<pre><code>  mkdir /your-path/php-cooking
+</code></pre></li>
+<li><p>Move to php-cooking folder</p>
+
+<pre><code>  cd /your-path/php-cooking
+</code></pre></li>
+<li><p>Initialize librarian-chef</p>
+
+<pre><code>  librarian-chef init
+</code></pre></li>
+<li><p>Initialize knife solo</p>
+
+<pre><code>  knife solo init .
+</code></pre></li>
+</ul>
+
+
+<p>After initialazing, you should see the folder structure like below (notice that I added the <code>www</code> folder for containing the php&rsquo;s web app )</p>
+
+<p><img src="https://lh5.googleusercontent.com/-e9FKrxVfB50/VFxCHoV-CaI/AAAAAAAAABg/aBM_nLe5EMY/s418/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png"></p>
+
+<p>Ok, now is time for adding the necessary cookbooks to <code>Cheffile</code></p>
+
+<figure class='code'><figcaption><span>Cheffile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env ruby</span>
+</span><span class='line'><span class="c1">#^syntax detection</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">site</span> <span class="s1">&#39;https://supermarket.getchef.com/api/v1&#39;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">cookbook</span> <span class="s1">&#39;php&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 1.4.6&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">cookbook</span> <span class="s2">&quot;php55&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s2">&quot;https://github.com/aporat/php55-cookbook&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">cookbook</span> <span class="s1">&#39;php-mcrypt&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 1.0.0&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">cookbook</span> <span class="s1">&#39;apache2&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;= 1.0.0&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">cookbook</span> <span class="s1">&#39;mysql&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 5.5.2&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">cookbook</span> <span class="s1">&#39;composer&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 1.0.5&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is including <code>php</code>, <code>apache</code>, <code>mysql</code> and <code>composer</code></p>
+
+<p>Next we will need to install all cookbooks which be specified in <code>Cheffile</code></p>
+
+<pre><code>    librarian-chef install
+</code></pre>
+
+<p>After installing, you should see the cookbooks folder as below</p>
+
+<p><img src="https://lh4.googleusercontent.com/-zg-x4_s1JLw/VFxCwKlTkfI/AAAAAAAAACE/sVvPi3G5hGA/s492/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png"></p>
+
+<p>That&rsquo;s good so far, now we should setup <code>roles</code>, <code>enviroments</code> and <code>owner cookbooks</code> for install the web server and deploy your application to web server.</p>
+
+<ul>
+<li>Setup <code>dev environent</code>: create a file called <code>dev.json</code> in enviroment folder</li>
+</ul>
+
+
+<p><img src="https://lh4.googleusercontent.com/-zg-x4_s1JLw/VFxCwKlTkfI/AAAAAAAAACE/sVvPi3G5hGA/s492/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png"></p>
+
+<figure class='code'><figcaption><span>dev.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;dev&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;default_attributes&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;apache2&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;listen_ports&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>      <span class="s2">&quot;80&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="s2">&quot;443&quot;</span>
+</span><span class='line'>    <span class="p">]</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>  <span class="nt">&quot;php&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nt">&quot;ext_conf_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;/etc/php5/apache2/conf.d&quot;</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;myapp&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;vagrant&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;root_path&quot;</span><span class="p">:</span> <span class="s2">&quot;/vagrant&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;server_name&quot;</span><span class="p">:</span> <span class="s2">&quot;phpdev.codeforfoods.net&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'>  <span class="nt">&quot;json_class&quot;</span><span class="p">:</span> <span class="s2">&quot;Chef::Environment&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;chef_type&quot;</span><span class="p">:</span> <span class="s2">&quot;environment&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Setup <code>myapp role</code> and <code>myapp deploy role</code>: create 2 file <code>myapp.json</code> and <code>myapp_deploy.json</code> in roles folder</li>
+</ul>
+
+
+<p><img src="https://lh6.googleusercontent.com/-yoM7_7UiHBY/VFxCYAUZpJI/AAAAAAAAABs/xbd3d4fabn8/s184/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png"></p>
+
+<figure class='code'><figcaption><span>myapp.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'> <span class="p">{</span>
+</span><span class='line'>      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;myapp&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The role for app servers&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;json_class&quot;</span><span class="p">:</span> <span class="s2">&quot;Chef::Role&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;default_attributes&quot;</span><span class="p">:</span> <span class="p">{},</span>
+</span><span class='line'>      <span class="nt">&quot;override_attributes&quot;</span><span class="p">:</span> <span class="p">{},</span>
+</span><span class='line'>      <span class="nt">&quot;chef_type&quot;</span><span class="p">:</span> <span class="s2">&quot;role&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;run_list&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>          <span class="s2">&quot;recipe[apt]&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;recipe[build-essential]&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;recipe[composer]&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;recipe[myapp]&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;recipe[myapp::deploy]&quot;</span>
+</span><span class='line'>      <span class="p">],</span>
+</span><span class='line'>      <span class="nt">&quot;env_run_lists&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;dev&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>              <span class="s2">&quot;recipe[apt]&quot;</span><span class="p">,</span>
+</span><span class='line'>              <span class="s2">&quot;recipe[build-essential]&quot;</span><span class="p">,</span>
+</span><span class='line'>              <span class="s2">&quot;recipe[composer]&quot;</span><span class="p">,</span>
+</span><span class='line'>              <span class="s2">&quot;recipe[myapp]&quot;</span><span class="p">,</span>
+</span><span class='line'>              <span class="s2">&quot;recipe[myapp::deploy]&quot;</span>
+</span><span class='line'>          <span class="p">]</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>myapp_deploy.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'> <span class="p">{</span>
+</span><span class='line'>      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;myapp_deploy&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The role for app servers&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;json_class&quot;</span><span class="p">:</span> <span class="s2">&quot;Chef::Role&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;default_attributes&quot;</span><span class="p">:</span> <span class="p">{},</span>
+</span><span class='line'>      <span class="nt">&quot;override_attributes&quot;</span><span class="p">:</span> <span class="p">{},</span>
+</span><span class='line'>      <span class="nt">&quot;chef_type&quot;</span><span class="p">:</span> <span class="s2">&quot;role&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;run_list&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>          <span class="s2">&quot;recipe[myapp::deploy]&quot;</span>
+</span><span class='line'>      <span class="p">],</span>
+</span><span class='line'>      <span class="nt">&quot;env_run_lists&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nt">&quot;dev&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>              <span class="s2">&quot;recipe[myapp::deploy]&quot;</span>
+</span><span class='line'>          <span class="p">]</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Create a owner cookbook called <code>myapp</code>, this should be store in <code>site-cookbooks</code> folder</p>
+
+<pre><code>      knife cookbook create myapp
+</code></pre></li>
+</ul>
+
+
+<p><img src="https://lh3.googleusercontent.com/-7wagSNwnOWI/VFxESOwCZCI/AAAAAAAAACs/Xe7vU8MlycA/s415/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png"></p>
+
+<p>Notes:</p>
+
+<p>1) 2 recipes, one for myapp default and other for myapp deploy</p>
+
+<figure class='code'><figcaption><span>defaut.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">include_recipe</span> <span class="s2">&quot;apache2&quot;</span>
+</span><span class='line'><span class="n">include_recipe</span> <span class="s2">&quot;mysql::client&quot;</span>
+</span><span class='line'><span class="n">include_recipe</span> <span class="s2">&quot;mysql::server&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">include_recipe</span> <span class="s2">&quot;php55&quot;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">include_recipe</span> <span class="s2">&quot;php::module_mysql&quot;</span>
+</span><span class='line'><span class="n">include_recipe</span> <span class="s2">&quot;php::module_curl&quot;</span>
+</span><span class='line'><span class="n">include_recipe</span> <span class="s2">&quot;php::module_memcache&quot;</span>
+</span><span class='line'><span class="n">include_recipe</span> <span class="s2">&quot;apache2::mod_php5&quot;</span>
+</span><span class='line'><span class="n">include_recipe</span> <span class="s2">&quot;apache2::mod_expires&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">include_recipe</span> <span class="s2">&quot;php-mcrypt&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># disble default site.</span>
+</span><span class='line'><span class="n">apache_site</span> <span class="s2">&quot;default&quot;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">enable</span> <span class="kp">false</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>deploy.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># grant permission for webroot</span>
+</span><span class='line'><span class="n">directory</span> <span class="n">node</span><span class="o">[</span><span class="s2">&quot;myapp&quot;</span><span class="o">][</span><span class="s2">&quot;root_path&quot;</span><span class="o">]</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">owner</span> <span class="s2">&quot;root&quot;</span>
+</span><span class='line'>  <span class="n">group</span> <span class="s2">&quot;root&quot;</span>
+</span><span class='line'>  <span class="n">mode</span> <span class="s2">&quot;0755&quot;</span>
+</span><span class='line'>  <span class="n">action</span> <span class="ss">:create</span>
+</span><span class='line'>  <span class="n">recursive</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># reading the data bag</span>
+</span><span class='line'><span class="c1">#secrets = Chef::EncryptedDataBagItem.load(&quot;secrets&quot;, &quot;myapp&quot;)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">chef_environment</span> <span class="o">==</span> <span class="s2">&quot;dev&quot;</span>
+</span><span class='line'>      <span class="c1"># enable kizang-api site.</span>
+</span><span class='line'>      <span class="n">web_app</span> <span class="s1">&#39;myapp&#39;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">template</span> <span class="s1">&#39;site.conf.erb&#39;</span>
+</span><span class='line'>      <span class="n">docroot</span> <span class="n">node</span><span class="o">[</span><span class="s1">&#39;myapp&#39;</span><span class="o">][</span><span class="s1">&#39;root_path&#39;</span><span class="o">]</span>
+</span><span class='line'>      <span class="n">server_name</span> <span class="n">node</span><span class="o">[</span><span class="s1">&#39;myapp&#39;</span><span class="o">][</span><span class="s1">&#39;server_name&#39;</span><span class="o">]</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>2) the Apache configuration template file</p>
+
+<figure class='code'><figcaption><span>site.conf.erb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="no">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="no">ServerName</span> <span class="o">&lt;</span><span class="sx">%= @params[:server_name] %&gt;</span>
+</span><span class='line'><span class="sx"> DocumentRoot &lt;%=</span> <span class="vi">@params</span><span class="o">[</span><span class="ss">:docroot</span><span class="o">]</span> <span class="sx">%&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sx"> &lt;Directory &lt;%= @params[:docroot] %&gt;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="no">Options</span> <span class="no">FollowSymLinks</span>
+</span><span class='line'>      <span class="no">AllowOverride</span> <span class="no">All</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="o">&lt;</span><span class="sx">% if </span><span class="n">node</span><span class="o">[</span><span class="s1">&#39;apache&#39;</span><span class="o">][</span><span class="s1">&#39;version&#39;</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#39;2.4&#39;</span> <span class="o">-</span><span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">             Require all granted</span>
+</span><span class='line'><span class="sx">         &lt;% elsif node[&#39;apache&#39;][&#39;version&#39;] == &#39;2.2&#39; -%&gt;</span>
+</span><span class='line'>          <span class="no">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+</span><span class='line'>          <span class="no">Allow</span> <span class="n">from</span> <span class="n">all</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="sx">% end </span><span class="o">-</span><span class="sx">%&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sx">     RewriteEngine On</span>
+</span><span class='line'><span class="sx">     RewriteBase /</span>
+</span><span class='line'><span class="sx">     RewriteRule ^index\.php$ - [L]</span>
+</span><span class='line'><span class="sx">     RewriteCond %{REQUEST_FILENAME} !-f</span>
+</span><span class='line'><span class="sx">     RewriteCond %{REQUEST_FILENAME} !-d</span>
+</span><span class='line'><span class="sx">     RewriteRule . /index.php [L]</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="sx"> &lt;/Directory&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="no">Directory</span> <span class="sr">/&gt;</span>
+</span><span class='line'><span class="sr">     Options FollowSymLinks</span>
+</span><span class='line'><span class="sr">     AllowOverride None</span>
+</span><span class='line'><span class="sr"> &lt;/</span><span class="no">Directory</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="no">ErrorLog</span> <span class="err">$</span><span class="p">{</span><span class="no">APACHE_LOG_DIR</span><span class="p">}</span><span class="o">/</span><span class="n">myapp</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">log</span>
+</span><span class='line'>  <span class="c1"># Possible values include: debug, info, notice, warn, error, crit,</span>
+</span><span class='line'>  <span class="c1"># alert, emerg.</span>
+</span><span class='line'>  <span class="no">LogLevel</span> <span class="nb">warn</span>
+</span><span class='line'>  <span class="no">CustomLog</span> <span class="err">$</span><span class="p">{</span><span class="no">APACHE_LOG_DIR</span><span class="p">}</span><span class="o">/</span><span class="n">myapp</span><span class="o">.</span><span class="n">access</span><span class="o">.</span><span class="n">log</span> <span class="n">combined</span>
+</span><span class='line'><span class="o">&lt;</span><span class="sr">/VirtualHost&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Step 3 - Setup vagrant for create development environment</h4>
+
+<p>Ok! Almost Chef setting up is done, now you should create a <code>Vagrantfile</code> and use chef-solo as provision for install development server</p>
+
+<figure class='code'><figcaption><span>Vagrantfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'> <span class="c1"># -*- mode: ruby -*-</span>
+</span><span class='line'>  <span class="c1"># vi: set ft=ruby :</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Vagrantfile API/syntax version. Don&#39;t touch unless you know what you&#39;re doing!</span>
+</span><span class='line'>  <span class="no">VAGRANTFILE_API_VERSION</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>
+</span><span class='line'>  <span class="no">CHEF_PATH</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span>
+</span><span class='line'>  <span class="no">SYNC_PATH</span> <span class="o">=</span> <span class="s2">&quot;./www&quot;</span>
+</span><span class='line'>  <span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="no">VAGRANTFILE_API_VERSION</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;ubuntu14.04&quot;</span>
+</span><span class='line'>      <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_url</span> <span class="o">=</span> <span class="s2">&quot;https://oss-binaries.phusionpassenger.com/vagrant/boxes/latest/ubuntu-14.04-amd64-vbox.box&quot;</span>
+</span><span class='line'>      <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;private_network&quot;</span><span class="p">,</span> <span class="ss">ip</span><span class="p">:</span> <span class="s2">&quot;192.168.34.100&quot;</span>
+</span><span class='line'>      <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="s2">&quot;devphp.congdang.com&quot;</span>
+</span><span class='line'>      <span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">forward_agent</span> <span class="o">=</span> <span class="kp">true</span>
+</span><span class='line'>      <span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">forward_x11</span>   <span class="o">=</span> <span class="kp">true</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">vb</span><span class="o">|</span>
+</span><span class='line'>          <span class="n">vb</span><span class="o">.</span><span class="n">customize</span><span class="p">(</span><span class="o">[</span><span class="s2">&quot;modifyvm&quot;</span><span class="p">,</span> <span class="ss">:id</span><span class="p">,</span> <span class="s2">&quot;--natdnshostresolver1&quot;</span><span class="p">,</span> <span class="s2">&quot;off&quot;</span>  <span class="o">]</span><span class="p">)</span>
+</span><span class='line'>          <span class="n">vb</span><span class="o">.</span><span class="n">customize</span><span class="p">(</span><span class="o">[</span><span class="s2">&quot;modifyvm&quot;</span><span class="p">,</span> <span class="ss">:id</span><span class="p">,</span> <span class="s2">&quot;--natdnsproxy1&quot;</span><span class="p">,</span>        <span class="s2">&quot;off&quot;</span>  <span class="o">]</span><span class="p">)</span>
+</span><span class='line'>          <span class="n">vb</span><span class="o">.</span><span class="n">customize</span><span class="p">(</span><span class="o">[</span><span class="s2">&quot;modifyvm&quot;</span><span class="p">,</span> <span class="ss">:id</span><span class="p">,</span> <span class="s2">&quot;--memory&quot;</span><span class="p">,</span>              <span class="s2">&quot;1024&quot;</span> <span class="o">]</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">config</span><span class="o">.</span><span class="n">omnibus</span><span class="o">.</span><span class="n">chef_version</span> <span class="o">=</span> <span class="s1">&#39;11.16.0&#39;</span>
+</span><span class='line'>      <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:chef_solo</span> <span class="k">do</span> <span class="o">|</span><span class="n">chef</span><span class="o">|</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">chef</span><span class="o">.</span><span class="n">cookbooks_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">CHEF_PATH</span><span class="si">}</span><span class="s2">/cookbooks&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">CHEF_PATH</span><span class="si">}</span><span class="s2">/site-cookbooks&quot;</span>
+</span><span class='line'>      <span class="n">chef</span><span class="o">.</span><span class="n">environments_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">CHEF_PATH</span><span class="si">}</span><span class="s2">/environments&quot;</span>
+</span><span class='line'>      <span class="n">chef</span><span class="o">.</span><span class="n">environment</span> <span class="o">=</span> <span class="s2">&quot;dev&quot;</span>
+</span><span class='line'>      <span class="n">chef</span><span class="o">.</span><span class="n">roles_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">CHEF_PATH</span><span class="si">}</span><span class="s2">/roles&quot;</span>
+</span><span class='line'>      <span class="n">chef</span><span class="o">.</span><span class="n">add_role</span><span class="p">(</span><span class="s1">&#39;myapp&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">synced_folder</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">SYNC_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/vagrant&quot;</span><span class="p">,</span>
+</span><span class='line'>                                                      <span class="ss">:owner</span> <span class="o">=&gt;</span> <span class="s2">&quot;vagrant&quot;</span><span class="p">,</span>
+</span><span class='line'>                                                      <span class="ss">:group</span> <span class="o">=&gt;</span> <span class="s2">&quot;vagrant&quot;</span><span class="p">,</span>
+</span><span class='line'>                                                      <span class="ss">:mount_options</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="s1">&#39;dmode=777&#39;</span><span class="p">,</span><span class="s1">&#39;fmode=777&#39;</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notice that, I used <code>www</code> vagrant&rsquo;s sync folder. That means you should store your web application in <code>www</code> folder. In this article I just created a simple php file in that folder</p>
+
+<figure class='code'><figcaption><span>index.php</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'>  <span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>      <span class="k">echo</span> <span class="s2">&quot;Hello PHP world!!!!&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally you need to run vagrant and check the site on the browser</p>
+
+<pre><code>        vagrant up
+</code></pre>
+
+<p>Once vagrant upping is done, you can check your application on browser</p>
+
+<pre><code>        http://192.168.34.100
+</code></pre>
+
+<h4>Conclusion</h4>
+
+<p>You can pull all code from my github</p>
+
+<figure class='code'><figcaption><span>repository on gihub</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>https://github.com/code-for-food/php-cooking.git <span class="c"># fork from github</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this Chef, I&rsquo;ve setup <code>mysql</code> as well but I just only used <code>php</code> and <code>apache</code>. You can add more code in <code>defaul.rb</code> recipe for using <code>mysql</code> for your project. If you have any question, you can drop an email to me <a href="mailto:code.for.food.14@gmail.com">codeforfoods</a>.</p>
+
+<p>Thanks for your reading!!!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+  
+
+
+
+
+<span class="byline author vcard">Posted by member <span class="fn">
+
+
+
+	<a href="http://codeforfoods.net/about-me">codeforfoods</a>
+
+</span></span>
+
+      
+  
+
+
+
+  
+
+
+<span class="byline author vcard"> * source: <span class="fn">
+
+
+
+	<a href="http://codeforfoods.net">codeforfoods</a>
+	
+
+</span></span>
+      
+
+
+
+
+<time class='entry-date' datetime='2014-11-07T11:03:51+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>11:03 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/chef/'>chef</a>, <a class='category' href='/blog/categories/cooking/'>cooking</a>, <a class='category' href='/blog/categories/php/'>php</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://codeforfoods.net/blog/2014/11/07/php-cooking/" data-via="congdang" data-counturl="http://codeforfoods.net/blog/2014/11/07/php-cooking/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/11/06/how-to-switch-careers/" title="Previous Post: How to Switch Careers">&laquo; How to Switch Careers</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/11/18/let-flood-test-your-site-with-flood-dot-io/" title="Next Post: Let Flood test your site with Flood.io">Let Flood test your site with Flood.io &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="gravatar-section first odd">
+  <h1>We are</h1>
+  <div class="bio">
+    <div class="messages">
+      <p><a href="https://codeforfoods.net"><strong>@CodeForFoods</strong></a></p>
+      <p>we are web developers</p>
+      <p>in Viet Name</p>
+      <a href="/about-us">More</a>
+    </div>
+  </div>
+  <div class="gravatar">
+    <img src="https://avatars3.githubusercontent.com/u/9510217?v=2&s=400" alt="Github avarta of code for food" title="Github avarta of code for food">
+  </div>
+</section><section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/28/scaling-ruby-on-rails-by-caching-your-database-queries/">Scaling Ruby on Rails by Caching Your Database Queries</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/27/example/">Example</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/27/crytal-syntax-and-semantics-part-1/">Crytal: Syntax and Semantics Part 1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/27/crystal-getting-started/">Crystal: Getting Started</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/19/rails-get-youtube-download-link/">[Rails] Get Youtube Download Link</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- codeforfoods -->
+	<ins class="adsbygoogle"
+	     style="display:inline-block;width:260px;height:260px"
+	     data-ad-client="ca-pub-4773765193389725"
+	     data-ad-slot="3148502299"></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+</section>
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/codeforfoods?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/codeforfoods">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/code.for.food.14?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - codeforfoods -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'codeforfoods';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://codeforfoods.net/blog/2014/11/07/php-cooking/';
+        var disqus_url = 'http://codeforfoods.net/blog/2014/11/07/php-cooking/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=288370854684839&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,551 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Scaling Ruby on Rails by Caching Your Database Queries - Chicken&#8217;s Blog ^_^</title>
+  <meta name="author" content="codeforfoods">
+
+  
+  <meta name="description" content="This article would help you to scaling your app with caching your database queries. Its pretty good to use active-record in ruby on rails, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://codeforfoods.net/blog/2014/11/28/scaling-ruby-on-rails-by-caching-your-database-queries">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Chicken's Blog ^_^" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+<!-- Social media content metadata -->
+
+  
+
+
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-56334390-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Chicken&#8217;s Blog ^_^</a></h1>
+  
+    <h2>(Just code for food)</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:codeforfoods.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/about-me">About Me</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- codeforfoods-footer -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-4773765193389725"
+     data-ad-slot="7439101090"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  <header>
+    
+      <h1 class="entry-title">Scaling Ruby on Rails by Caching Your Database Queries</h1>
+    
+    
+  
+
+
+
+  
+
+
+<span class="byline author vcard"> * source: <span class="fn">
+
+
+
+	<a href="http://www.codebeerstartups.com/2014/11/scaling-ruby-on-rails-by-caching-your-database-queries/">scaling-ruby-on-rails-by-caching-your-database-queries</a>
+	
+
+</span></span>
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-11-28T08:34:54+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:34 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://codeforfoods.net">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This article would help you to scaling your app with caching your database queries.</p>
+
+<p>Its pretty good to use active-record in ruby on rails, relationships, find_by methods, where queries everything makes your life much more simpler as a developer but sooner or later your application becomes slow. At that time you need to work on optimizations. There are lot of work around for optimizations and one of them in caching the queries. The company I work for is StudyPad and we have a product ie splashmath and that has over 9 millions users using it across multiple platforms. The amount of traffic that we get is pretty huge and caching one of the thing that helped us to solve out scaling problems. Here is quick idea to cache your queries in memcache.</p>
+
+<h4>Basic requirements</h4>
+
+<p>There are few requirements for this. First is the dalli gem and memcache installed on your machine.</p>
+
+<h4>Basic structure of the application.</h4>
+
+<p>We have lot of static/seed data which change very less and the queries on those things are pretty high. So first thing to handle that static data.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Grade &lt; ActiveRecord::Base
+</span><span class='line'>  has_many :skills
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'>class Skills &lt; ActiveRecord::Base
+</span><span class='line'>  belongs_to :grade
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So in order to get skills for a grade, its pretty simple</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>grade = Grade.first
+</span><span class='line'>skills = grade.skills</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now for that matter every time we are fetching skills for a grade its gonna hit the database and get the results. So its time to get this query and its results cached.</p>
+
+<p>Assuming you have configured dalli gem easily and you have memcached up and running. Here is a simple method to cache the results</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def cached_skills
+</span><span class='line'>  Rails.cache.fetch([self.class.name, id, :skills], expires_in: 240.hours) {
+</span><span class='line'>    skills.to_a
+</span><span class='line'>  }
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So instead of fetching skills like</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>grade.skills</span></code></pre></td></tr></table></div></figure>
+
+
+<p>we are gonna get it like</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>grade.cached_skills</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So whats its gonna do. Its gonna fetch the results first time from the database and store it in cache. Next time its gonna return the results from the cache. Note few things here</p>
+
+<ul>
+<li><p>Understand the pattern of the key. [self.class.name, id, :skills] is your key here.</p></li>
+<li><p>Cache will expire in 240.hours. You can customize it as per your needs. Better keep a constant for this somewhere in your application.</p></li>
+<li><p>In cached_skills methods we are keep records not the active-record relations that why we have to convert into array by using to_a else active-record-relation will be cached and database query will be executed.</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>skills.to_a</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Expiring the cache.</h4>
+
+<p>We are caching the query results but we are not expiring the results. What if some skill has changed. Grade object is not getting any notification for that, so cache is stale, we need to expire it. So we can write a after_commit hook for skill to expire its grade object’s cache</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># in skill model
+</span><span class='line'>after_commit :flush_cache
+</span><span class='line'>
+</span><span class='line'>def flush_cache
+</span><span class='line'>  Rails.cache.delete([self.grade.class.name, self.grade_id, :skills])
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is enough to make sure you cache is never stale. There is another way to handle the expiring cache. Lets see that.</p>
+
+<h4>Another way</h4>
+
+<p>We redefine the models like this</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Grade &lt; ActiveRecord::Base
+</span><span class='line'>  has_many :skills
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'>class Skills &lt; ActiveRecord::Base
+</span><span class='line'>  belongs_to :grade, touch: true
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note we have added touch: true in skills, and now we redefine our cached_skills method again:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def cached_skills
+</span><span class='line'>  Rails.cache.fetch([self.class.name, updated_at.to_i, :skills], expires_in: 240.hours) {
+</span><span class='line'>    skills.to_a
+</span><span class='line'>  }
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now just caching this we don’t need to expire the cache manually, when ever skills get updated it will touch its parent object object grade, that will update its updated_at value and that specific cache will be never used, as key attribute updated_at has been changed.</p>
+
+<h4>The problem with second approach</h4>
+
+<p>But there is a problem. Assume you have 10 different has_many relationships for grade and you are caching it all, now everytime a skill has be changed all the other cache keys for grade relationships will be useless too. For example: Grade has_many topics</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Grade &lt; ActiveRecord::Base
+</span><span class='line'>  has_many :skills
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'>class Skill &lt; ActiveRecord::Base
+</span><span class='line'>  belongs_to :grade, touch: true
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'>class Topic &lt; ActiveRecord::Base
+</span><span class='line'>  belongs_to :grade, touch: true
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># In Grade model
+</span><span class='line'>def cached_skills
+</span><span class='line'>  Rails.cache.fetch([self.class.name, updated_at.to_i, :skills], expires_in: 240.hours) {
+</span><span class='line'>    skills.to_a
+</span><span class='line'>  }
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'>def cached_topics
+</span><span class='line'>  Rails.cache.fetch([self.class.name, updated_at.to_i, :topics], expires_in: 240.hours) {
+</span><span class='line'>    topics.to_a
+</span><span class='line'>  }
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now in this case changing any skill will make topics cache useless, but that’s not the case when you are trying to expire it manually. So both approach has pros and cons, first will ask you write more code and second expire cache more frequently. You have to make that choice as per your needs.</p>
+
+<h4>What else?</h4>
+
+<p>Using the same base principle you can cache lot of queries like</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Grade.cached_find_by_id(1)
+</span><span class='line'>Skill.first.cached_grade</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This approach helped us to reduce the load on RDS and make things pretty fast. I hope this will help you too. Let me know you feedback or some tips that made you system more faster</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+  
+
+
+
+
+<span class="byline author vcard">Posted by member <span class="fn">
+
+
+
+	<a href="http://codeforfoods.net/about-me">Duy Phan</a>
+
+</span></span>
+
+      
+  
+
+
+
+  
+
+
+<span class="byline author vcard"> * source: <span class="fn">
+
+
+
+	<a href="http://www.codebeerstartups.com/2014/11/scaling-ruby-on-rails-by-caching-your-database-queries/">scaling-ruby-on-rails-by-caching-your-database-queries</a>
+	
+
+</span></span>
+      
+
+
+
+
+<time class='entry-date' datetime='2014-11-28T08:34:54+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:34 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/database/'>database</a>, <a class='category' href='/blog/categories/rails/'>rails</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://codeforfoods.net/blog/2014/11/28/scaling-ruby-on-rails-by-caching-your-database-queries/" data-via="congdang" data-counturl="http://codeforfoods.net/blog/2014/11/28/scaling-ruby-on-rails-by-caching-your-database-queries/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/11/27/example/" title="Previous Post: Example">&laquo; Example</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="gravatar-section first odd">
+  <h1>We are</h1>
+  <div class="bio">
+    <div class="messages">
+      <p><a href="https://codeforfoods.net"><strong>@CodeForFoods</strong></a></p>
+      <p>we are web developers</p>
+      <p>in Viet Name</p>
+      <a href="/about-us">More</a>
+    </div>
+  </div>
+  <div class="gravatar">
+    <img src="https://avatars3.githubusercontent.com/u/9510217?v=2&s=400" alt="Github avarta of code for food" title="Github avarta of code for food">
+  </div>
+</section><section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/28/scaling-ruby-on-rails-by-caching-your-database-queries/">Scaling Ruby on Rails by Caching Your Database Queries</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/27/example/">Example</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/27/crytal-syntax-and-semantics-part-1/">Crytal: Syntax and Semantics Part 1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/27/crystal-getting-started/">Crystal: Getting Started</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/19/rails-get-youtube-download-link/">[Rails] Get Youtube Download Link</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- codeforfoods -->
+	<ins class="adsbygoogle"
+	     style="display:inline-block;width:260px;height:260px"
+	     data-ad-client="ca-pub-4773765193389725"
+	     data-ad-slot="3148502299"></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+</section>
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/codeforfoods?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/codeforfoods">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/code.for.food.14?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - codeforfoods -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'codeforfoods';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://codeforfoods.net/blog/2014/11/28/scaling-ruby-on-rails-by-caching-your-database-queries/';
+        var disqus_url = 'http://codeforfoods.net/blog/2014/11/28/scaling-ruby-on-rails-by-caching-your-database-queries/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=288370854684839&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

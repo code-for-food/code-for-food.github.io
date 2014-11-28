@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Php | Chicken's Blog ^_^]]></title>
+  <link href="http://codeforfoods.net/blog/categories/php/atom.xml" rel="self"/>
+  <link href="http://codeforfoods.net/"/>
+  <updated>2014-11-28T09:19:15+07:00</updated>
+  <id>http://codeforfoods.net/</id>
+  <author>
+    <name><![CDATA[codeforfoods]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Php-cooking]]></title>
+    <link href="http://codeforfoods.net/blog/2014/11/07/php-cooking/"/>
+    <updated>2014-11-07T11:03:51+07:00</updated>
+    <id>http://codeforfoods.net/blog/2014/11/07/php-cooking</id>
+    <content type="html"><![CDATA[<p>This article would help you to setup Chef for PHP stuff step by step</p>
+
+<h4>Step 1 - Install required tools</h4>
+
+<ul>
+<li>Ruby</li>
+</ul>
+
+
+<pre><code>    https://www.ruby-lang.org/en/installation/
+</code></pre>
+
+<ul>
+<li>Knife Solo</li>
+</ul>
+
+
+<pre><code>    gem install knife-solo
+</code></pre>
+
+<ul>
+<li>librarian-chef</li>
+</ul>
+
+
+<pre><code>    gem install librarian-chef
+</code></pre>
+
+<h4>Step 2 - Setup</h4>
+
+<ul>
+<li><p>Create new directory for your project</p>
+
+<pre><code>  mkdir /your-path/php-cooking
+</code></pre></li>
+<li><p>Move to php-cooking folder</p>
+
+<pre><code>  cd /your-path/php-cooking
+</code></pre></li>
+<li><p>Initialize librarian-chef</p>
+
+<pre><code>  librarian-chef init
+</code></pre></li>
+<li><p>Initialize knife solo</p>
+
+<pre><code>  knife solo init .
+</code></pre></li>
+</ul>
+
+
+<p>After initialazing, you should see the folder structure like below (notice that I added the <code>www</code> folder for containing the php&rsquo;s web app )</p>
+
+<p><img class="<a" src="href="https://lh5.googleusercontent.com/-e9FKrxVfB50/VFxCHoV-CaI/AAAAAAAAABg/aBM_nLe5EMY/s418/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png">https://lh5.googleusercontent.com/-e9FKrxVfB50/VFxCHoV-CaI/AAAAAAAAABg/aBM_nLe5EMY/s418/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png</a>&#8221;></p>
+
+<p>Ok, now is time for adding the necessary cookbooks to <code>Cheffile</code></p>
+
+<pre><code class="ruby Cheffile">    #!/usr/bin/env ruby
+    #^syntax detection
+
+    site 'https://supermarket.getchef.com/api/v1'
+
+
+    cookbook 'php', '~&gt; 1.4.6'
+
+    cookbook "php55",
+      :git =&gt; "https://github.com/aporat/php55-cookbook"
+
+    cookbook 'php-mcrypt', '~&gt; 1.0.0'
+
+    cookbook 'apache2', '&gt;= 1.0.0'
+
+    cookbook 'mysql', '~&gt; 5.5.2'
+
+    cookbook 'composer', '~&gt; 1.0.5'
+</code></pre>
+
+<p>This is including <code>php</code>, <code>apache</code>, <code>mysql</code> and <code>composer</code></p>
+
+<p>Next we will need to install all cookbooks which be specified in <code>Cheffile</code></p>
+
+<pre><code>    librarian-chef install
+</code></pre>
+
+<p>After installing, you should see the cookbooks folder as below</p>
+
+<p><img class="<a" src="href="https://lh4.googleusercontent.com/-zg-x4_s1JLw/VFxCwKlTkfI/AAAAAAAAACE/sVvPi3G5hGA/s492/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png">https://lh4.googleusercontent.com/-zg-x4_s1JLw/VFxCwKlTkfI/AAAAAAAAACE/sVvPi3G5hGA/s492/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png</a>&#8221;></p>
+
+<p>That&rsquo;s good so far, now we should setup <code>roles</code>, <code>enviroments</code> and <code>owner cookbooks</code> for install the web server and deploy your application to web server.</p>
+
+<ul>
+<li>Setup <code>dev environent</code>: create a file called <code>dev.json</code> in enviroment folder</li>
+</ul>
+
+
+<p><img class="<a" src="href="https://lh4.googleusercontent.com/-zg-x4_s1JLw/VFxCwKlTkfI/AAAAAAAAACE/sVvPi3G5hGA/s492/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png">https://lh4.googleusercontent.com/-zg-x4_s1JLw/VFxCwKlTkfI/AAAAAAAAACE/sVvPi3G5hGA/s492/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png</a>&#8221;></p>
+
+<pre><code class="json dev.json">    {
+      "name": "dev",
+      "default_attributes": {
+        "apache2": {
+          "listen_ports": [
+            "80",
+            "443"
+          ]
+        },
+        "php": {
+          "ext_conf_dir": "/etc/php5/apache2/conf.d"
+        },
+        "myapp": {
+          "user": "vagrant",
+          "root_path": "/vagrant",
+          "server_name": "phpdev.codeforfoods.net"
+        }
+      },
+      "json_class": "Chef::Environment",
+      "description": "",
+      "chef_type": "environment"
+    }
+</code></pre>
+
+<ul>
+<li>Setup <code>myapp role</code> and <code>myapp deploy role</code>: create 2 file <code>myapp.json</code> and <code>myapp_deploy.json</code> in roles folder</li>
+</ul>
+
+
+<p><img class="<a" src="href="https://lh6.googleusercontent.com/-yoM7_7UiHBY/VFxCYAUZpJI/AAAAAAAAABs/xbd3d4fabn8/s184/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png">https://lh6.googleusercontent.com/-yoM7_7UiHBY/VFxCYAUZpJI/AAAAAAAAABs/xbd3d4fabn8/s184/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png</a>&#8221;></p>
+
+<pre><code class="json myapp.json">
+    {
+        "name": "myapp",
+        "description": "The role for app servers",
+        "json_class": "Chef::Role",
+        "default_attributes": {},
+        "override_attributes": {},
+        "chef_type": "role",
+        "run_list": [
+            "recipe[apt]",
+            "recipe[build-essential]",
+            "recipe[composer]",
+            "recipe[myapp]",
+            "recipe[myapp::deploy]"
+        ],
+        "env_run_lists": {
+            "dev": [
+                "recipe[apt]",
+                "recipe[build-essential]",
+                "recipe[composer]",
+                "recipe[myapp]",
+                "recipe[myapp::deploy]"
+            ]
+        }
+    }
+</code></pre>
+
+<pre><code class="json myapp_deploy.json">
+    {
+        "name": "myapp_deploy",
+        "description": "The role for app servers",
+        "json_class": "Chef::Role",
+        "default_attributes": {},
+        "override_attributes": {},
+        "chef_type": "role",
+        "run_list": [
+            "recipe[myapp::deploy]"
+        ],
+        "env_run_lists": {
+            "dev": [
+                "recipe[myapp::deploy]"
+            ]
+        }
+    }
+</code></pre>
+
+<ul>
+<li><p>Create a owner cookbook called <code>myapp</code>, this should be store in <code>site-cookbooks</code> folder</p>
+
+<pre><code>      knife cookbook create myapp
+</code></pre></li>
+</ul>
+
+
+<p><img class="<a" src="href="https://lh3.googleusercontent.com/-7wagSNwnOWI/VFxESOwCZCI/AAAAAAAAACs/Xe7vU8MlycA/s415/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png">https://lh3.googleusercontent.com/-7wagSNwnOWI/VFxESOwCZCI/AAAAAAAAACs/Xe7vU8MlycA/s415/README_md_-__Users_congdang_my-training_codeforfoods_php-cooking_-_Atom.png</a>&#8221;></p>
+
+<p>Notes:</p>
+
+<p>1) 2 recipes, one for myapp default and other for myapp deploy</p>
+
+<pre><code class="ruby defaut.rb">    include_recipe "apache2"
+    include_recipe "mysql::client"
+    include_recipe "mysql::server"
+
+    include_recipe "php55"
+
+
+    include_recipe "php::module_mysql"
+    include_recipe "php::module_curl"
+    include_recipe "php::module_memcache"
+    include_recipe "apache2::mod_php5"
+    include_recipe "apache2::mod_expires"
+
+    include_recipe "php-mcrypt"
+
+    # disble default site.
+    apache_site "default" do
+        enable false
+    end
+</code></pre>
+
+<pre><code class="ruby deploy.rb">    # grant permission for webroot
+    directory node["myapp"]["root_path"] do
+        owner "root"
+        group "root"
+        mode "0755"
+        action :create
+        recursive true
+    end
+
+    # reading the data bag
+    #secrets = Chef::EncryptedDataBagItem.load("secrets", "myapp")
+
+    if node.chef_environment == "dev"
+            # enable kizang-api site.
+            web_app 'myapp' do
+            template 'site.conf.erb'
+            docroot node['myapp']['root_path']
+            server_name node['myapp']['server_name']
+    end
+    else
+
+    end
+</code></pre>
+
+<p>2) the Apache configuration template file</p>
+
+<pre><code class="ruby site.conf.erb">    &lt;VirtualHost *:80&gt;
+        ServerName &lt;%= @params[:server_name] %&gt;
+        DocumentRoot &lt;%= @params[:docroot] %&gt;
+
+        &lt;Directory &lt;%= @params[:docroot] %&gt;&gt;
+            Options FollowSymLinks
+            AllowOverride All
+
+            &lt;% if node['apache']['version'] == '2.4' -%&gt;
+                    Require all granted
+                &lt;% elsif node['apache']['version'] == '2.2' -%&gt;
+                Order allow,deny
+                Allow from all
+                &lt;% end -%&gt;
+
+            RewriteEngine On
+            RewriteBase /
+            RewriteRule ^index\.php$ - [L]
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteCond %{REQUEST_FILENAME} !-d
+            RewriteRule . /index.php [L]
+
+
+        &lt;/Directory&gt;
+
+        &lt;Directory /&gt;
+            Options FollowSymLinks
+            AllowOverride None
+        &lt;/Directory&gt;
+        ErrorLog ${APACHE_LOG_DIR}/myapp.error.log
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+        CustomLog ${APACHE_LOG_DIR}/myapp.access.log combined
+    &lt;/VirtualHost&gt;
+</code></pre>
+
+<h4>Step 3 - Setup vagrant for create development environment</h4>
+
+<p>Ok! Almost Chef setting up is done, now you should create a <code>Vagrantfile</code> and use chef-solo as provision for install development server</p>
+
+<pre><code class="ruby Vagrantfile">
+    # -*- mode: ruby -*-
+    # vi: set ft=ruby :
+
+    # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+    VAGRANTFILE_API_VERSION = "2"
+    CHEF_PATH = "."
+    SYNC_PATH = "./www"
+    Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+        config.vm.box = "ubuntu14.04"
+        config.vm.box_url = "https://oss-binaries.phusionpassenger.com/vagrant/boxes/latest/ubuntu-14.04-amd64-vbox.box"
+        config.vm.network "private_network", ip: "192.168.34.100"
+        config.vm.hostname = "devphp.congdang.com"
+        config.ssh.forward_agent = true
+        config.ssh.forward_x11   = true
+
+        config.vm.provider "virtualbox" do |vb|
+            vb.customize(["modifyvm", :id, "--natdnshostresolver1", "off"  ])
+            vb.customize(["modifyvm", :id, "--natdnsproxy1",        "off"  ])
+            vb.customize(["modifyvm", :id, "--memory",              "1024" ])
+        end
+
+
+
+        config.omnibus.chef_version = '11.16.0'
+        config.vm.provision :chef_solo do |chef|
+
+
+        chef.cookbooks_path = "#{CHEF_PATH}/cookbooks", "#{CHEF_PATH}/site-cookbooks"
+        chef.environments_path = "#{CHEF_PATH}/environments"
+        chef.environment = "dev"
+        chef.roles_path = "#{CHEF_PATH}/roles"
+        chef.add_role('myapp')
+        end
+
+        config.vm.synced_folder("#{SYNC_PATH}", "/vagrant",
+                                                        :owner =&gt; "vagrant",
+                                                        :group =&gt; "vagrant",
+                                                        :mount_options =&gt; ['dmode=777','fmode=777'])
+    end
+</code></pre>
+
+<p>Notice that, I used <code>www</code> vagrant&rsquo;s sync folder. That means you should store your web application in <code>www</code> folder. In this article I just created a simple php file in that folder</p>
+
+<pre><code class="php index.php">
+    &lt;?php
+        echo "Hello PHP world!!!!";
+    ?&gt;
+</code></pre>
+
+<p>Finally you need to run vagrant and check the site on the browser</p>
+
+<pre><code>        vagrant up
+</code></pre>
+
+<p>Once vagrant upping is done, you can check your application on browser</p>
+
+<pre><code>        http://192.168.34.100
+</code></pre>
+
+<h4>Conclusion</h4>
+
+<p>You can pull all code from my github</p>
+
+<pre><code class="bash repository on gihub">    https://github.com/code-for-food/php-cooking.git # fork from github
+</code></pre>
+
+<p>In this Chef, I&rsquo;ve setup <code>mysql</code> as well but I just only used <code>php</code> and <code>apache</code>. You can add more code in <code>defaul.rb</code> recipe for using <code>mysql</code> for your project. If you have any question, you can drop an email to me <a href="mailto:code.for.food.14@gmail.com">codeforfoods</a>.</p>
+
+<p>Thanks for your reading!!!</p>
+]]></content>
+  </entry>
+  
+</feed>

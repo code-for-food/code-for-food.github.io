@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Rails | Chicken's Blog ^_^]]></title>
+  <link href="http://codeforfoods.net/blog/categories/rails/atom.xml" rel="self"/>
+  <link href="http://codeforfoods.net/"/>
+  <updated>2014-11-28T09:19:15+07:00</updated>
+  <id>http://codeforfoods.net/</id>
+  <author>
+    <name><![CDATA[codeforfoods]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Scaling Ruby on Rails by Caching Your Database Queries]]></title>
+    <link href="http://codeforfoods.net/blog/2014/11/28/scaling-ruby-on-rails-by-caching-your-database-queries/"/>
+    <updated>2014-11-28T08:34:54+07:00</updated>
+    <id>http://codeforfoods.net/blog/2014/11/28/scaling-ruby-on-rails-by-caching-your-database-queries</id>
+    <content type="html"><![CDATA[<p>This article would help you to scaling your app with caching your database queries.</p>
+
+<p>Its pretty good to use active-record in ruby on rails, relationships, find_by methods, where queries everything makes your life much more simpler as a developer but sooner or later your application becomes slow. At that time you need to work on optimizations. There are lot of work around for optimizations and one of them in caching the queries. The company I work for is StudyPad and we have a product ie splashmath and that has over 9 millions users using it across multiple platforms. The amount of traffic that we get is pretty huge and caching one of the thing that helped us to solve out scaling problems. Here is quick idea to cache your queries in memcache.</p>
+
+<h4>Basic requirements</h4>
+
+<p>There are few requirements for this. First is the dalli gem and memcache installed on your machine.</p>
+
+<h4>Basic structure of the application.</h4>
+
+<p>We have lot of static/seed data which change very less and the queries on those things are pretty high. So first thing to handle that static data.</p>
+
+<pre><code>    class Grade &lt; ActiveRecord::Base
+      has_many :skills
+    end
+
+    class Skills &lt; ActiveRecord::Base
+      belongs_to :grade
+    end
+</code></pre>
+
+<p>So in order to get skills for a grade, its pretty simple</p>
+
+<pre><code>    grade = Grade.first
+    skills = grade.skills
+</code></pre>
+
+<p>Now for that matter every time we are fetching skills for a grade its gonna hit the database and get the results. So its time to get this query and its results cached.</p>
+
+<p>Assuming you have configured dalli gem easily and you have memcached up and running. Here is a simple method to cache the results</p>
+
+<pre><code>    def cached_skills
+      Rails.cache.fetch([self.class.name, id, :skills], expires_in: 240.hours) {
+        skills.to_a
+      }
+end
+</code></pre>
+
+<p>So instead of fetching skills like</p>
+
+<pre><code>    grade.skills
+</code></pre>
+
+<p>we are gonna get it like</p>
+
+<pre><code>    grade.cached_skills
+</code></pre>
+
+<p>So whats its gonna do. Its gonna fetch the results first time from the database and store it in cache. Next time its gonna return the results from the cache. Note few things here</p>
+
+<ul>
+<li><p>Understand the pattern of the key. [self.class.name, id, :skills] is your key here.</p></li>
+<li><p>Cache will expire in 240.hours. You can customize it as per your needs. Better keep a constant for this somewhere in your application.</p></li>
+<li><p>In cached_skills methods we are keep records not the active-record relations that why we have to convert into array by using to_a else active-record-relation will be cached and database query will be executed.</p></li>
+</ul>
+
+
+<pre><code>    skills.to_a
+</code></pre>
+
+<h4>Expiring the cache.</h4>
+
+<p>We are caching the query results but we are not expiring the results. What if some skill has changed. Grade object is not getting any notification for that, so cache is stale, we need to expire it. So we can write a after_commit hook for skill to expire its grade object’s cache</p>
+
+<pre><code>    # in skill model
+    after_commit :flush_cache
+
+    def flush_cache
+      Rails.cache.delete([self.grade.class.name, self.grade_id, :skills])
+    end
+</code></pre>
+
+<p>This is enough to make sure you cache is never stale. There is another way to handle the expiring cache. Lets see that.</p>
+
+<h4>Another way</h4>
+
+<p>We redefine the models like this</p>
+
+<pre><code>    class Grade &lt; ActiveRecord::Base
+      has_many :skills
+    end
+
+    class Skills &lt; ActiveRecord::Base
+      belongs_to :grade, touch: true
+    end
+</code></pre>
+
+<p>Note we have added touch: true in skills, and now we redefine our cached_skills method again:</p>
+
+<pre><code>    def cached_skills
+      Rails.cache.fetch([self.class.name, updated_at.to_i, :skills], expires_in: 240.hours) {
+        skills.to_a
+      }
+    end
+</code></pre>
+
+<p>Now just caching this we don’t need to expire the cache manually, when ever skills get updated it will touch its parent object object grade, that will update its updated_at value and that specific cache will be never used, as key attribute updated_at has been changed.</p>
+
+<h4>The problem with second approach</h4>
+
+<p>But there is a problem. Assume you have 10 different has_many relationships for grade and you are caching it all, now everytime a skill has be changed all the other cache keys for grade relationships will be useless too. For example: Grade has_many topics</p>
+
+<pre><code>    class Grade &lt; ActiveRecord::Base
+      has_many :skills
+    end
+
+    class Skill &lt; ActiveRecord::Base
+      belongs_to :grade, touch: true
+    end
+
+    class Topic &lt; ActiveRecord::Base
+      belongs_to :grade, touch: true
+    end
+</code></pre>
+
+<pre><code>    # In Grade model
+    def cached_skills
+      Rails.cache.fetch([self.class.name, updated_at.to_i, :skills], expires_in: 240.hours) {
+        skills.to_a
+      }
+    end
+
+    def cached_topics
+      Rails.cache.fetch([self.class.name, updated_at.to_i, :topics], expires_in: 240.hours) {
+        topics.to_a
+      }
+    end
+</code></pre>
+
+<p>Now in this case changing any skill will make topics cache useless, but that’s not the case when you are trying to expire it manually. So both approach has pros and cons, first will ask you write more code and second expire cache more frequently. You have to make that choice as per your needs.</p>
+
+<h4>What else?</h4>
+
+<p>Using the same base principle you can cache lot of queries like</p>
+
+<pre><code>Grade.cached_find_by_id(1)
+Skill.first.cached_grade
+</code></pre>
+
+<p>This approach helped us to reduce the load on RDS and make things pretty fast. I hope this will help you too. Let me know you feedback or some tips that made you system more faster</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Rails] Get Youtube Download Link]]></title>
+    <link href="http://codeforfoods.net/blog/2014/11/19/rails-get-youtube-download-link/"/>
+    <updated>2014-11-19T08:39:56+07:00</updated>
+    <id>http://codeforfoods.net/blog/2014/11/19/rails-get-youtube-download-link</id>
+    <content type="html"><![CDATA[<h3>Installation:</h3>
+
+<pre><code>    gem install viddl-rb
+</code></pre>
+
+<h3>Usage:</h3>
+
+<p>Download a video: viddl-rb <a href="http://www.youtube.com/watch?v=QH2-TGUlwu4">http://www.youtube.com/watch?v=QH2-TGUlwu4</a>
+<br>
+Viddl-rb supports the following command line options:
+<code>
+-e, --extract-audio              Extract the audio track of the download to a separate file
+-a, --abort-on-failure           Abort if one of the videos in a list fails to download
+-u, --url-only                   Just display the download url without downloading the file.
+-t, --title-only                 Just display the title without downloading the file.
+-f, --filter REGEX               Filters a video playlist according to the regex (Youtube only right now)
+-s, --save-dir DIRECTORY         Specifies the directory where videos should be saved
+-d, --downloader TOOL            Specifies the tool to download with. Supports 'wget', 'curl', 'aria2c' and 'net-http'
+-q, --quality QUALITY            Specifies the video format and resolution in the following way: width:height:format (e.g. 1280:720:mp4)
+                                 The width, height and format may be omitted with a *.
+                                 For example, to match any quality with a height of 720 pixels in any format specify --quality *:720:*
+-h, --help                       Displays the help screen
+</code></p>
+
+<h3>Library Usage:</h3>
+
+<pre><code>require 'viddl-rb'
+
+download_urls = ViddlRb.get_urls("http://www.youtube.com/watch?v=QH2-TGUlwu4")
+download_urls.first     # =&gt; "http://o-o.preferred.arn06s04.v3.lscac ..."
+</code></pre>
+
+<p>The ViddlRb module has the following module public methods:</p>
+
+<h4>get_urls_names(url)</h4>
+
+<p> &ndash; Returns an array of one or more hashes that has the keys :url which points to the download url and :name which points to the name (which is a filename safe version of the video title with a file extension). Returns nil if the url is not recognized by any plugins.</p>
+
+<h4>get_urls_exts(url)</h4>
+
+<p>&ndash; Same as get_urls_names but with just the file extension (for example &ldquo;.mp4&rdquo;) instead of the full filename, and the :name key is replaced with :ext. Returns nil if the url is not recognized by any plugins.</p>
+
+<h4>get_urls(url)</h4>
+
+<p>&ndash; Returns an array of download urls for the specified video url. Returns nil if the url is not recognized by any plugins.</p>
+
+<h4>get_names(url)</h4>
+
+<p>&ndash; Returns an array of filenames for the specified video url. Returns nil if the url is not recognized by any plugins.</p>
+
+<h4>io=(io_object)</h4>
+
+<p>&ndash; By default all plugin output to stdout will be suppressed when the library is used. If you are interested in the output of a plugin, you can set an IO object that will receive all plugin output using this method.</p>
+
+<h3>Requirements:</h3>
+
+<blockquote><ul>
+<li>curl/wget/aria2c or the progress bar gem</li>
+<li>Nokogiri</li>
+<li>ffmpeg if you want to extract audio tracks from the videos</li>
+</ul>
+</blockquote>
+]]></content>
+  </entry>
+  
+</feed>
