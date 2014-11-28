@@ -357,63 +357,6 @@
 </script>
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/11/27/example/">Example</a></h1>
-    
-    
-  
-
-
-
-  
-
-
-<span class="byline author vcard"> * source: <span class="fn">
-
-
-
-	<a href="http://codeforfoods.net">codeforfoods</a>
-	
-
-</span></span>
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-11-27T17:15:55+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>5:15 pm</span></time>
-        
-           | <a href="/blog/2014/11/27/example/#disqus_thread"
-             data-disqus-identifier="http://codeforfoods.net/blog/2014/11/27/example/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- codeforfoods-footer -->
-<ins class="adsbygoogle"
-     style="display:inline-block;width:728px;height:90px"
-     data-ad-client="ca-pub-4773765193389725"
-     data-ad-slot="7439101090"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-  <header>
-    
       <h1 class="entry-title"><a href="/blog/2014/11/27/crytal-syntax-and-semantics-part-1/">Crytal: Syntax and Semantics Part 1</a></h1>
     
     
@@ -1869,6 +1812,82 @@ After having listed all known skills and talents, identify what skills will best
 
     </article>
   
+  
+    <article>
+      
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- codeforfoods-footer -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-4773765193389725"
+     data-ad-slot="7439101090"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/04/cors-on-apache/">CORS on Apache</a></h1>
+    
+    
+  
+
+
+
+  
+
+
+<span class="byline author vcard"> * source: <span class="fn">
+
+
+
+	<a href="http://codeforfoods.net">codeforfoods</a>
+	
+
+</span></span>
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-11-04T08:32:41+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:32 am</span></time>
+        
+           | <a href="/blog/2014/11/04/cors-on-apache/#disqus_thread"
+             data-disqus-identifier="http://codeforfoods.net/blog/2014/11/04/cors-on-apache/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>To add the CORS authorization to the header using Apache, simply add the following line inside either the <code>&lt;Directory&gt;</code>, <code>&lt;Location&gt;</code>, <code>&lt;Files&gt;</code> or <code>&lt;VirtualHost&gt;</code> sections of your server config (usually located in a *.conf file, such as <code>httpd.conf</code> or <code>apache.conf</code>), or within a <code>.htaccess</code> file:</p>
+
+<pre><code>    Header set Access-Control-Allow-Origin "*"
+</code></pre>
+
+<p>To ensure that your changes are correct, it is strongly reccomended that you use</p>
+
+<pre><code>    apachectl -t
+</code></pre>
+
+<p>to check your configuration changes for errors. After this passes, you may need to reload Apache to make sure your changes are applied by running the command</p>
+
+<pre><code>    sudo service apache2 reload
+</code></pre>
+
+<p>More detail</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>http://enable-cors.org/server_apache.html</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -1901,10 +1920,6 @@ After having listed all known skills and talents, identify what skills will best
       </li>
     
       <li class="post">
-        <a href="/blog/2014/11/27/example/">Example</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2014/11/27/crytal-syntax-and-semantics-part-1/">Crytal: Syntax and Semantics Part 1</a>
       </li>
     
@@ -1914,6 +1929,10 @@ After having listed all known skills and talents, identify what skills will best
     
       <li class="post">
         <a href="/blog/2014/11/19/rails-get-youtube-download-link/">[Rails] Get Youtube Download Link</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/18/let-flood-test-your-site-with-flood-dot-io/">Let Flood Test Your Site With Flood.io</a>
       </li>
     
   </ul>
