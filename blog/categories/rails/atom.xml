@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Chicken's Blog ^_^]]></title>
   <link href="http://codeforfoods.net/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://codeforfoods.net/"/>
-  <updated>2014-11-28T09:25:20+07:00</updated>
+  <updated>2014-11-28T10:03:22+07:00</updated>
   <id>http://codeforfoods.net/</id>
   <author>
     <name><![CDATA[codeforfoods]]></name>
@@ -25,6 +25,8 @@
 <h4>Basic requirements</h4>
 
 <p>There are few requirements for this. First is the dalli gem and memcache installed on your machine.</p>
+
+<p><a href="https://github.com/mperham/dalli">https://github.com/mperham/dalli</a></p>
 
 <h4>Basic structure of the application.</h4>
 
