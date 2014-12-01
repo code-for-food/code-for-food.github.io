@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Chicken's Blog ^_^]]></title>
   <link href="http://codeforfoods.net/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://codeforfoods.net/"/>
-  <updated>2014-12-01T10:17:35+07:00</updated>
+  <updated>2014-12-01T10:19:20+07:00</updated>
   <id>http://codeforfoods.net/</id>
   <author>
     <name><![CDATA[codeforfoods]]></name>
@@ -12,50 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Rails Beginner Cheat Sheet]]></title>
-    <link href="http://codeforfoods.net/blog/2014/12/01/rails-beginner-cheat-sheet/"/>
-    <updated>2014-12-01T09:42:21+07:00</updated>
-    <id>http://codeforfoods.net/blog/2014/12/01/rails-beginner-cheat-sheet</id>
-    <content type="html"><![CDATA[<h4>Rails Basics</h4>
-
-<p>This is an introduction to the basics of Rails. We look at the general structure of a Rails application and the important commands used in the terminal.</p>
-
-<p>If you do not have Rails installed yet, there is a <a href="http://railsapps.github.io/installing-rails.html">well maintained guide by Daniel Kehoe</a> on how to install Rails on different platforms.</p>
-
-<ul>
-<li>The structure of a Rails app</li>
-</ul>
-
-
-<p>Here is an overview of all the folders of a new Rails application, outlining the purpose of each folder, and describing the most important files.</p>
-
-<table>
-<thead>
-<tr>
-<th> Name      </th>
-<th style="text-align:left;"> Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> app   </td>
-<td style="text-align:left;">  This folder contains your application. Therefore it is the most important folder in Ruby on Rails and it is worth digging into its subfolders. See the following rows.</td>
-</tr>
-<tr>
-<td> app/assets    </td>
-<td style="text-align:left;">    Assets basically are your front-end stuff. This folder contains images you use on your website, javascripts for all your fancy front-end interaction and stylesheets for all your CSS making your website absolutely beautiful.</td>
-</tr>
-<tr>
-<td> app/controllers       </td>
-<td style="text-align:left;"> The controllers subdirectory contains the controllers, which handle the requests from the users. It is often responsible for a single resource type, such as places, users or attendees. Controllers also tie together the models and the views.</td>
-</tr>
-</tbody>
-</table>
-
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Protocol]]></title>
