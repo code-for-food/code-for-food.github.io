@@ -4,7 +4,7 @@
   <title><![CDATA[Chicken's Blog ^_^]]></title>
   <link href="http://codeforfoods.net/atom.xml" rel="self"/>
   <link href="http://codeforfoods.net/"/>
-  <updated>2014-11-28T10:03:22+07:00</updated>
+  <updated>2014-12-01T10:11:51+07:00</updated>
   <id>http://codeforfoods.net/</id>
   <author>
     <name><![CDATA[codeforfoods]]></name>
@@ -12,6 +12,210 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Beginner Cheat Sheet]]></title>
+    <link href="http://codeforfoods.net/blog/2014/12/01/rails-beginner-cheat-sheet/"/>
+    <updated>2014-12-01T09:42:21+07:00</updated>
+    <id>http://codeforfoods.net/blog/2014/12/01/rails-beginner-cheat-sheet</id>
+    <content type="html"><![CDATA[<h4>Rails Basics</h4>
+
+<p>This is an introduction to the basics of Rails. We look at the general structure of a Rails application and the important commands used in the terminal.</p>
+
+<p>If you do not have Rails installed yet, there is a <a href="http://railsapps.github.io/installing-rails.html">well maintained guide by Daniel Kehoe</a> on how to install Rails on different platforms.</p>
+
+<ul>
+<li>The structure of a Rails app</li>
+</ul>
+
+
+<p>Here is an overview of all the folders of a new Rails application, outlining the purpose of each folder, and describing the most important files.</p>
+
+<table>
+<thead>
+<tr>
+<th> Name      </th>
+<th style="text-align:left;"> Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> app   </td>
+<td style="text-align:left;">  This folder contains your application. Therefore it is the most important folder in Ruby on Rails and it is worth digging into its subfolders. See the following rows.</td>
+</tr>
+<tr>
+<td> app/assets    </td>
+<td style="text-align:left;">    Assets basically are your front-end stuff. This folder contains images you use on your website, javascripts for all your fancy front-end interaction and stylesheets for all your CSS making your website absolutely beautiful.</td>
+</tr>
+<tr>
+<td> app/controllers       </td>
+<td style="text-align:left;"> The controllers subdirectory contains the controllers, which handle the requests from the users. It is often responsible for a single resource type, such as places, users or attendees. Controllers also tie together the models and the views.</td>
+</tr>
+</tbody>
+</table>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Protocol]]></title>
+    <link href="http://codeforfoods.net/blog/2014/11/28/rails-protocol/"/>
+    <updated>2014-11-28T10:05:34+07:00</updated>
+    <id>http://codeforfoods.net/blog/2014/11/28/rails-protocol</id>
+    <content type="html"><![CDATA[<p>A guide for writing great web apps.</p>
+
+<h4>Set Up Laptop</h4>
+
+<p>Set up your laptop with :</p>
+
+<ul>
+<li><p><a href="https://github.com/thoughtbot/laptop">https://github.com/thoughtbot/laptop</a></p></li>
+<li><p><a href="https://github.com/thoughtbot/dotfiles">https://github.com/thoughtbot/dotfiles</a></p></li>
+</ul>
+
+
+<h4>Create App</h4>
+
+<p>Get Suspenders.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem install suspenders</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create the app.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>suspenders app --heroku true --github organization/app</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Set Up App</h4>
+
+<p>Get the code</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git@github.com:organization/app.git</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Set up the app&rsquo;s dependencies</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd project
+</span><span class='line'>./bin/setup</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Use Heroku config to get ENV variables. (<a href="https://github.com/ddollar/heroku-config">https://github.com/ddollar/heroku-config</a>)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>heroku config:pull --remote staging</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Delete extra lines in .env, leaving only those needed for app to function properly. For example: BRAINTREE_MERCHANT_ID and S3_SECRET.</p>
+
+<p>Use Foreman to run the app locally (<a href="https://github.com/ddollar/foreman">https://github.com/ddollar/foreman</a>)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>foreman start</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It uses your .env file and Procfile to run processes like Heroku&rsquo;s Cedar stack. (<a href="https://devcenter.heroku.com/articles/cedar">https://devcenter.heroku.com/articles/cedar</a>)</p>
+
+<h4>Git protocol</h4>
+
+<p><a href="https://github.com/thoughtbot/guides/tree/master/protocol/git">https://github.com/thoughtbot/guides/tree/master/protocol/git</a></p>
+
+<h4>Product Review</h4>
+
+<p><a href="https://github.com/thoughtbot/guides/tree/master/protocol/product-review">https://github.com/thoughtbot/guides/tree/master/protocol/product-review</a></p>
+
+<h4>Code Review</h4>
+
+<p><a href="https://github.com/thoughtbot/guides/tree/master/code-review">https://github.com/thoughtbot/guides/tree/master/code-review</a></p>
+
+<ul>
+<li><p>Review data integrity closely, such as migrations that make irreversible changes to the data, and whether there is a related todo to make a database backup during the staging and production deploys.</p></li>
+<li><p>Review SQL queries for potential SQL injection.</p></li>
+<li><p>Review whether dependency upgrades include a reason in the commit message, such as a link to the dependency&rsquo;s
+ChangeLog or NEWS file.</p></li>
+<li><p>Review whether new database indexes are necessary if new columns or SQL queries were added.</p></li>
+<li><p>Review whether new scheduler (cron) tasks have been added and whether there is a related todo in the project management system to add it during the staging and production deploys.</p></li>
+</ul>
+
+
+<h4>Deploy</h4>
+
+<p>View a list of new commits. View changed files.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git fetch staging
+</span><span class='line'>git log staging/master..master
+</span><span class='line'>git diff --stat staging/master</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If necessary, add new environment variables.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>heroku config:add NEW_VARIABLE=value --remote staging</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Deploy to Heroku</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git push staging</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If necessary, run migrations and restart the dynos.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>heroku run rake db:migrate --remote staging
+</span><span class='line'>heroku restart --remote staging</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Introspect to make sure everything&rsquo;s ok.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>watch heroku ps --remote staging</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Test the feature in browser.</p>
+
+<p>Deploy to production.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git fetch production
+</span><span class='line'>git log production/master..master
+</span><span class='line'>git diff --stat production/master
+</span><span class='line'>heroku config:add NEW_VARIABLE=value --remote production
+</span><span class='line'>git push production
+</span><span class='line'>heroku run rake db:migrate --remote production
+</span><span class='line'>heroku restart --remote production
+</span><span class='line'>watch heroku ps --remote production</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Watch logs and metrics dashboards.</p>
+
+<p>Close pull request and comment Merged.</p>
+
+<h4>Set Up Production Environment</h4>
+
+<ul>
+<li><p>Make sure that your Procfile is set up to run Unicorn. (<a href="https://devcenter.heroku.com/articles/procfile">https://devcenter.heroku.com/articles/procfile</a>)</p></li>
+<li><p>Make sure the PG Backups add-on is enabled.</p></li>
+<li><p>Create a read-only Heroku Follower for your production database. If a Heroku database outage occurs, Heroku can use the follower to get your app back up and running faster. (<a href="https://devcenter.heroku.com/articles/heroku-postgres-follower-databases#high-availability-with-followers">https://devcenter.heroku.com/articles/heroku-postgres-follower-databases#high-availability-with-followers</a>)</p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Scaling Ruby on Rails by Caching Your Database Queries]]></title>
@@ -1876,7 +2080,7 @@ After having listed all known skills and talents, identify what skills will best
 <p>Welcome any comments, please contact me via</p>
 
 <ul>
-<li>Email: <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#99;&#x6f;&#100;&#x65;&#46;&#102;&#x6f;&#x72;&#46;&#x66;&#111;&#111;&#100;&#x2e;&#x31;&#x34;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#99;&#x6f;&#100;&#x65;&#46;&#102;&#x6f;&#x72;&#46;&#x66;&#x6f;&#x6f;&#100;&#x2e;&#49;&#52;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#x6d;</a></li>
+<li>Email: <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x63;&#111;&#x64;&#x65;&#x2e;&#x66;&#x6f;&#114;&#x2e;&#102;&#x6f;&#x6f;&#100;&#x2e;&#49;&#x34;&#x40;&#103;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;">&#99;&#x6f;&#100;&#x65;&#46;&#x66;&#x6f;&#x72;&#x2e;&#102;&#111;&#111;&#x64;&#46;&#49;&#52;&#x40;&#103;&#109;&#x61;&#105;&#x6c;&#46;&#x63;&#111;&#x6d;</a></li>
 </ul>
 
 ]]></content>

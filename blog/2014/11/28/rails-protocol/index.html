@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Crytal: Syntax and Semantics Part 1 - Chicken&#8217;s Blog ^_^</title>
+  <title>Rails Protocol - Chicken&#8217;s Blog ^_^</title>
   <meta name="author" content="codeforfoods">
 
   
-  <meta name="description" content="1. Comments 1
-# This is a comment 2.Local variables Local variables start with lowercase letters. They are declared when you first assign them a &hellip;">
+  <meta name="description" content="A guide for writing great web apps. Set Up Laptop Set up your laptop with : https://github.com/thoughtbot/laptop
+https://github.com/thoughtbot/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://codeforfoods.net/blog/2014/11/27/crytal-syntax-and-semantics-part-1">
+  <link rel="canonical" href="http://codeforfoods.net/blog/2014/11/28/rails-protocol">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Chicken's Blog ^_^" type="application/atom+xml">
@@ -97,7 +97,7 @@
 </script>
   <header>
     
-      <h1 class="entry-title">Crytal: Syntax and Semantics Part 1</h1>
+      <h1 class="entry-title">Rails Protocol</h1>
     
     
   
@@ -111,7 +111,7 @@
 
 
 
-	<a href="http://codeforfoods.net">codeforfoods</a>
+	<a href="https://github.com/thoughtbot/guides/tree/master/protocol/rails">rails-protocol</a>
 	
 
 </span></span>
@@ -122,7 +122,7 @@
 
 
 
-<time class='entry-date' datetime='2014-11-27T17:05:09+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>5:05 pm</span></time>
+<time class='entry-date' datetime='2014-11-28T10:05:34+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:05 am</span></time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://codeforfoods.net">Comments</a>
@@ -132,135 +132,127 @@
   </header>
 
 
-<div class="entry-content"><h3>1. Comments</h3>
+<div class="entry-content"><p>A guide for writing great web apps.</p>
+
+<h4>Set Up Laptop</h4>
+
+<p>Set up your laptop with :</p>
+
+<ul>
+<li><p><a href="https://github.com/thoughtbot/laptop">https://github.com/thoughtbot/laptop</a></p></li>
+<li><p><a href="https://github.com/thoughtbot/dotfiles">https://github.com/thoughtbot/dotfiles</a></p></li>
+</ul>
+
+
+<h4>Create App</h4>
+
+<p>Get Suspenders.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># This is a comment</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem install suspenders</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>2.Local variables</h3>
-
-<p>Local variables start with lowercase letters. They are declared when you first assign them a value.</p>
+<p>Create the app.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>name = "Crystal"
-</span><span class='line'>age = 1</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>suspenders app --heroku true --github organization/app</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Their type is inferred from their usage, not only from their initializer. In general, they are just value holders associated with the type that the programmer expects them to have according to their location and usage on the program.</p>
+<h4>Set Up App</h4>
 
-<p>For example, reassinging a variable with a different expression makes it have that expression’s type:</p>
+<p>Get the code</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>var = "Hello"
-</span><span class='line'># At this point 'var' is a String
-</span><span class='line'>
-</span><span class='line'>var = 1
-</span><span class='line'># At this point 'var' is an Int32</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git@github.com:organization/app.git</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Underscores are allowed at the beginning of a variable name, but these names are reserved for the compiler, so their use is not recommended (and it also makes the code uglier to read).</p>
-
-<h3>3.Global variables</h3>
-
-<p>Global variables start with a dollar sign ($). They are declared when you first assign them a value.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$year = 2014</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Their type is the combined type of all expressions that were assigned to them. Additionally, if you program reads a global variable before it was ever assigned a value it will also have the Nil type.</p>
-
-<h3>4.Assignment</h3>
-
-<p>Assignment is done with the equal (=) character.</p>
+<p>Set up the app&rsquo;s dependencies</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># Assigns to a local variable
-</span><span class='line'>local = 1
-</span><span class='line'>
-</span><span class='line'># Assigns to an instance variable
-</span><span class='line'>@instance = 2
-</span><span class='line'>
-</span><span class='line'># Assigns to a class variable
-</span><span class='line'>@@class = 3
-</span><span class='line'>
-</span><span class='line'># Assigns to a global variable
-</span><span class='line'>$global = 4</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd project
+</span><span class='line'>./bin/setup</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Some syntax sugar that contains the = character is available:</p>
+<p>Use Heroku config to get ENV variables. (<a href="https://github.com/ddollar/heroku-config">https://github.com/ddollar/heroku-config</a>)</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>local += 1  # same as: local = local + 1
-</span><span class='line'>
-</span><span class='line'># The above is valid with these operators:
-</span><span class='line'># +, -, *, /, %, |, &, ^, **, &lt;&lt;, &gt;&gt;
-</span><span class='line'>
-</span><span class='line'>local ||= 1 # same as: local || (local = 1)
-</span><span class='line'>local &&= 1 # same as: local && (local = 1)</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>heroku config:pull --remote staging</span></code></pre></td></tr></table></div></figure>
 
 
-<p>A method invocation that ends with = has syntax sugar:</p>
+<p>Delete extra lines in .env, leaving only those needed for app to function properly. For example: BRAINTREE_MERCHANT_ID and S3_SECRET.</p>
+
+<p>Use Foreman to run the app locally (<a href="https://github.com/ddollar/foreman">https://github.com/ddollar/foreman</a>)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>foreman start</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It uses your .env file and Procfile to run processes like Heroku&rsquo;s Cedar stack. (<a href="https://devcenter.heroku.com/articles/cedar">https://devcenter.heroku.com/articles/cedar</a>)</p>
+
+<h4>Git protocol</h4>
+
+<p><a href="https://github.com/thoughtbot/guides/tree/master/protocol/git">https://github.com/thoughtbot/guides/tree/master/protocol/git</a></p>
+
+<h4>Product Review</h4>
+
+<p><a href="https://github.com/thoughtbot/guides/tree/master/protocol/product-review">https://github.com/thoughtbot/guides/tree/master/protocol/product-review</a></p>
+
+<h4>Code Review</h4>
+
+<p><a href="https://github.com/thoughtbot/guides/tree/master/code-review">https://github.com/thoughtbot/guides/tree/master/code-review</a></p>
+
+<ul>
+<li><p>Review data integrity closely, such as migrations that make irreversible changes to the data, and whether there is a related todo to make a database backup during the staging and production deploys.</p></li>
+<li><p>Review SQL queries for potential SQL injection.</p></li>
+<li><p>Review whether dependency upgrades include a reason in the commit message, such as a link to the dependency&rsquo;s
+ChangeLog or NEWS file.</p></li>
+<li><p>Review whether new database indexes are necessary if new columns or SQL queries were added.</p></li>
+<li><p>Review whether new scheduler (cron) tasks have been added and whether there is a related todo in the project management system to add it during the staging and production deploys.</p></li>
+</ul>
+
+
+<h4>Deploy</h4>
+
+<p>View a list of new commits. View changed files.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># A setter
-</span><span class='line'>person.name=("John")
-</span><span class='line'>
-</span><span class='line'># The above can be written as:
-</span><span class='line'>person.name = "John"
-</span><span class='line'>
-</span><span class='line'># An indexed assignment
-</span><span class='line'>objects.[]=(2, 3)
-</span><span class='line'>
-</span><span class='line'># The above can be written as:
-</span><span class='line'>objects[2] = 3
-</span><span class='line'>
-</span><span class='line'># Not assignment-related, but also syntax sugar:
-</span><span class='line'>objects.[](2, 3)
-</span><span class='line'>
-</span><span class='line'># The above can be written as:
-</span><span class='line'>objects[2, 3]</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git fetch staging
+</span><span class='line'>git log staging/master..master
+</span><span class='line'>git diff --stat staging/master</span></code></pre></td></tr></table></div></figure>
 
 
-<p>The = operator syntax sugar is also available to setters and indexers. Note that || and &amp;&amp; use the []? method to check for key prescence.</p>
+<p>If necessary, add new environment variables.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>heroku config:add NEW_VARIABLE=value --remote staging</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Deploy to Heroku</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git push staging</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If necessary, run migrations and restart the dynos.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>heroku run rake db:migrate --remote staging
+</span><span class='line'>heroku restart --remote staging</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Introspect to make sure everything&rsquo;s ok.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>watch heroku ps --remote staging</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Test the feature in browser.</p>
+
+<p>Deploy to production.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -270,20 +262,28 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>person.age += 1        # same as: person.age = person.age + 1
-</span><span class='line'>
-</span><span class='line'>person.name ||= "John" # same as: person.name || (person.name = "John")
-</span><span class='line'>person.name &&= "John" # same as: person.name && (person.name = "John")
-</span><span class='line'>
-</span><span class='line'>objects[1] += 2        # same as: objects[1] = objects[1] + 2
-</span><span class='line'>
-</span><span class='line'>objects[1] ||= 2       # same as: objects[1]? || (objects[1] = 2)
-</span><span class='line'>objects[1] &&= 2       # same as: objects[1]? && (objects[1] = 2)</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git fetch production
+</span><span class='line'>git log production/master..master
+</span><span class='line'>git diff --stat production/master
+</span><span class='line'>heroku config:add NEW_VARIABLE=value --remote production
+</span><span class='line'>git push production
+</span><span class='line'>heroku run rake db:migrate --remote production
+</span><span class='line'>heroku restart --remote production
+</span><span class='line'>watch heroku ps --remote production</span></code></pre></td></tr></table></div></figure>
 
 
-<p>I will present about control expressions in part 2.
-Thanks!</p>
+<p>Watch logs and metrics dashboards.</p>
+
+<p>Close pull request and comment Merged.</p>
+
+<h4>Set Up Production Environment</h4>
+
+<ul>
+<li><p>Make sure that your Procfile is set up to run Unicorn. (<a href="https://devcenter.heroku.com/articles/procfile">https://devcenter.heroku.com/articles/procfile</a>)</p></li>
+<li><p>Make sure the PG Backups add-on is enabled.</p></li>
+<li><p>Create a read-only Heroku Follower for your production database. If a Heroku database outage occurs, Heroku can use the follower to get your app back up and running faster. (<a href="https://devcenter.heroku.com/articles/heroku-postgres-follower-databases#high-availability-with-followers">https://devcenter.heroku.com/articles/heroku-postgres-follower-databases#high-availability-with-followers</a>)</p></li>
+</ul>
+
 </div>
 
 
@@ -303,7 +303,7 @@ Thanks!</p>
 
 
 
-	<a href="http://codeforfoods.net/about-me">codeforfoods</a>
+	<a href="http://codeforfoods.net/about-me">Duy Phan</a>
 
 </span></span>
 
@@ -319,7 +319,7 @@ Thanks!</p>
 
 
 
-	<a href="http://codeforfoods.net">codeforfoods</a>
+	<a href="https://github.com/thoughtbot/guides/tree/master/protocol/rails">rails-protocol</a>
 	
 
 </span></span>
@@ -328,15 +328,21 @@ Thanks!</p>
 
 
 
-<time class='entry-date' datetime='2014-11-27T17:05:09+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>5:05 pm</span></time>
+<time class='entry-date' datetime='2014-11-28T10:05:34+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:05 am</span></time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/rails/'>rails</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://codeforfoods.net/blog/2014/11/27/crytal-syntax-and-semantics-part-1/" data-via="congdang" data-counturl="http://codeforfoods.net/blog/2014/11/27/crytal-syntax-and-semantics-part-1/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://codeforfoods.net/blog/2014/11/28/rails-protocol/" data-via="congdang" data-counturl="http://codeforfoods.net/blog/2014/11/28/rails-protocol/" >Tweet</a>
   
   
   
@@ -347,10 +353,10 @@ Thanks!</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/11/27/crystal-getting-started/" title="Previous Post: Crystal: Getting Started">&laquo; Crystal: Getting Started</a>
+        <a class="basic-alignment left" href="/blog/2014/11/28/scaling-ruby-on-rails-by-caching-your-database-queries/" title="Previous Post: Scaling Ruby on Rails by Caching Your Database Queries">&laquo; Scaling Ruby on Rails by Caching Your Database Queries</a>
       
       
-        <a class="basic-alignment right" href="/blog/2014/11/28/scaling-ruby-on-rails-by-caching-your-database-queries/" title="Next Post: Scaling Ruby on Rails by Caching Your Database Queries">Scaling Ruby on Rails by Caching Your Database Queries &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2014/12/01/rails-beginner-cheat-sheet/" title="Next Post: Rails Beginner Cheat Sheet">Rails Beginner Cheat Sheet &raquo;</a>
       
     </p>
   </footer>
@@ -454,8 +460,8 @@ Thanks!</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://codeforfoods.net/blog/2014/11/27/crytal-syntax-and-semantics-part-1/';
-        var disqus_url = 'http://codeforfoods.net/blog/2014/11/27/crytal-syntax-and-semantics-part-1/';
+        var disqus_identifier = 'http://codeforfoods.net/blog/2014/11/28/rails-protocol/';
+        var disqus_url = 'http://codeforfoods.net/blog/2014/11/28/rails-protocol/';
         var disqus_script = 'embed.js';
       
     (function () {
