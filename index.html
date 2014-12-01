@@ -9,8 +9,7 @@
   <meta name="author" content="codeforfoods">
 
   
-  <meta name="description" content="A guide for writing great web apps. Set Up Laptop Set up your laptop with : https://github.com/thoughtbot/laptop
-https://github.com/thoughtbot/ &hellip;">
+  <meta name="description" content="In previous post I have wrote how to use Chef Solo to setup and deploy a Server with PHP stuff. Today I&rsquo;d like to use Chef Server for storing &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,6 +84,472 @@ https://github.com/thoughtbot/ &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- codeforfoods-footer -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-4773765193389725"
+     data-ad-slot="7439101090"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/01/work-with-chef-server/">Work With Chef Server</a></h1>
+    
+    
+  
+
+
+
+  
+
+
+<span class="byline author vcard"> * source: <span class="fn">
+
+
+
+	<a href="http://codeforfoods.net">codeforfoods</a>
+	
+
+</span></span>
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-01T16:44:10+07:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>4:44 pm</span></time>
+        
+           | <a href="/blog/2014/12/01/work-with-chef-server/#disqus_thread"
+             data-disqus-identifier="http://codeforfoods.net/blog/2014/12/01/work-with-chef-server/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In <a href="blog/2014/11/07/php-cooking/">previous post</a> I have wrote how to use Chef Solo to setup and deploy a Server with PHP stuff. Today I&rsquo;d like to use Chef Server for storing Chef&rsquo;s configurations (Cookbooks, Roles, Enviroments, Data Bags) and Bootstrap a server use Chef Server.</p>
+
+<h1>Setup Chef Server</h1>
+
+<p>The easiest way to get started with a Chef server is to use Opscode’s <a href="http://www.opscode.com/hosted-chef/">Hosted Chef</a>–it’s free for up to 5 nodes. Once you exceed 5 nodes you can decide whether to pay a monthly fee or install your own Chef server.</p>
+
+<ul>
+<li>Register your free trial of hosted Chef</li>
+</ul>
+
+
+<p><img src="https://lh5.googleusercontent.com/-PeezzBJhRrE/VHwwAKgzq7I/AAAAAAAAABk/OBw78YVf5Mk/w707-h604-no/Sign_Up_-_Chef_Manage.png"></p>
+
+<ul>
+<li>Get pem key from profile</li>
+</ul>
+
+
+<p><img src="https://lh6.googleusercontent.com/-_tKhvVNO0u8/VHww8xtE59I/AAAAAAAAABw/O_cbtONexe0/w791-h640-no/Chef_-_Account_Management.png"></p>
+
+<ul>
+<li>Generate Knife config</li>
+</ul>
+
+
+<p><img src="https://lh4.googleusercontent.com/-xyw-Lzc3V5Y/VHwzDvnqQwI/AAAAAAAAACY/RJsXXJP_6VY/w710-h640-no/Chef_Manage_and_php-cooking_%E2%80%94_bash_%E2%80%94_162%C3%9730.png"></p>
+
+<ul>
+<li>Fork the <code>php-cooking</code> from <a href="blog/2014/11/07/php-cooking/">previous post</a></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>https://github.com/code-for-food/php-cooking.git # fork from github</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Move to <code>php-cooking</code> and copy client key and validation key to <code>.chef</code> folder.</p></li>
+<li><p>Replace the knife.rb in .chef folder</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">current_dir</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">)</span>
+</span><span class='line'><span class="n">log_level</span>                <span class="ss">:info</span>
+</span><span class='line'><span class="n">log_location</span>             <span class="no">STDOUT</span>
+</span><span class='line'><span class="n">node_name</span>                <span class="s2">&quot;codeforfoods&quot;</span>
+</span><span class='line'><span class="n">client_key</span>               <span class="s2">&quot;</span><span class="si">#{</span><span class="n">current_dir</span><span class="si">}</span><span class="s2">/codeforfoods.pem&quot;</span> <span class="c1"># replace by your key</span>
+</span><span class='line'><span class="n">validation_client_name</span>   <span class="s2">&quot;chicken-validator&quot;</span>
+</span><span class='line'><span class="n">validation_key</span>           <span class="s2">&quot;</span><span class="si">#{</span><span class="n">current_dir</span><span class="si">}</span><span class="s2">/chicken-validator.pem&quot;</span> <span class="c1"># replace by your key</span>
+</span><span class='line'><span class="n">chef_server_url</span>          <span class="s2">&quot;https://api.opscode.com/organizations/chicken&quot;</span>
+</span><span class='line'><span class="n">cache_type</span>               <span class="s1">&#39;BasicFile&#39;</span>
+</span><span class='line'><span class="n">cache_options</span><span class="p">(</span> <span class="ss">:path</span> <span class="o">=&gt;</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;HOME&#39;</span><span class="o">]</span><span class="si">}</span><span class="s2">/.chef/checksums&quot;</span> <span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">cookbook_path</span>    <span class="o">[</span><span class="s2">&quot;cookbooks&quot;</span><span class="p">,</span> <span class="s2">&quot;site-cookbooks&quot;</span><span class="o">]</span>
+</span><span class='line'><span class="n">node_path</span>        <span class="s2">&quot;nodes&quot;</span>
+</span><span class='line'><span class="n">role_path</span>        <span class="s2">&quot;roles&quot;</span>
+</span><span class='line'><span class="n">environment_path</span> <span class="s2">&quot;environments&quot;</span>
+</span><span class='line'><span class="n">data_bag_path</span>    <span class="s2">&quot;data_bags&quot;</span>
+</span><span class='line'><span class="n">encrypted_data_bag_secret</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">current_dir</span><span class="si">}</span><span class="s2">/encrypted_data_bag_secret&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Upload cookbooks to Chef server</p>
+
+<pre><code>  knife cookbook upload --all
+</code></pre></li>
+</ul>
+
+
+<p><img src="https://lh6.googleusercontent.com/-0WxqaSjoQfE/VHw9TgYqHEI/AAAAAAAAACo/qyVX1k3ZFdY/w266-h293-no/php-cooking_%E2%80%94_bash_%E2%80%94_162%C3%9730.png"></p>
+
+<p>View on Chef server</p>
+
+<p><img src="https://lh3.googleusercontent.com/-_jRaxKzYeac/VHw92i4RIYI/AAAAAAAAACw/ybd_zPQg7gA/w775-h591-no/Chef_Manage_and_Picasa_3.png"></p>
+
+<ul>
+<li><p>Upload Roles to Chef Server</p>
+
+<pre><code>   knife role from file roles/myapp.json 
+   knife role from file roles/myapp_deploy.json
+</code></pre></li>
+</ul>
+
+
+<p>View on Server</p>
+
+<p><img src="https://lh6.googleusercontent.com/-ARi99k01P8E/VHw_QKAtUPI/AAAAAAAAAC8/weO6WZ8ub-o/w558-h186-no/Chef_Manage.png"></p>
+
+<ul>
+<li>Create new enviroment called <code>staging</code> by create staging.json file in <code>enviroments</code> folder</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>staging.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;staging&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;default_attributes&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;apache2&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nt">&quot;listen_ports&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>        <span class="s2">&quot;80&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="s2">&quot;443&quot;</span>
+</span><span class='line'>      <span class="p">]</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;php&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nt">&quot;ext_conf_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;/etc/php5/apache2/conf.d&quot;</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;myapp&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nt">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;ubuntu&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;root_path&quot;</span><span class="p">:</span> <span class="s2">&quot;/var/www/codeforfoods&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nt">&quot;server_name&quot;</span><span class="p">:</span> <span class="s2">&quot;phpdev.codeforfoods.net&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'>  <span class="nt">&quot;json_class&quot;</span><span class="p">:</span> <span class="s2">&quot;Chef::Environment&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;chef_type&quot;</span><span class="p">:</span> <span class="s2">&quot;environment&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Upload Enviroments to Chef Server</p>
+
+<pre><code>  knife environment from file environments/dev.json 
+  knife environment from file environments/staging.json 
+</code></pre></li>
+</ul>
+
+
+<p>View on Server</p>
+
+<p><img src="https://lh4.googleusercontent.com/-kUMwE9lMI1k/VHxAFiJZKcI/AAAAAAAAADE/tVMTf4MMHhQ/w333-h240-no/Chef_Manage.png"></p>
+
+<ul>
+<li><p>Create an encrypted data bag</p>
+
+<ul>
+<li><p>Create encrypted data bag key, the key would help to decrypted the data bag</p>
+
+<pre><code>  openssl rand -base64 512 | tr -d 'rn' &gt; ~/.chef/encrypted_data_bag_secret
+  chmod 600 ~/.chef/encrypted_data_bag_secret
+</code></pre></li>
+<li><p>Add below line to <code>.chef/knife.rb</code></p>
+
+<pre><code>  encrypted_data_bag_secret "#{current_dir}/encrypted_data_bag_secret"
+</code></pre></li>
+<li><p>Create the encrypted data bage</p>
+
+<pre><code>   knife data bag create --secret-file ~/.chef/encrypted_data_bag_secret secrets myapp
+</code></pre></li>
+</ul>
+
+
+<p>  <img src="https://lh6.googleusercontent.com/--OFW4K4ZuFk/VHxfvrX4DCI/AAAAAAAAADU/SGCTIKaQW9s/w290-h249-no/php-cooking_%E2%80%94_vim_%E2%80%94_162%C3%9730.png"></p>
+
+<p>  View on Server</p>
+
+<p>  <img src="https://lh3.googleusercontent.com/-1W37bGO_9FU/VHxifiyiOCI/AAAAAAAAADg/VsHn4LbYVf4/w958-h421-no/Chef_Manage.png"></p></li>
+</ul>
+
+
+<h1>Setup Vagrant use chef-client as provision</h1>
+
+<figure class='code'><figcaption><span>Vagrantfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># -*- mode: ruby -*-</span>
+</span><span class='line'><span class="c1"># vi: set ft=ruby :</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Vagrantfile API/syntax version. Don&#39;t touch unless you know what you&#39;re doing!</span>
+</span><span class='line'><span class="no">VAGRANTFILE_API_VERSION</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>
+</span><span class='line'><span class="no">CHEF_PATH</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span>
+</span><span class='line'><span class="no">SYNC_PATH</span> <span class="o">=</span> <span class="s2">&quot;./www&quot;</span>
+</span><span class='line'><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="no">VAGRANTFILE_API_VERSION</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;ubuntu14.04&quot;</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_url</span> <span class="o">=</span> <span class="s2">&quot;https://oss-binaries.phusionpassenger.com/vagrant/boxes/latest/ubuntu-14.04-amd64-vbox.box&quot;</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;private_network&quot;</span><span class="p">,</span> <span class="ss">ip</span><span class="p">:</span> <span class="s2">&quot;192.168.34.100&quot;</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="s2">&quot;devphp.congdang.com&quot;</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">forward_agent</span> <span class="o">=</span> <span class="kp">true</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">forward_x11</span>   <span class="o">=</span> <span class="kp">true</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">vb</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">vb</span><span class="o">.</span><span class="n">customize</span><span class="p">(</span><span class="o">[</span><span class="s2">&quot;modifyvm&quot;</span><span class="p">,</span> <span class="ss">:id</span><span class="p">,</span> <span class="s2">&quot;--natdnshostresolver1&quot;</span><span class="p">,</span> <span class="s2">&quot;off&quot;</span>  <span class="o">]</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">vb</span><span class="o">.</span><span class="n">customize</span><span class="p">(</span><span class="o">[</span><span class="s2">&quot;modifyvm&quot;</span><span class="p">,</span> <span class="ss">:id</span><span class="p">,</span> <span class="s2">&quot;--natdnsproxy1&quot;</span><span class="p">,</span>        <span class="s2">&quot;off&quot;</span>  <span class="o">]</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">vb</span><span class="o">.</span><span class="n">customize</span><span class="p">(</span><span class="o">[</span><span class="s2">&quot;modifyvm&quot;</span><span class="p">,</span> <span class="ss">:id</span><span class="p">,</span> <span class="s2">&quot;--memory&quot;</span><span class="p">,</span>              <span class="s2">&quot;1024&quot;</span> <span class="o">]</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">omnibus</span><span class="o">.</span><span class="n">chef_version</span> <span class="o">=</span> <span class="s1">&#39;11.16.0&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Your organization name for hosted Chef </span>
+</span><span class='line'>  <span class="n">orgname</span> <span class="o">=</span> <span class="s2">&quot;chicken&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Set the Chef node ID based on environment variable NODE, if set. Otherwise default to vagrant-$USER</span>
+</span><span class='line'>  <span class="n">node</span> <span class="o">=</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;NODE&#39;</span><span class="o">]</span>
+</span><span class='line'>  <span class="n">node</span> <span class="o">||=</span> <span class="s2">&quot;vagrant-codeforfoods&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:chef_client</span> <span class="k">do</span> <span class="o">|</span><span class="n">chef</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">chef</span><span class="o">.</span><span class="n">chef_server_url</span> <span class="o">=</span> <span class="s2">&quot;https://api.opscode.com/organizations/</span><span class="si">#{</span><span class="n">orgname</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>    <span class="n">chef</span><span class="o">.</span><span class="n">validation_key_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">CHEF_PATH</span><span class="si">}</span><span class="s2">/.chef/</span><span class="si">#{</span><span class="n">orgname</span><span class="si">}</span><span class="s2">-validator.pem&quot;</span>
+</span><span class='line'>    <span class="n">chef</span><span class="o">.</span><span class="n">validation_client_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">orgname</span><span class="si">}</span><span class="s2">-validator&quot;</span>
+</span><span class='line'>    <span class="n">chef</span><span class="o">.</span><span class="n">encrypted_data_bag_secret_key_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">CHEF_PATH</span><span class="si">}</span><span class="s2">/.chef/encrypted_data_bag_secret&quot;</span>
+</span><span class='line'>    <span class="n">chef</span><span class="o">.</span><span class="n">node_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">node</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>    <span class="n">chef</span><span class="o">.</span><span class="n">provisioning_path</span> <span class="o">=</span> <span class="s2">&quot;/etc/chef&quot;</span>
+</span><span class='line'>    <span class="n">chef</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="ss">:debug</span>
+</span><span class='line'>    <span class="c1">#chef.log_level = :info</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">chef</span><span class="o">.</span><span class="n">environment</span> <span class="o">=</span> <span class="s2">&quot;dev&quot;</span>
+</span><span class='line'>    <span class="n">chef</span><span class="o">.</span><span class="n">add_role</span><span class="p">(</span><span class="s2">&quot;myapp&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">#chef.json.merge!({ :mysql_password =&gt; &quot;foo&quot; }) # You can do this to override any default attributes for this node.</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">synced_folder</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">SYNC_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/vagrant&quot;</span><span class="p">,</span>
+</span><span class='line'>                          <span class="ss">:owner</span> <span class="o">=&gt;</span> <span class="s2">&quot;vagrant&quot;</span><span class="p">,</span>
+</span><span class='line'>                          <span class="ss">:group</span> <span class="o">=&gt;</span> <span class="s2">&quot;vagrant&quot;</span><span class="p">,</span>
+</span><span class='line'>                          <span class="ss">:mount_options</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="s1">&#39;dmode=777&#39;</span><span class="p">,</span><span class="s1">&#39;fmode=777&#39;</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Starting <code>Vagrant</code></p>
+
+<pre><code>    vagrant up
+</code></pre>
+
+<p>Chef the webapp on browser</p>
+
+<figure class='code'><figcaption><span>Vagrantfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">http</span><span class="p">:</span><span class="sr">//</span><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">34</span><span class="o">.</span><span class="mi">100</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h1>Bootstrap a Server</h1>
+
+<p><a href="http://cloudshare.com">Cloudshare</a> provides a easy way to create new node for testing <a href="http://learn.getchef.com/ubuntu/bootstrap-your-node/">More detail here</a></p>
+
+<ul>
+<li>Get a Linux machine to bootstrap</li>
+</ul>
+
+
+<p><img src="https://lh5.googleusercontent.com/-rJtVKEyp_-k/VHx18JYfv0I/AAAAAAAAADw/fECENQ9LPqo/w661-h524-no/Machines.png"></p>
+
+<ul>
+<li><p>Bootstrap your node</p>
+
+<pre><code>  knife bootstrap uvo1vinqr3ty38kwnpn.vm.cld.sr -x sysadmin -P Oi9YB7HTfP --sudo -N node1 -r 'role[myapp]' -E staging
+</code></pre></li>
+</ul>
+
+
+<p>** If you meet the error while creating the node, please see the comment in this <a href="https://groups.google.com/forum/#!topic/learnchef-fundamentals-webinar/LYe_i_QIWdU">https://groups.google.com/forum/#!topic/learnchef-fundamentals-webinar/LYe_i_QIWdU</a></p>
+
+<p>Error</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>54.79.58.34   knife ssl check -c /etc/chef/client.rb
+</span><span class='line'>54.79.58.34 <span class="sb">```</span>
+</span><span class='line'>54.79.58.34
+</span><span class='line'>54.79.58.34 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+</span><span class='line'>54.79.58.34
+</span><span class='line'>54.79.58.34 Starting Chef Client, version 11.16.4
+</span><span class='line'>54.79.58.34
+</span><span class='line'>54.79.58.34 <span class="o">================================================================================</span>
+</span><span class='line'>54.79.58.34 Chef encountered an error attempting to load the node data <span class="k">for</span> <span class="s2">&quot;testnode&quot;</span>
+</span><span class='line'>54.79.58.34 <span class="o">================================================================================</span>
+</span><span class='line'>54.79.58.34
+</span><span class='line'>54.79.58.34 Authentication Error:
+</span><span class='line'>54.79.58.34 ---------------------
+</span><span class='line'>54.79.58.34 Failed to authenticate to the chef server <span class="o">(</span>http 401<span class="o">)</span>.
+</span><span class='line'>54.79.58.34
+</span><span class='line'>54.79.58.34 Server Response:
+</span><span class='line'>54.79.58.34 ----------------
+</span><span class='line'>54.79.58.34 Failed to authenticate as <span class="s1">&#39;testnode&#39;</span>. Ensure that your node_name and client key are correct.
+</span><span class='line'>54.79.58.34
+</span><span class='line'>54.79.58.34 Relevant Config Settings:
+</span><span class='line'>54.79.58.34 -------------------------
+</span><span class='line'>54.79.58.34 chef_server_url   <span class="s2">&quot;https://api.opscode.com/organizations/cd-chef&quot;</span>
+</span><span class='line'>54.79.58.34 node_name         <span class="s2">&quot;testnode&quot;</span>
+</span><span class='line'>54.79.58.34 client_key        <span class="s2">&quot;/etc/chef/client.pem&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>SSH to server and do this command</p>
+
+<pre><code>    sudo rm -rf /etc/chef/client.pem
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1948,79 +2413,6 @@ After having listed all known skills and talents, identify what skills will best
 
     </article>
   
-  
-    <article>
-      
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- codeforfoods-footer -->
-<ins class="adsbygoogle"
-     style="display:inline-block;width:728px;height:90px"
-     data-ad-client="ca-pub-4773765193389725"
-     data-ad-slot="7439101090"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/04/api-documentation-made-beautiful-with-apiary-dot-io/">API Documentation Made Beautiful With Apiary.io</a></h1>
-    
-    
-  
-
-
-
-  
-
-
-<span class="byline author vcard"> * source: <span class="fn">
-
-
-
-	<a href="http://www.itworld.com/article/2700666/development/api-documentation-made-beautiful-with-apiary-io.html">itworld</a>
-	
-
-</span></span>
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-11-04T22:19:17+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:19 pm</span></time>
-        
-           | <a href="/blog/2014/11/04/api-documentation-made-beautiful-with-apiary-dot-io/#disqus_thread"
-             data-disqus-identifier="http://codeforfoods.net/blog/2014/11/04/api-documentation-made-beautiful-with-apiary-dot-io/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h5>Apiary is a free, hosted API documentation repository</h5>
-
-<p>The least exciting part of any software project I work on is the documentation. With APIs in particular, documentation can be time consuming because it needs to provide enough detail for any consumer to understand and interface with it. For that reason, proper documentation of an API is even more crucial.</p>
-
-<p>The most recent two projects I&rsquo;ve been working on both required that full APIs be developed in addition to the core of the platform. On one of them I was building both the API and the client to consume it so the need to describe the API was nil. On the other I&rsquo;m working in tandem with a colleague and need to communicate the API calls and requirements as they&rsquo;re completed. My first attempt at doing so was pretty lame. I typed out the API calls for a particular controller and attached sample requests/responses in text files and emailed them across the room. I&rsquo;m happy to say that was the last time I did that.</p>
-
-<p>As soon as I hit send on that email I knew I was doing something stupid. I asked another colleague about what he had used in the past and he pointed me toward <a href="http://apiary.io">Apiary.io</a>. Apiary is a web based repository for API documentation that also includes server mocking, code samples, automated testing, and GitHub sync. It&rsquo;s free for most needs including both public and private API documentation.</p>
-
-<p>I created a new account in a single click since I was already logged into GitHub and I was off and running creating my API documentation. Once I got the hang of the Markdown related syntax called <a href="http://apiary.io/blueprint">API Blueprint</a>, I was able to quickly document each API resource in far greater detail than I had been previously. I then invited my colleague to the Apiary API project and things became much better for both of us. Now he can simply refresh the page to pick up any new documentation and get full detail and examples of each API resource at will.</p>
-
-<p>What does the resulting documentation look like you might ask? Here&rsquo;s a screenshot but you&rsquo;ll want to head over to <a href="http://docs.themoviedb.apiary.io/">one of the featured APIs</a> to check it out for yourself.</p>
-
-<p><img src="http://images.techhive.com/images/idge/imported/article/itw/2014/02/28/image1-100480198-orig.png"></p>
-
-<p>So far we&rsquo;ve been pretty happy using Apiary. There are some helpful features to the system that can aid your efforts such as reusable request and response models, but it&rsquo;s no silver bullet. Good documentation takes time and it&rsquo;s probably not possible to completely avoid that.</p>
-
-<p>The only real complaint I have with the system so far is that your entire API document is constructed in a single, loooong page. This works OK for reading because things collapse and there is a table of contents, but for editing, it can be a mess. Aside from that it&rsquo;s been a great collaboration and organization tool. It&rsquo;s unlikely that my API would be as well documented as it is in Apiary if I had chosen to write it in some other way.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -2049,6 +2441,10 @@ After having listed all known skills and talents, identify what skills will best
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/12/01/work-with-chef-server/">Work With Chef Server</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/28/rails-protocol/">Rails Protocol</a>
       </li>
     
@@ -2062,10 +2458,6 @@ After having listed all known skills and talents, identify what skills will best
     
       <li class="post">
         <a href="/blog/2014/11/27/crystal-getting-started/">Crystal: Getting Started</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/19/rails-get-youtube-download-link/">[Rails] Get Youtube Download Link</a>
       </li>
     
   </ul>
