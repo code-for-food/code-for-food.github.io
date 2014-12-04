@@ -1,0 +1,821 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Crytal: Syntax and Semantics Part 2 - Chicken&#8217;s Blog ^_^</title>
+  <meta name="author" content="codeforfoods">
+
+  
+  <meta name="description" content="5.Control expressions 5.1.Truthy and falsey values A truthy value is a value that is considered true for an if, unless, while or until guard. A &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://codeforfoods.net/blog/2014/12/04/crytal-syntax-and-semantics-part-2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Chicken's Blog ^_^" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+<!-- Social media content metadata -->
+
+  
+
+
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-56334390-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Chicken&#8217;s Blog ^_^</a></h1>
+  
+    <h2>(Just code for food)</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:codeforfoods.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/about-me">About Me</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- codeforfoods-footer -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-4773765193389725"
+     data-ad-slot="7439101090"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  <header>
+    
+      <h1 class="entry-title">Crytal: Syntax and Semantics Part 2</h1>
+    
+    
+  
+
+
+
+  
+
+
+<span class="byline author vcard"> * source: <span class="fn">
+
+
+
+	<a href="http://codeforfoods.net">codeforfoods</a>
+	
+
+</span></span>
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-04T16:46:54+07:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>4:46 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://codeforfoods.net">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>5.Control expressions</h3>
+
+<h4>5.1.Truthy and falsey values</h4>
+
+<p>A truthy value is a value that is considered true for an if, unless, while or until guard. A falsey value is a value that is considered false in those places.</p>
+
+<p>The only falsey values are nil, false and null pointers (pointers whose memory address is zero). Any other value is truthy.</p>
+
+<h4>5.2.if</h4>
+
+<p>An if evaluates the then branch if its condition is truthy, and evaluates the else branch, if there’s any, otherwise.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = 1
+</span><span class='line'>if a &gt; 0
+</span><span class='line'>  a = 10
+</span><span class='line'>end
+</span><span class='line'>a #=&gt; 10
+</span><span class='line'>
+</span><span class='line'>b = 1
+</span><span class='line'>if b &gt; 2
+</span><span class='line'>  b = 10
+</span><span class='line'>else
+</span><span class='line'>  b = 20
+</span><span class='line'>end
+</span><span class='line'>b #=&gt; 20</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To write a chain of if-else-if you use <em>elsif</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if some_condition
+</span><span class='line'>  do_something
+</span><span class='line'>elsif some_other_condition
+</span><span class='line'>  do_something_else
+</span><span class='line'>else
+</span><span class='line'>  do_that
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After an <em>if</em>, a variable’s type depends on the type of the expressions used in both branches.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = 1
+</span><span class='line'>if some_condition
+</span><span class='line'>  a = "hello"
+</span><span class='line'>else
+</span><span class='line'>  a = true
+</span><span class='line'>end
+</span><span class='line'># a :: String | Bool
+</span><span class='line'>
+</span><span class='line'>b = 1
+</span><span class='line'>if some_condition
+</span><span class='line'>  b = "hello"
+</span><span class='line'>end
+</span><span class='line'># b :: Int32 | String
+</span><span class='line'>
+</span><span class='line'>if some_condition
+</span><span class='line'>  c = 1
+</span><span class='line'>else
+</span><span class='line'>  c = "hello"
+</span><span class='line'>end
+</span><span class='line'># c :: Int32 | String
+</span><span class='line'>
+</span><span class='line'>if some_condition
+</span><span class='line'>  d = 1
+</span><span class='line'>end
+</span><span class='line'># d :: Int32 | Nil</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that if a variable is declared inside one of the branches but not in the other one, at the end of the <em>if</em> it will also contain the <em>Nil</em> type.</p>
+
+<p>Inside an <em>if</em>&rsquo;s branch the type of a variable is the one it got assigned in that branch, or the one that it had before the branch if it was not reassigned:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = 1
+</span><span class='line'>if some_condition
+</span><span class='line'>  a = "hello"
+</span><span class='line'>  # a :: String
+</span><span class='line'>  a.length
+</span><span class='line'>end
+</span><span class='line'># a :: String | Int32</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That is, a variable’s type is the type of the last expression(s) assigned to it.</p>
+
+<p>If one of the branches never reaches past the end of an <em>if</em>, like in the case of a <em>return</em>, <em>next</em>, <em>break</em> or <em>raise</em>, that type is not considered at the end of the <em>if</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if some_condition
+</span><span class='line'>  e = 1
+</span><span class='line'>else
+</span><span class='line'>  e = "hello"
+</span><span class='line'>  # e :: String
+</span><span class='line'>  return
+</span><span class='line'>end
+</span><span class='line'># e :: Int32</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>5.3.unless</h4>
+
+<p>An <em>unless</em> evaluates the then branch if its condition is falsey, and evaluates the <em>else branch</em>, if there’s any, otherwise. That is, it behaves in the opposite way of an <em>if</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>unless some_condition
+</span><span class='line'>  then_expression
+</span><span class='line'>else
+</span><span class='line'>  else_expression
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>if some_condition
+</span><span class='line'>  else_expression
+</span><span class='line'>else
+</span><span class='line'>  then_expression
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># Can also be written as a suffix
+</span><span class='line'>close_door unless door_closed?</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>5.4.case</h4>
+
+<p>A <em>case</em> is a control expression that allows a sort of pattern matching. It allows writing a chain of if-else-if with a small change in semantic and some more powerful constructs.</p>
+
+<p>In its basic form, it allows matching a value against other values:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ase exp
+</span><span class='line'>when value1, value2
+</span><span class='line'>  do_something
+</span><span class='line'>when value3
+</span><span class='line'>  do_something_else
+</span><span class='line'>else
+</span><span class='line'>  do_another_thing
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>tmp = exp
+</span><span class='line'>if value1 === tmp || value2 === tmp
+</span><span class='line'>  do_something
+</span><span class='line'>elsif value3 === tmp
+</span><span class='line'>  do_something_else
+</span><span class='line'>else
+</span><span class='line'>  do_another_thing
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that <em>===</em> is used for comparing an expression against a <em>case</em>&rsquo;s value.</p>
+
+<p>If a <em>when</em>&rsquo;s expression is a type, <em>is_a</em>? is used. Additionally, if the case expression is a variable or a variable assignment the type of the variable is restricted:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>case var
+</span><span class='line'>when String
+</span><span class='line'>  # var :: String
+</span><span class='line'>  do_something
+</span><span class='line'>when Int32
+</span><span class='line'>  # var :: Int32
+</span><span class='line'>  do_something_else
+</span><span class='line'>else
+</span><span class='line'>  # here var is neither a String nor an Int32
+</span><span class='line'>  do_another_thing
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>if var.is_a?(String)
+</span><span class='line'>  do_something
+</span><span class='line'>elsif var.is_a?(Int32)
+</span><span class='line'>  do_something_else
+</span><span class='line'>else
+</span><span class='line'>  do_another_thing
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can invoke a method on the <em>case</em>&rsquo;s expression in a <em>when</em> by using the implicit-object syntax:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>case num
+</span><span class='line'>when .even?
+</span><span class='line'>  do_something
+</span><span class='line'>when .odd?
+</span><span class='line'>  do_something_else
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>tmp = num
+</span><span class='line'>if tmp.even?
+</span><span class='line'>  do_something
+</span><span class='line'>elsif tmp.odd?
+</span><span class='line'>  do_something_else
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, you can ommit the <em>case</em>&rsquo;s value:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>case
+</span><span class='line'>when cond1, cond2
+</span><span class='line'>  do_something
+</span><span class='line'>when cond3
+</span><span class='line'>  do_something_else
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>if cond1 || cond2
+</span><span class='line'>  do_something
+</span><span class='line'>elsif cond3
+</span><span class='line'>  do_something_else
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This sometimes leads to code that is more natural to read.</p>
+
+<h4>5.5.while</h4>
+
+<p>A <em>while</em> executes its body as long as its condition is truthy</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>while some_condition
+</span><span class='line'>  do_this
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the above form, the condition is first tested and, if truthy, the body is executed. That is, the body might never be executed.</p>
+
+<p>To execute the body at least once and then continue executing it while the condition is truthy, write the while as a prefix:v</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>do_this while some_condition</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you need to execute multiple expressions, group them between <em>begin</em> and <em>end</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>begin
+</span><span class='line'>  do_this
+</span><span class='line'>  do_that
+</span><span class='line'>end while some_condition</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A while&rsquo;s type is always Nil.</p>
+
+<p>Similar to an if, if a while&rsquo;s condition is a variable, the variable is guaranteed to not be nil inside the body. If the condition is an var.is_a?(Type) test, var is guaranteed to be of type Type inside the body. And if the condition is a var.responds_to?(:method), var is guaranteed to be of a type that responds to that method.</p>
+
+<p>The type of a variable after a while depends on the type it had before the while and the type it had before leaving the while&rsquo;s body:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = 1
+</span><span class='line'>while some_condition
+</span><span class='line'>  # a :: Int32 | String
+</span><span class='line'>  a = "hello"
+</span><span class='line'>  # a :: String
+</span><span class='line'>  a.length
+</span><span class='line'>end
+</span><span class='line'># a :: Int32 | String</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>5.6.until</h4>
+
+<p>An <em>until</em> executes its body until its condition is truthy. An until is just syntax sugar for a while with the condition negated:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>until some_condition
+</span><span class='line'>  do_this
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>while !some_condition
+</span><span class='line'>  do_this
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>An <em>until</em> can also be used in its suffix form, causing the body to be executed at least once. break and next can also be used inside an until.</p>
+
+<h4>5.7.&amp;&amp;</h4>
+
+<p>An <em>&amp;&amp;</em> (and) evaluates its left hand side. If its truthy, it evaluates its right hand side and has that value. Otherwise it has the value of the left hand side. Its type is the union of the types of both sides.</p>
+
+<p>You can think an <em>&amp;&amp;</em> as syntax sugar of an <em>if</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>some_exp1 && some_exp2
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>tmp = some_exp1
+</span><span class='line'>if tmp
+</span><span class='line'>  some_exp2
+</span><span class='line'>else
+</span><span class='line'>  tmp
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>5.8.||</h4>
+
+<p>An <em>||</em> (or) evaluates its left hand side. If its falsey, it evaluates its right hand side and has that value. Otherwise it has the value of the left hand side. Its type is the union of the types of both sides.</p>
+
+<p>You can think an <em>||</em> as syntax sugar of an <em>if</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>some_exp1 || some_exp2
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>tmp = some_exp1
+</span><span class='line'>if tmp
+</span><span class='line'>  tmp
+</span><span class='line'>else
+</span><span class='line'>  some_exp2
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I will present about types and methods in part 3.
+Thanks!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+  
+
+
+
+
+<span class="byline author vcard">Posted by member <span class="fn">
+
+
+
+	<a href="http://codeforfoods.net/about-me">codeforfoods</a>
+
+</span></span>
+
+      
+  
+
+
+
+  
+
+
+<span class="byline author vcard"> * source: <span class="fn">
+
+
+
+	<a href="http://codeforfoods.net">codeforfoods</a>
+	
+
+</span></span>
+      
+
+
+
+
+<time class='entry-date' datetime='2014-12-04T16:46:54+07:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>4:46 pm</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://codeforfoods.net/blog/2014/12/04/crytal-syntax-and-semantics-part-2/" data-via="congdang" data-counturl="http://codeforfoods.net/blog/2014/12/04/crytal-syntax-and-semantics-part-2/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/12/01/work-with-chef-server/" title="Previous Post: work with chef server">&laquo; work with chef server</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="gravatar-section first odd">
+  <h1>We are</h1>
+  <div class="bio">
+    <div class="messages">
+      <p><a href="https://codeforfoods.net"><strong>@CodeForFoods</strong></a></p>
+      <p>we are web developers</p>
+      <p>in Viet Nam</p>
+      <a href="/about-us">More</a>
+    </div>
+  </div>
+  <div class="gravatar">
+    <img src="https://avatars3.githubusercontent.com/u/9510217?v=2&s=400" alt="Github avarta of code for food" title="Github avarta of code for food">
+  </div>
+</section><section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/04/crytal-syntax-and-semantics-part-2/">Crytal: Syntax and Semantics Part 2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/01/work-with-chef-server/">Work With Chef Server</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/28/rails-protocol/">Rails Protocol</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/28/scaling-ruby-on-rails-by-caching-your-database-queries/">Scaling Ruby on Rails by Caching Your Database Queries</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/27/crytal-syntax-and-semantics-part-1/">Crytal: Syntax and Semantics Part 1</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- codeforfoods -->
+	<ins class="adsbygoogle"
+	     style="display:inline-block;width:260px;height:260px"
+	     data-ad-client="ca-pub-4773765193389725"
+	     data-ad-slot="3148502299"></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+</section>
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/codeforfoods?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/codeforfoods">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/code.for.food.14?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - codeforfoods -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'codeforfoods';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://codeforfoods.net/blog/2014/12/04/crytal-syntax-and-semantics-part-2/';
+        var disqus_url = 'http://codeforfoods.net/blog/2014/12/04/crytal-syntax-and-semantics-part-2/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=288370854684839&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

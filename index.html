@@ -9,7 +9,7 @@
   <meta name="author" content="codeforfoods">
 
   
-  <meta name="description" content="In previous post I have wrote how to use Chef Solo to setup and deploy a Server with PHP stuff. Today I&rsquo;d like to use Chef Server for storing &hellip;">
+  <meta name="description" content="5.Control expressions 5.1.Truthy and falsey values A truthy value is a value that is considered true for an if, unless, while or until guard. A &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,6 +84,540 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- codeforfoods-footer -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-4773765193389725"
+     data-ad-slot="7439101090"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/04/crytal-syntax-and-semantics-part-2/">Crytal: Syntax and Semantics Part 2</a></h1>
+    
+    
+  
+
+
+
+  
+
+
+<span class="byline author vcard"> * source: <span class="fn">
+
+
+
+	<a href="http://codeforfoods.net">codeforfoods</a>
+	
+
+</span></span>
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-04T16:46:54+07:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>4:46 pm</span></time>
+        
+           | <a href="/blog/2014/12/04/crytal-syntax-and-semantics-part-2/#disqus_thread"
+             data-disqus-identifier="http://codeforfoods.net/blog/2014/12/04/crytal-syntax-and-semantics-part-2/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>5.Control expressions</h3>
+
+<h4>5.1.Truthy and falsey values</h4>
+
+<p>A truthy value is a value that is considered true for an if, unless, while or until guard. A falsey value is a value that is considered false in those places.</p>
+
+<p>The only falsey values are nil, false and null pointers (pointers whose memory address is zero). Any other value is truthy.</p>
+
+<h4>5.2.if</h4>
+
+<p>An if evaluates the then branch if its condition is truthy, and evaluates the else branch, if there’s any, otherwise.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = 1
+</span><span class='line'>if a &gt; 0
+</span><span class='line'>  a = 10
+</span><span class='line'>end
+</span><span class='line'>a #=&gt; 10
+</span><span class='line'>
+</span><span class='line'>b = 1
+</span><span class='line'>if b &gt; 2
+</span><span class='line'>  b = 10
+</span><span class='line'>else
+</span><span class='line'>  b = 20
+</span><span class='line'>end
+</span><span class='line'>b #=&gt; 20</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To write a chain of if-else-if you use <em>elsif</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if some_condition
+</span><span class='line'>  do_something
+</span><span class='line'>elsif some_other_condition
+</span><span class='line'>  do_something_else
+</span><span class='line'>else
+</span><span class='line'>  do_that
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After an <em>if</em>, a variable’s type depends on the type of the expressions used in both branches.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = 1
+</span><span class='line'>if some_condition
+</span><span class='line'>  a = "hello"
+</span><span class='line'>else
+</span><span class='line'>  a = true
+</span><span class='line'>end
+</span><span class='line'># a :: String | Bool
+</span><span class='line'>
+</span><span class='line'>b = 1
+</span><span class='line'>if some_condition
+</span><span class='line'>  b = "hello"
+</span><span class='line'>end
+</span><span class='line'># b :: Int32 | String
+</span><span class='line'>
+</span><span class='line'>if some_condition
+</span><span class='line'>  c = 1
+</span><span class='line'>else
+</span><span class='line'>  c = "hello"
+</span><span class='line'>end
+</span><span class='line'># c :: Int32 | String
+</span><span class='line'>
+</span><span class='line'>if some_condition
+</span><span class='line'>  d = 1
+</span><span class='line'>end
+</span><span class='line'># d :: Int32 | Nil</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that if a variable is declared inside one of the branches but not in the other one, at the end of the <em>if</em> it will also contain the <em>Nil</em> type.</p>
+
+<p>Inside an <em>if</em>&rsquo;s branch the type of a variable is the one it got assigned in that branch, or the one that it had before the branch if it was not reassigned:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = 1
+</span><span class='line'>if some_condition
+</span><span class='line'>  a = "hello"
+</span><span class='line'>  # a :: String
+</span><span class='line'>  a.length
+</span><span class='line'>end
+</span><span class='line'># a :: String | Int32</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That is, a variable’s type is the type of the last expression(s) assigned to it.</p>
+
+<p>If one of the branches never reaches past the end of an <em>if</em>, like in the case of a <em>return</em>, <em>next</em>, <em>break</em> or <em>raise</em>, that type is not considered at the end of the <em>if</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if some_condition
+</span><span class='line'>  e = 1
+</span><span class='line'>else
+</span><span class='line'>  e = "hello"
+</span><span class='line'>  # e :: String
+</span><span class='line'>  return
+</span><span class='line'>end
+</span><span class='line'># e :: Int32</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>5.3.unless</h4>
+
+<p>An <em>unless</em> evaluates the then branch if its condition is falsey, and evaluates the <em>else branch</em>, if there’s any, otherwise. That is, it behaves in the opposite way of an <em>if</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>unless some_condition
+</span><span class='line'>  then_expression
+</span><span class='line'>else
+</span><span class='line'>  else_expression
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>if some_condition
+</span><span class='line'>  else_expression
+</span><span class='line'>else
+</span><span class='line'>  then_expression
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># Can also be written as a suffix
+</span><span class='line'>close_door unless door_closed?</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>5.4.case</h4>
+
+<p>A <em>case</em> is a control expression that allows a sort of pattern matching. It allows writing a chain of if-else-if with a small change in semantic and some more powerful constructs.</p>
+
+<p>In its basic form, it allows matching a value against other values:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ase exp
+</span><span class='line'>when value1, value2
+</span><span class='line'>  do_something
+</span><span class='line'>when value3
+</span><span class='line'>  do_something_else
+</span><span class='line'>else
+</span><span class='line'>  do_another_thing
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>tmp = exp
+</span><span class='line'>if value1 === tmp || value2 === tmp
+</span><span class='line'>  do_something
+</span><span class='line'>elsif value3 === tmp
+</span><span class='line'>  do_something_else
+</span><span class='line'>else
+</span><span class='line'>  do_another_thing
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that <em>===</em> is used for comparing an expression against a <em>case</em>&rsquo;s value.</p>
+
+<p>If a <em>when</em>&rsquo;s expression is a type, <em>is_a</em>? is used. Additionally, if the case expression is a variable or a variable assignment the type of the variable is restricted:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>case var
+</span><span class='line'>when String
+</span><span class='line'>  # var :: String
+</span><span class='line'>  do_something
+</span><span class='line'>when Int32
+</span><span class='line'>  # var :: Int32
+</span><span class='line'>  do_something_else
+</span><span class='line'>else
+</span><span class='line'>  # here var is neither a String nor an Int32
+</span><span class='line'>  do_another_thing
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>if var.is_a?(String)
+</span><span class='line'>  do_something
+</span><span class='line'>elsif var.is_a?(Int32)
+</span><span class='line'>  do_something_else
+</span><span class='line'>else
+</span><span class='line'>  do_another_thing
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can invoke a method on the <em>case</em>&rsquo;s expression in a <em>when</em> by using the implicit-object syntax:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>case num
+</span><span class='line'>when .even?
+</span><span class='line'>  do_something
+</span><span class='line'>when .odd?
+</span><span class='line'>  do_something_else
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>tmp = num
+</span><span class='line'>if tmp.even?
+</span><span class='line'>  do_something
+</span><span class='line'>elsif tmp.odd?
+</span><span class='line'>  do_something_else
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, you can ommit the <em>case</em>&rsquo;s value:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>case
+</span><span class='line'>when cond1, cond2
+</span><span class='line'>  do_something
+</span><span class='line'>when cond3
+</span><span class='line'>  do_something_else
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>if cond1 || cond2
+</span><span class='line'>  do_something
+</span><span class='line'>elsif cond3
+</span><span class='line'>  do_something_else
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This sometimes leads to code that is more natural to read.</p>
+
+<h4>5.5.while</h4>
+
+<p>A <em>while</em> executes its body as long as its condition is truthy</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>while some_condition
+</span><span class='line'>  do_this
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the above form, the condition is first tested and, if truthy, the body is executed. That is, the body might never be executed.</p>
+
+<p>To execute the body at least once and then continue executing it while the condition is truthy, write the while as a prefix:v</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>do_this while some_condition</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you need to execute multiple expressions, group them between <em>begin</em> and <em>end</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>begin
+</span><span class='line'>  do_this
+</span><span class='line'>  do_that
+</span><span class='line'>end while some_condition</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A while&rsquo;s type is always Nil.</p>
+
+<p>Similar to an if, if a while&rsquo;s condition is a variable, the variable is guaranteed to not be nil inside the body. If the condition is an var.is_a?(Type) test, var is guaranteed to be of type Type inside the body. And if the condition is a var.responds_to?(:method), var is guaranteed to be of a type that responds to that method.</p>
+
+<p>The type of a variable after a while depends on the type it had before the while and the type it had before leaving the while&rsquo;s body:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = 1
+</span><span class='line'>while some_condition
+</span><span class='line'>  # a :: Int32 | String
+</span><span class='line'>  a = "hello"
+</span><span class='line'>  # a :: String
+</span><span class='line'>  a.length
+</span><span class='line'>end
+</span><span class='line'># a :: Int32 | String</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>5.6.until</h4>
+
+<p>An <em>until</em> executes its body until its condition is truthy. An until is just syntax sugar for a while with the condition negated:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>until some_condition
+</span><span class='line'>  do_this
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>while !some_condition
+</span><span class='line'>  do_this
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>An <em>until</em> can also be used in its suffix form, causing the body to be executed at least once. break and next can also be used inside an until.</p>
+
+<h4>5.7.&amp;&amp;</h4>
+
+<p>An <em>&amp;&amp;</em> (and) evaluates its left hand side. If its truthy, it evaluates its right hand side and has that value. Otherwise it has the value of the left hand side. Its type is the union of the types of both sides.</p>
+
+<p>You can think an <em>&amp;&amp;</em> as syntax sugar of an <em>if</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>some_exp1 && some_exp2
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>tmp = some_exp1
+</span><span class='line'>if tmp
+</span><span class='line'>  some_exp2
+</span><span class='line'>else
+</span><span class='line'>  tmp
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>5.8.||</h4>
+
+<p>An <em>||</em> (or) evaluates its left hand side. If its falsey, it evaluates its right hand side and has that value. Otherwise it has the value of the left hand side. Its type is the union of the types of both sides.</p>
+
+<p>You can think an <em>||</em> as syntax sugar of an <em>if</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>some_exp1 || some_exp2
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>tmp = some_exp1
+</span><span class='line'>if tmp
+</span><span class='line'>  tmp
+</span><span class='line'>else
+</span><span class='line'>  some_exp2
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I will present about types and methods in part 3.
+Thanks!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -2302,117 +2836,6 @@ After having listed all known skills and talents, identify what skills will best
 
     </article>
   
-  
-    <article>
-      
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- codeforfoods-footer -->
-<ins class="adsbygoogle"
-     style="display:inline-block;width:728px;height:90px"
-     data-ad-client="ca-pub-4773765193389725"
-     data-ad-slot="7439101090"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/06/7-characteristics-that-separate-a-boss-from-a-leader/">7 Characteristics That Separate a Boss From a Leader</a></h1>
-    
-    
-  
-
-
-
-  
-
-
-<span class="byline author vcard"> * source: <span class="fn">
-
-
-
-	<a href="https://www.facebook.com/ArchiDesiign/posts/414950071993587">Internet</a>
-	
-
-</span></span>
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-11-06T08:11:12+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:11 am</span></time>
-        
-           | <a href="/blog/2014/11/06/7-characteristics-that-separate-a-boss-from-a-leader/#disqus_thread"
-             data-disqus-identifier="http://codeforfoods.net/blog/2014/11/06/7-characteristics-that-separate-a-boss-from-a-leader/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>While a leader can be a boss, not every boss is a leader. Although leaders and</p>
-
-<p>While a boss is mostly concerned with outcomes, a leader feels responsible for the process of that outcome and the people who see it out. Check out some major points that distinguish a leader from a boss:</p>
-
-<h4>1. Leaders lead rather than rule.</h4>
-
-<p>Throughout history, the best chiefs headed their troops in fights or campaigns or whatever. The troops were not afraid because their leader was right there with them. Leaders are there to lead the team forward and to move together.</p>
-
-<p><img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-xap1/t31.0-8/s960x960/10750009_414949625326965_7306927192227304603_o.jpg"></p>
-
-<h4>2. Leaders listen and speak rather than command.</h4>
-
-<p>Bosses tend to give orders; they need their employees to listen and to obey. However, leaders always listen to the opinions of their colleagues and regard them as important.</p>
-
-<p><img src="https://scontent-a-sin.xx.fbcdn.net/hphotos-xpa1/v/t1.0-9/1901348_414949695326958_1617544880402520783_n.jpg?oh=f1cd8754b1f4cb16cf53b4270c3087d8&oe=54EDAB49"></p>
-
-<p>Leaders are always ready for advising, discussion and any feedback an employee has to offer. This reciprocity makes any individual employee feel stronger and gives him or her confidence to follow the leader.</p>
-
-<h4>3. Leaders motivate rather than terrify.</h4>
-
-<p>While working on projects, people have their ups and downs. Through this roller coaster, bosses are more likely to intimidate into action while leaders will motivate to action.</p>
-
-<p><img src="https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-xpa1/v/t1.0-9/10734090_414949795326948_3416275930774179251_n.jpg?oh=810fc4bbc2c48acc50901f0ace834780&oe=54D510A4&__gda__=1425216796_844fce8da41177cca8e81b7e8420446f"></p>
-
-<p>One of the best things about leaders is that they offer empathy and prepare a group for the tasks at hand. This is very important, seeing as whenever colleagues are not prepared for certain duties, leaders are there to support, teach and back them up. Leaders know that each employee is on the team for a reason and they have faith in every concerted effort.</p>
-
-<h4>4. Leaders teach and learn rather than expect and ignore.</h4>
-
-<p>A true leader is the person who has self-esteem, but who is not arrogant nor embarrassed to learn from those with lower titles. They know that it is never late to learn more.</p>
-
-<p><img src="https://fbcdn-sphotos-e-a.akamaihd.net/hphotos-ak-xap1/v/t1.0-9/10390082_414949875326940_5418551154960633658_n.jpg?oh=29e60279326157a42885c54f67bd5089&oe=54F60741&__gda__=1423894173_22dbfb4334e5d1b501a5a56f149bd558"></p>
-
-<p>This explains the tendency of leaders to always pay attention to their colleagues, knowing there is always more to learn from them. Moreover, leaders are not only takers, but givers, as well. A good leader is not greedy for sharing knowledge and experience with someone else; instead, the leader teaches and nurtures new professionals.</p>
-
-<h4>5. Leaders take part rather than stay aside.</h4>
-
-<p>While bosses choose to stay aside in the job, leaders take initiative. They watch over the progress of work, make adjustments where necessary and aid team members. They choose to be a part of the team rather than bossing the team around.</p>
-
-<h4>6. Leaders reprimand rather than scold or shout.</h4>
-
-<p>When necessary, a leader offers constructive criticism. However, a leader never scolds or shouts at any individual, especially in public. They do understand that they are dealing with people and no one has right to humiliate others. Rather, the leader talks to the person individually and without any spike in temper.</p>
-
-<p><img src="https://fbcdn-sphotos-e-a.akamaihd.net/hphotos-ak-xaf1/v/t1.0-9/10302103_414949405326987_7411112196686359758_n.jpg?oh=6cf1816ef68d247e18d323ce9e567143&oe=54E9D98C&__gda__=1423805501_e5f258925a4f00bf50521f72097a608f"></p>
-
-<h4>7. Leaders establish equal relationships.</h4>
-
-<p>Anyone who has ever worked on a team knows what it feels like when the manager chooses his favorites and non-favorites. It always causes stress and tension among team members which comprises productivity.</p>
-
-<p><img src="https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xfp1/v/t1.0-9/10712864_414949598660301_9088054071801414512_n.jpg?oh=fae2d01837a2ae2a3000f50907882919&oe=54D5DB78&__gda__=1424870129_0066f0dd1c3aa8f1ef57f9abef7cba6d"></p>
-
-<p>A good leader tries to treat everyone equally and to not allow personal preferences affect the team dynamic.</p>
-
-<p>During your life, you will face two kinds of managers: leaders and bosses. It does not matter how high the position of these individuals; bossy people are more likely to fail while those who lead will succeed.</p>
-
-<p>Maybe the things I mentioned above do not make any sense for you now, but eventually, you will experience the difference and garner a greater understanding of which manager you prefer for your own professional life.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -2441,6 +2864,10 @@ After having listed all known skills and talents, identify what skills will best
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/12/04/crytal-syntax-and-semantics-part-2/">Crytal: Syntax and Semantics Part 2</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/12/01/work-with-chef-server/">Work With Chef Server</a>
       </li>
     
@@ -2454,10 +2881,6 @@ After having listed all known skills and talents, identify what skills will best
     
       <li class="post">
         <a href="/blog/2014/11/27/crytal-syntax-and-semantics-part-1/">Crytal: Syntax and Semantics Part 1</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/27/crystal-getting-started/">Crystal: Getting Started</a>
       </li>
     
   </ul>

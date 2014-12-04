@@ -4,7 +4,7 @@
   <title><![CDATA[Chicken's Blog ^_^]]></title>
   <link href="http://codeforfoods.net/atom.xml" rel="self"/>
   <link href="http://codeforfoods.net/"/>
-  <updated>2014-12-02T00:59:53+07:00</updated>
+  <updated>2014-12-04T17:04:27+07:00</updated>
   <id>http://codeforfoods.net/</id>
   <author>
     <name><![CDATA[codeforfoods]]></name>
@@ -12,6 +12,492 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Crytal: Syntax and Semantics Part 2]]></title>
+    <link href="http://codeforfoods.net/blog/2014/12/04/crytal-syntax-and-semantics-part-2/"/>
+    <updated>2014-12-04T16:46:54+07:00</updated>
+    <id>http://codeforfoods.net/blog/2014/12/04/crytal-syntax-and-semantics-part-2</id>
+    <content type="html"><![CDATA[<h3>5.Control expressions</h3>
+
+<h4>5.1.Truthy and falsey values</h4>
+
+<p>A truthy value is a value that is considered true for an if, unless, while or until guard. A falsey value is a value that is considered false in those places.</p>
+
+<p>The only falsey values are nil, false and null pointers (pointers whose memory address is zero). Any other value is truthy.</p>
+
+<h4>5.2.if</h4>
+
+<p>An if evaluates the then branch if its condition is truthy, and evaluates the else branch, if there’s any, otherwise.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = 1
+</span><span class='line'>if a &gt; 0
+</span><span class='line'>  a = 10
+</span><span class='line'>end
+</span><span class='line'>a #=&gt; 10
+</span><span class='line'>
+</span><span class='line'>b = 1
+</span><span class='line'>if b &gt; 2
+</span><span class='line'>  b = 10
+</span><span class='line'>else
+</span><span class='line'>  b = 20
+</span><span class='line'>end
+</span><span class='line'>b #=&gt; 20</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To write a chain of if-else-if you use <em>elsif</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if some_condition
+</span><span class='line'>  do_something
+</span><span class='line'>elsif some_other_condition
+</span><span class='line'>  do_something_else
+</span><span class='line'>else
+</span><span class='line'>  do_that
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After an <em>if</em>, a variable’s type depends on the type of the expressions used in both branches.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = 1
+</span><span class='line'>if some_condition
+</span><span class='line'>  a = "hello"
+</span><span class='line'>else
+</span><span class='line'>  a = true
+</span><span class='line'>end
+</span><span class='line'># a :: String | Bool
+</span><span class='line'>
+</span><span class='line'>b = 1
+</span><span class='line'>if some_condition
+</span><span class='line'>  b = "hello"
+</span><span class='line'>end
+</span><span class='line'># b :: Int32 | String
+</span><span class='line'>
+</span><span class='line'>if some_condition
+</span><span class='line'>  c = 1
+</span><span class='line'>else
+</span><span class='line'>  c = "hello"
+</span><span class='line'>end
+</span><span class='line'># c :: Int32 | String
+</span><span class='line'>
+</span><span class='line'>if some_condition
+</span><span class='line'>  d = 1
+</span><span class='line'>end
+</span><span class='line'># d :: Int32 | Nil</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that if a variable is declared inside one of the branches but not in the other one, at the end of the <em>if</em> it will also contain the <em>Nil</em> type.</p>
+
+<p>Inside an <em>if</em>&rsquo;s branch the type of a variable is the one it got assigned in that branch, or the one that it had before the branch if it was not reassigned:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = 1
+</span><span class='line'>if some_condition
+</span><span class='line'>  a = "hello"
+</span><span class='line'>  # a :: String
+</span><span class='line'>  a.length
+</span><span class='line'>end
+</span><span class='line'># a :: String | Int32</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That is, a variable’s type is the type of the last expression(s) assigned to it.</p>
+
+<p>If one of the branches never reaches past the end of an <em>if</em>, like in the case of a <em>return</em>, <em>next</em>, <em>break</em> or <em>raise</em>, that type is not considered at the end of the <em>if</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if some_condition
+</span><span class='line'>  e = 1
+</span><span class='line'>else
+</span><span class='line'>  e = "hello"
+</span><span class='line'>  # e :: String
+</span><span class='line'>  return
+</span><span class='line'>end
+</span><span class='line'># e :: Int32</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>5.3.unless</h4>
+
+<p>An <em>unless</em> evaluates the then branch if its condition is falsey, and evaluates the <em>else branch</em>, if there’s any, otherwise. That is, it behaves in the opposite way of an <em>if</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>unless some_condition
+</span><span class='line'>  then_expression
+</span><span class='line'>else
+</span><span class='line'>  else_expression
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>if some_condition
+</span><span class='line'>  else_expression
+</span><span class='line'>else
+</span><span class='line'>  then_expression
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># Can also be written as a suffix
+</span><span class='line'>close_door unless door_closed?</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>5.4.case</h4>
+
+<p>A <em>case</em> is a control expression that allows a sort of pattern matching. It allows writing a chain of if-else-if with a small change in semantic and some more powerful constructs.</p>
+
+<p>In its basic form, it allows matching a value against other values:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ase exp
+</span><span class='line'>when value1, value2
+</span><span class='line'>  do_something
+</span><span class='line'>when value3
+</span><span class='line'>  do_something_else
+</span><span class='line'>else
+</span><span class='line'>  do_another_thing
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>tmp = exp
+</span><span class='line'>if value1 === tmp || value2 === tmp
+</span><span class='line'>  do_something
+</span><span class='line'>elsif value3 === tmp
+</span><span class='line'>  do_something_else
+</span><span class='line'>else
+</span><span class='line'>  do_another_thing
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that <em>===</em> is used for comparing an expression against a <em>case</em>&rsquo;s value.</p>
+
+<p>If a <em>when</em>&rsquo;s expression is a type, <em>is_a</em>? is used. Additionally, if the case expression is a variable or a variable assignment the type of the variable is restricted:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>case var
+</span><span class='line'>when String
+</span><span class='line'>  # var :: String
+</span><span class='line'>  do_something
+</span><span class='line'>when Int32
+</span><span class='line'>  # var :: Int32
+</span><span class='line'>  do_something_else
+</span><span class='line'>else
+</span><span class='line'>  # here var is neither a String nor an Int32
+</span><span class='line'>  do_another_thing
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>if var.is_a?(String)
+</span><span class='line'>  do_something
+</span><span class='line'>elsif var.is_a?(Int32)
+</span><span class='line'>  do_something_else
+</span><span class='line'>else
+</span><span class='line'>  do_another_thing
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can invoke a method on the <em>case</em>&rsquo;s expression in a <em>when</em> by using the implicit-object syntax:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>case num
+</span><span class='line'>when .even?
+</span><span class='line'>  do_something
+</span><span class='line'>when .odd?
+</span><span class='line'>  do_something_else
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>tmp = num
+</span><span class='line'>if tmp.even?
+</span><span class='line'>  do_something
+</span><span class='line'>elsif tmp.odd?
+</span><span class='line'>  do_something_else
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, you can ommit the <em>case</em>&rsquo;s value:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>case
+</span><span class='line'>when cond1, cond2
+</span><span class='line'>  do_something
+</span><span class='line'>when cond3
+</span><span class='line'>  do_something_else
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>if cond1 || cond2
+</span><span class='line'>  do_something
+</span><span class='line'>elsif cond3
+</span><span class='line'>  do_something_else
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This sometimes leads to code that is more natural to read.</p>
+
+<h4>5.5.while</h4>
+
+<p>A <em>while</em> executes its body as long as its condition is truthy</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>while some_condition
+</span><span class='line'>  do_this
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the above form, the condition is first tested and, if truthy, the body is executed. That is, the body might never be executed.</p>
+
+<p>To execute the body at least once and then continue executing it while the condition is truthy, write the while as a prefix:v</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>do_this while some_condition</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you need to execute multiple expressions, group them between <em>begin</em> and <em>end</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>begin
+</span><span class='line'>  do_this
+</span><span class='line'>  do_that
+</span><span class='line'>end while some_condition</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A while&rsquo;s type is always Nil.</p>
+
+<p>Similar to an if, if a while&rsquo;s condition is a variable, the variable is guaranteed to not be nil inside the body. If the condition is an var.is_a?(Type) test, var is guaranteed to be of type Type inside the body. And if the condition is a var.responds_to?(:method), var is guaranteed to be of a type that responds to that method.</p>
+
+<p>The type of a variable after a while depends on the type it had before the while and the type it had before leaving the while&rsquo;s body:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = 1
+</span><span class='line'>while some_condition
+</span><span class='line'>  # a :: Int32 | String
+</span><span class='line'>  a = "hello"
+</span><span class='line'>  # a :: String
+</span><span class='line'>  a.length
+</span><span class='line'>end
+</span><span class='line'># a :: Int32 | String</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>5.6.until</h4>
+
+<p>An <em>until</em> executes its body until its condition is truthy. An until is just syntax sugar for a while with the condition negated:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>until some_condition
+</span><span class='line'>  do_this
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>while !some_condition
+</span><span class='line'>  do_this
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>An <em>until</em> can also be used in its suffix form, causing the body to be executed at least once. break and next can also be used inside an until.</p>
+
+<h4>5.7.&amp;&amp;</h4>
+
+<p>An <em>&amp;&amp;</em> (and) evaluates its left hand side. If its truthy, it evaluates its right hand side and has that value. Otherwise it has the value of the left hand side. Its type is the union of the types of both sides.</p>
+
+<p>You can think an <em>&amp;&amp;</em> as syntax sugar of an <em>if</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>some_exp1 && some_exp2
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>tmp = some_exp1
+</span><span class='line'>if tmp
+</span><span class='line'>  some_exp2
+</span><span class='line'>else
+</span><span class='line'>  tmp
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>5.8.||</h4>
+
+<p>An <em>||</em> (or) evaluates its left hand side. If its falsey, it evaluates its right hand side and has that value. Otherwise it has the value of the left hand side. Its type is the union of the types of both sides.</p>
+
+<p>You can think an <em>||</em> as syntax sugar of an <em>if</em>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>some_exp1 || some_exp2
+</span><span class='line'>
+</span><span class='line'># The above is the same as:
+</span><span class='line'>tmp = some_exp1
+</span><span class='line'>if tmp
+</span><span class='line'>  tmp
+</span><span class='line'>else
+</span><span class='line'>  some_exp2
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I will present about types and methods in part 3.
+Thanks!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Work With Chef Server]]></title>
@@ -2452,7 +2938,7 @@ After having listed all known skills and talents, identify what skills will best
 <p>Welcome any comments, please contact me via</p>
 
 <ul>
-<li>Email: <a href="&#109;&#97;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#99;&#x6f;&#100;&#x65;&#46;&#x66;&#111;&#114;&#x2e;&#102;&#111;&#x6f;&#100;&#x2e;&#x31;&#x34;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#x63;&#x6f;&#100;&#101;&#46;&#x66;&#111;&#114;&#46;&#102;&#111;&#111;&#100;&#x2e;&#49;&#x34;&#64;&#103;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;</a></li>
+<li>Email: <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#58;&#99;&#x6f;&#x64;&#x65;&#x2e;&#102;&#x6f;&#x72;&#46;&#102;&#x6f;&#x6f;&#100;&#x2e;&#x31;&#52;&#64;&#x67;&#109;&#x61;&#105;&#x6c;&#46;&#99;&#111;&#109;">&#99;&#x6f;&#x64;&#101;&#46;&#102;&#x6f;&#x72;&#x2e;&#102;&#x6f;&#111;&#100;&#x2e;&#x31;&#x34;&#x40;&#x67;&#109;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#x6d;</a></li>
 </ul>
 
 ]]></content>
