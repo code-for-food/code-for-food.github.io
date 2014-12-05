@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>The Second Chicken - Chicken&#8217;s Blog ^_^</title>
+  <title>Fixing: PG::UniqueViolation: ERROR: Duplicate Key Value Violates Unique Constraint &#8216;Your_table_name_pkey&#8217; - Chicken&#8217;s Blog ^_^</title>
   <meta name="author" content="codeforfoods">
 
   
-  <meta name="description" content="The Second Chicken Nov 19th, 2014 9:48 am The &lsquo;chicken&rsquo; developer from Da Nang, Vietnam. It&rsquo;s all about me. ^^ Facebook Email Nice &hellip;">
+  <meta name="description" content="Issue Postgresql maintain a internal value which is the max value of the id column of a given table. And uses this to generate values for primary &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://codeforfoods.net/chicken-two">
+  <link rel="canonical" href="http://codeforfoods.net/blog/2014/12/05/fixing-pg-uniqueviolation-error-duplicate-key-value-violates-unique-constraint-your-table-name-pkey">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Chicken's Blog ^_^" type="application/atom+xml">
@@ -83,42 +83,145 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- codeforfoods-footer -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-4773765193389725"
+     data-ad-slot="7439101090"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
   <header>
-    <h1 class="entry-title">The Second Chicken</h1>
-    <p class="meta">
-
-
-
-
-<time class='entry-date' datetime='2014-11-19T09:48:00+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>9:48 am</span></time></p>
-  </header>
+    
+      <h1 class="entry-title">Fixing: PG::UniqueViolation: ERROR: Duplicate Key Value Violates Unique Constraint &#8216;Your_table_name_pkey&#8217;</h1>
+    
+    
   
-  <p>The &lsquo;chicken&rsquo; developer from Da Nang, Vietnam. It&rsquo;s all about me. ^^</p>
 
-<p><a href="https://www.facebook.com/anh.hau.54">Facebook</a></p>
 
-<p><a href="ntahau1989@gmail.com">Email</a></p>
-
-<p>Nice to meet you!</p>
 
   
-    <footer>
+
+
+<span class="byline author vcard"> * source: <span class="fn">
+
+
+
+	<a href="http://blog.thekindof.me/blog/2013/12/05/fixing-pg-uniqueviolation-error-duplicate-key-value-violates-unique-constraint/">fixing-pg-uniqueviolation-error-duplicate-key-value-violates-unique-constraint</a>
+	
+
+</span></span>
+    
       <p class="meta">
         
+
+
+
+
+<time class='entry-date' datetime='2014-12-05T10:04:09+07:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:04 am</span></time>
         
-
-
-
-
-<time class='entry-date' datetime='2014-11-19T09:48:00+07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>9:48 am</span></time>
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://codeforfoods.net">Comments</a>
         
       </p>
+    
+  </header>
+
+
+<div class="entry-content"><h5>Issue</h5>
+
+<p>Postgresql maintain a internal value which is the max value of the id column of a given table. And uses this to generate values for primary keys when you insert new records. Sometimes this internally stored value can get messed up. And that can cause the error above when you are trying to insert a new record to the table.</p>
+
+<h5>How to fix ????</h5>
+
+<p>You need to basically correct the above said value.</p>
+
+<p>Access to your database and run :</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pg_dump -U user_name database_name -f database_backup_name.sql
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Change your rails app and run :</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /your/rails/app/root/
+</span><span class='line'>rails db production</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Update your_table_id_sql</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SELECT setval('your_table_id_seq', (SELECT MAX(id) FROM your_table));</span></code></pre></td></tr></table></div></figure>
+
+
+<p>replace your_table with whatever the table name you are using. And the code above assumes your primary key column name is id.</p>
+
+<p>Good lucks to you :)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
       
-        <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://codeforfoods.net/chicken-two/index.html" data-via="congdang" data-counturl="http://codeforfoods.net/chicken-two/index.html" >Tweet</a>
+
+
+
+  
+
+
+
+
+<span class="byline author vcard">Posted by member <span class="fn">
+
+
+
+	<a href="http://codeforfoods.net/about-me">chicken-dp</a>
+
+</span></span>
+
+      
+  
+
+
+
+  
+
+
+<span class="byline author vcard"> * source: <span class="fn">
+
+
+
+	<a href="http://blog.thekindof.me/blog/2013/12/05/fixing-pg-uniqueviolation-error-duplicate-key-value-violates-unique-constraint/">fixing-pg-uniqueviolation-error-duplicate-key-value-violates-unique-constraint</a>
+	
+
+</span></span>
+      
+
+
+
+
+<time class='entry-date' datetime='2014-12-05T10:04:09+07:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:04 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/database/'>database</a>, <a class='category' href='/blog/categories/rails/'>rails</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://codeforfoods.net/blog/2014/12/05/fixing-pg-uniqueviolation-error-duplicate-key-value-violates-unique-constraint-your-table-name-pkey/" data-via="congdang" data-counturl="http://codeforfoods.net/blog/2014/12/05/fixing-pg-uniqueviolation-error-duplicate-key-value-violates-unique-constraint-your-table-name-pkey/" >Tweet</a>
   
   
   
@@ -126,10 +229,21 @@
   
 </div>
 
+    
+    <p class="meta">
       
-    </footer>
-  
+        <a class="basic-alignment left" href="/blog/2014/12/04/crytal-syntax-and-semantics-part-2/" title="Previous Post: Crytal: Syntax and semantics Part 2">&laquo; Crytal: Syntax and semantics Part 2</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -153,6 +267,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/12/05/fixing-pg-uniqueviolation-error-duplicate-key-value-violates-unique-constraint-your-table-name-pkey/">Fixing: PG::UniqueViolation: ERROR: Duplicate Key Value Violates Unique Constraint &#8216;Your_table_name_pkey&#8217;</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/12/04/crytal-syntax-and-semantics-part-2/">Crytal: Syntax and Semantics Part 2</a>
       </li>
     
@@ -166,10 +284,6 @@
     
       <li class="post">
         <a href="/blog/2014/11/28/scaling-ruby-on-rails-by-caching-your-database-queries/">Scaling Ruby on Rails by Caching Your Database Queries</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/27/crytal-syntax-and-semantics-part-1/">Crytal: Syntax and Semantics Part 1</a>
       </li>
     
   </ul>
@@ -222,7 +336,10 @@
       var disqus_shortname = 'codeforfoods';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://codeforfoods.net/blog/2014/12/05/fixing-pg-uniqueviolation-error-duplicate-key-value-violates-unique-constraint-your-table-name-pkey/';
+        var disqus_url = 'http://codeforfoods.net/blog/2014/12/05/fixing-pg-uniqueviolation-error-duplicate-key-value-violates-unique-constraint-your-table-name-pkey/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
