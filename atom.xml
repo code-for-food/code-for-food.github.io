@@ -4,7 +4,7 @@
   <title><![CDATA[Chicken's Blog ^_^]]></title>
   <link href="http://codeforfoods.net/atom.xml" rel="self"/>
   <link href="http://codeforfoods.net/"/>
-  <updated>2014-12-05T10:12:03+07:00</updated>
+  <updated>2014-12-09T17:31:08+07:00</updated>
   <id>http://codeforfoods.net/</id>
   <author>
     <name><![CDATA[codeforfoods]]></name>
@@ -12,6 +12,231 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[Rails] How to Create a Rails App]]></title>
+    <link href="http://codeforfoods.net/blog/2014/12/09/how-to-create-a-rails-app/"/>
+    <updated>2014-12-09T17:14:37+07:00</updated>
+    <id>http://codeforfoods.net/blog/2014/12/09/how-to-create-a-rails-app</id>
+    <content type="html"><![CDATA[<h4>How To Create a Rails App</h4>
+
+<h5>A step by step guide to prepare your app.</h5>
+
+<p>First there was “rails new Foo” &ndash; the next thing you know you’re adding “group :test, :development do gem ‘rspec-rails’ end” to your Gemfile and editing your database.yml file to reflect the correct localhost IP. While learning Rails for the first time, it’s difficult to remember these various minutiae of setting up your app; moreover, it’s even more difficult to remember which order they should be performed in. This can often mean running into some time consuming errors along the way. Here is a step by step guide I created, and very often use, to make sure I’m not missing any steps in setting up a working Rails app.</p>
+
+<h4>The 17.5 Steps</h4>
+
+<h5>Step 1</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rails new --database=postgresql OR rails new -T --database=postgresql</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At Launch Academy we tend to use postgresql. So to save yourself a little extra work, make sure you include the &ndash;database flag when executing rails new.</p>
+
+<p>The -T flag is short for &ndash;skip-test-unit (which is helpful since we usually delete the test directory anyway).</p>
+
+<h5>Step 2</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>remove turbolinks in Rails 4.x -- for Rails 3.x, make sure you remove the public/index.html</span></code></pre></td></tr></table></div></figure>
+
+
+<p>How to remove Turbolinks:</p>
+
+<pre><code>⋅⋅* Remove the gem 'turbolinks' line from your Gemfile
+
+⋅⋅* Remove the //= require turbolinks from your app/assets/javascripts/application.js.
+
+⋅⋅* Remove the two "data-turbolinks-track" =&gt; true hash key/value pairs from your app/views/layouts/application.html.erb.
+</code></pre>
+
+<h5>Step 3</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git init</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This command sets up your local git repository. You’ll need to do this command first in order to commit your changes later.</p>
+
+<h5>Step 4</h5>
+
+<p>edit config/database.yml</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>host: 127.0.0.1</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This file holds some settings for your postgresql database. You will probably want to remove the username on your databases. For my system I also needed to add the line host: 127.0.0.1 to make postgresql work.</p>
+
+<h5>Step 5</h5>
+
+<p>Gemfile updates
+These are some common gems I’ve used:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem ‘twitter-bootstrap-rails’
+</span><span class='line'>gem ‘simple-form’
+</span><span class='line'>
+</span><span class='line'>   group :test, :development do
+</span><span class='line'>   gem 'rspec-rails'
+</span><span class='line'>   gem 'capybara'
+</span><span class='line'>   gem 'launchy'
+</span><span class='line'>   end
+</span><span class='line'>
+</span><span class='line'>   group :test do
+</span><span class='line'>   gem 'factory_girl_rails'
+</span><span class='line'> gem ‘shoulda-matchers’
+</span><span class='line'>   end
+</span><span class='line'>
+</span><span class='line'>   group :development do    #access at rails/routes
+</span><span class='line'>   gem 'sextant'
+</span><span class='line'>   end</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>Step 6</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake db:create</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I usually do this before bundle, as I’ve run into some errors otherwise. This command creates a local instance of the postgresql database.</p>
+
+<h5>Step 7</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>bundle install</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>Step 8</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git add * ; git commit -m ‘message’</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A good chance to commit those changes! git add * will add all changed files to your commit. When you do git commit -m ‘message’, those changes are then saved to your local git repository. This is useful if you ever need to go back to a stable version of your app. This command will also be very important to Git collaboration.</p>
+
+<h5>Step 9</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rails g rspec:install (rails g bootstrap:install static)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Install any gem generated scaffolds you may be using. Rspec is a must! Other examples could include bootstrap, or devise.</p>
+
+<h5>Step 10</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>remove ~/test</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Remove that ~/test dir once you have Rspec setup. A clean app is a happy app. If you used the -T flag while creating the rails app, you can skip this step.</p>
+
+<h5>Step 11</h5>
+
+<p>add to spec_helper.rb</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#spec_helper.rb
+</span><span class='line'>  require 'capybara/rails'
+</span><span class='line'>  require 'capybara/rspec'
+</span><span class='line'>
+</span><span class='line'>  config.include FactoryGirl::Syntax::Methods</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add this helpful lines to make sure everything works! I like to include the FactoryGirl line as well. That way I don’t have to type FactoryGirl.build, but rather just: build.</p>
+
+<h5>Step 12</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>create factories.rb file in spec/support</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You’ll need to create the spec/support directory, where you’ll place a new file that will create your factories.</p>
+
+<h5>Step 13</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git add * ; git commit -m ‘message’</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Commit</p>
+
+<h5>Step 14</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>create models / scaffold / migrations</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Time to create any generated code. If you’re not using generated code, you can mostly skip to step 16</p>
+
+<h5>Step 15</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git add * ; git commit -m ‘message’</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Commit before migrating: JUST IN CASE!</p>
+
+<h5>Step 16</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake db:migrate ; rake db:rollback ; rake db:migrate</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Use this command to double check that your tables / migrations are correctly configured. This is a best practices sort of deal. If you&rsquo;re using zsh, I&rsquo;d highly recommend making an alias for this command!</p>
+
+<h5>Step 16.5</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake db:test:prepare</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This command generates the test environment that Rspec uses. You’ll need to redo this command if you make any new migrations.</p>
+
+<h5>Step 17</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git add * ; git commit -m ‘message’</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Don’t forget to commit after you Migrate!</p>
+
+<h5>Extras: add database.yml and secret_token.rb to your .gitginore</h5>
+
+<p>This is just a good habit to get into. When others fork your repos, having special database settings can give them a headache when trying to check out your code. Do them a favor and tell git to ignore that file. Another file to add is the secret_token.rb &ndash; it&rsquo;s called that for a reason! It&rsquo;s supposed to be secret! Protect your users by hiding this file.</p>
+
+<p>In your .gitignore file add the lines:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/config/database.yml
+</span><span class='line'>/config/secret_token.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<h6>From here you can do whatever you’d like, and you shouldn’t break your app too much. Have fun!</h6>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Fixing: PG::UniqueViolation: ERROR: Duplicate Key Value Violates Unique Constraint 'Your_table_name_pkey']]></title>
@@ -2978,7 +3203,7 @@ After having listed all known skills and talents, identify what skills will best
 <p>Welcome any comments, please contact me via</p>
 
 <ul>
-<li>Email: <a href="&#x6d;&#97;&#x69;&#108;&#116;&#111;&#58;&#99;&#x6f;&#x64;&#x65;&#46;&#x66;&#111;&#114;&#x2e;&#102;&#111;&#x6f;&#100;&#x2e;&#49;&#52;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#99;&#111;&#100;&#x65;&#46;&#x66;&#111;&#x72;&#46;&#102;&#111;&#111;&#x64;&#x2e;&#x31;&#x34;&#64;&#x67;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#x6f;&#x6d;</a></li>
+<li>Email: <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#99;&#x6f;&#x64;&#x65;&#x2e;&#x66;&#111;&#114;&#46;&#102;&#x6f;&#111;&#x64;&#46;&#49;&#x34;&#64;&#x67;&#109;&#x61;&#105;&#108;&#46;&#99;&#x6f;&#x6d;">&#x63;&#111;&#100;&#x65;&#46;&#102;&#111;&#x72;&#x2e;&#102;&#111;&#111;&#100;&#46;&#49;&#52;&#64;&#x67;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;</a></li>
 </ul>
 
 ]]></content>
