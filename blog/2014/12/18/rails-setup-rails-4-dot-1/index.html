@@ -1,0 +1,528 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Rails] Setup Rails 4.1 - Chicken&#8217;s Blog ^_^</title>
+  <meta name="author" content="codeforfoods">
+
+  
+  <meta name="description" content="How to setup Rails 4.1 with Spring, RSpec and Guard Rails 4.1 allows us to use Spring to run our rails and rake commands quickly by running your &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://codeforfoods.net/blog/2014/12/18/rails-setup-rails-4-dot-1">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Chicken's Blog ^_^" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+<!-- Social media content metadata -->
+
+  
+
+
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-56334390-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Chicken&#8217;s Blog ^_^</a></h1>
+  
+    <h2>(Just code for food)</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:codeforfoods.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/about-me">About Me</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- codeforfoods-footer -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-4773765193389725"
+     data-ad-slot="7439101090"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  <header>
+    
+      <h1 class="entry-title">[Rails] Setup Rails 4.1</h1>
+    
+    
+  
+
+
+
+  
+
+
+<span class="byline author vcard"> * source: <span class="fn">
+
+
+
+	<a href="http://codeforfoods.net">setup-rails-41-spring-rspec-and-guard</a>
+	
+
+</span></span>
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-18T09:37:33+07:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>9:37 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://codeforfoods.net">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>How to setup Rails 4.1 with Spring, RSpec and Guard</h1>
+
+<p>Rails 4.1 allows us to use <a href="https://github.com/rails/spring">Spring</a> to run our <code>rails</code> and <code>rake</code> commands quickly by running your application in the background and avoiding the rails startup time penalty. It took me a little while to find this information, so here is my guide to setting this up.</p>
+
+<p>I’m using the <a href="http://rspec.info/">RSpec</a> testing framework with the <a href="https://github.com/guard/guard">Guard</a> event watcher as the test runner. Spring allows us to watch the test run almost immediately after hitting save of a file in the editor.</p>
+
+<p>First, let’s start with a fresh app to understand things. Upgrading an existing app is straightforward with this technique as well. Note that I am using Rails 4.1.0.beta1 on Ruby 2.1.0p0.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rails new myapp -T
+</span><span class='line'>cd myapp
+</span><span class='line'>vim Gemfile</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After we open the <code>Gemfile</code> in our editor, we add the following gems</p>
+
+<ul>
+<li><a href="http://rubygems.org/gems/rspec-rails">rspec-rails</a> - The RSpec testing framework with Rails integrations</li>
+<li><a href="http://rubygems.org/gems/spring-commands-rspec">spring-commands-rspec</a> - Adds rspec command for spring. Includes a dependency for the spring Rails application preloader.</li>
+<li><a href="http://rubygems.org/gems/guard-rspec">guard-rspec</a> - The Guard file watcher for running rspec</li>
+<li><a href="http://rubygems.org/gems/rb-fsevent">rb-fsevent</a> - For OS/X only, waits for file changes from the Mac OS/X FSEvents API instead of polling the disk for changes.</li>
+</ul>
+
+
+<p>Add this block to the <code>Gemfile</code> (You may wish to add gem versions as well.)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>group :development, :test do
+</span><span class='line'>  gem 'spring-commands-rspec'
+</span><span class='line'>  gem 'rspec-rails'
+</span><span class='line'>  gem 'guard-rspec'
+</span><span class='line'>  gem 'rb-fsevent' if `uname` =~ /Darwin/
+</span><span class='line'>end   </span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>Bundle</code> again after saving to install the dependent gems.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>bundle install</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<h3>Setup Spring</h3>
+
+<p>The <code>spring</code> command runs a command through the spring application runner. By default, it is configured to run <code>rails</code> and <code>rake</code> commands only. We added a plugin gem to allow it to run <code>rspec</code> for us.</p>
+
+<p>Spring has a <code>binstub</code> subcommand that updates the scripts in <code>myapp/bin</code> to load the spring runner. Run this command to configure these scripts (when converting to spring) and for the rspec command.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>% spring binstub --all
+</span><span class='line'>* bin/rake: spring already present
+</span><span class='line'>* bin/rspec: generated with spring
+</span><span class='line'>* bin/rails: spring already present</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can check if spring has your application running as a background process with the status subcommand. When you run a spring-enabled command, it will start the server.</p>
+
+<p>The startup for the first time will take a moment as rails initializes. Now that spring has started the app server for you, subsequent runs will use a forked process from this server instead and return faster.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>% spring status
+</span><span class='line'>Spring is not running.
+</span><span class='line'>% rails g
+</span><span class='line'>...
+</span><span class='line'>% spring status
+</span><span class='line'>Spring is running:
+</span><span class='line'>
+</span><span class='line'>89168 spring server | myapp | started 5 secs ago
+</span><span class='line'>89170 spring app    | myapp | started 5 secs ago | development mode</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The spring server will shutdown automatically when your shell session is closed. You can shut it down yourself by:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>% spring stop
+</span><span class='line'>Spring stopped.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That’s about all you need to know to get started with spring.</p>
+
+<hr />
+
+<h3>Setting up RSpec and Guard</h3>
+
+<p>This process is the same as you normally would do:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>% rails g rspec:install
+</span><span class='line'>  create  .rspec
+</span><span class='line'>  create  spec
+</span><span class='line'>  create  spec/spec_helper.rb
+</span><span class='line'>% guard init
+</span><span class='line'>11:32:14 - INFO - Writing new Guardfile to /Users/allen/src/myapp/Guardfile
+</span><span class='line'>11:32:14 - INFO - rspec guard added to Guardfile, feel free to edit it
+</span><span class='line'>% vim Guardfile</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This sets up the files for rspec and guard. Now we have to tell guard to use the spring runner when using rspec. Edit your <code>Guardfile</code> and change the command for rspec to <code>spring rspec</code>. Change this line:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>guard :rspec do</span></code></pre></td></tr></table></div></figure>
+
+
+<p>to</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>guard :rspec, cmd:"spring rspec" do</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<h3>Running</h3>
+
+<p>(Running with binstubs, shell extensions, alias, etc. may make executing these commands different on your system. You may need to <code>bundle exec rails</code> or <code>bin/rails</code>, or however your environment is setup.)</p>
+
+<p>Check out the time gains running rspec through spring, I’ll use the time command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>% time spring rspec
+</span><span class='line'>...
+</span><span class='line'>spring rspec  0.12s user 0.07s system 6% cpu 3.126 total
+</span><span class='line'>
+</span><span class='line'>% time spring rspec
+</span><span class='line'>...
+</span><span class='line'>spring rspec  0.12s user 0.06s system 30% cpu 0.600 total</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is on a minimal app with a single, scaffolded resource. As your app grows larger, the initial startup time will be longer, and your time savings will multiply accordingly. (Of course, you can just run the <code>spring rspec</code> command if you are more interested in the results rather than the timings.)</p>
+
+<p>To start TDD’ing, fire up guard in a terminal session.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>% guard
+</span><span class='line'>11:48:02 - INFO - Guard is using TerminalTitle to send notifications.
+</span><span class='line'>11:48:02 - INFO - Guard::RSpec is running
+</span><span class='line'>11:48:02 - INFO - Guard is now watching at '/Users/allen/src/myapp'
+</span><span class='line'>[1] guard(main)&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This runs <code>guard</code> to watch your app files and kicks off the spring rspec command to run your changed spec file or suite.</p>
+
+<p>If you need to change something basic in your app, such as adding a gem, updating a local dependency that could be cached, you need to restart both guard (Ctrl-D at the console) (or a server or console process), and spring (<code>spring stop</code>). Restarting <code>guard</code> will restart spring as well, with your dependencies reloaded.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+  
+
+
+
+
+<span class="byline author vcard">Posted by member <span class="fn">
+
+
+
+	<a href="http://codeforfoods.net/about-me">chicken-dp</a>
+
+</span></span>
+
+      
+  
+
+
+
+  
+
+
+<span class="byline author vcard"> * source: <span class="fn">
+
+
+
+	<a href="http://codeforfoods.net">setup-rails-41-spring-rspec-and-guard</a>
+	
+
+</span></span>
+      
+
+
+
+
+<time class='entry-date' datetime='2014-12-18T09:37:33+07:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>9:37 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/rails/'>rails</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://codeforfoods.net/blog/2014/12/18/rails-setup-rails-4-dot-1/" data-via="congdang" data-counturl="http://codeforfoods.net/blog/2014/12/18/rails-setup-rails-4-dot-1/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/12/09/how-to-create-a-rails-app/" title="Previous Post: [Rails] How To Create a Rails App">&laquo; [Rails] How To Create a Rails App</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="gravatar-section first odd">
+  <h1>We are</h1>
+  <div class="bio">
+    <div class="messages">
+      <p><a href="https://codeforfoods.net"><strong>@CodeForFoods</strong></a></p>
+      <p>we are web developers</p>
+      <p>in Viet Nam</p>
+      <a href="/about-us">More</a>
+    </div>
+  </div>
+  <div class="gravatar">
+    <img src="https://avatars3.githubusercontent.com/u/9510217?v=2&s=400" alt="Github avarta of code for food" title="Github avarta of code for food">
+  </div>
+</section><section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/18/rails-setup-rails-4-dot-1/">[Rails] Setup Rails 4.1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/09/how-to-create-a-rails-app/">[Rails] How to Create a Rails App</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/05/fixing-pg-uniqueviolation-error-duplicate-key-value-violates-unique-constraint-your-table-name-pkey/">Fixing: PG::UniqueViolation: ERROR: Duplicate Key Value Violates Unique Constraint &#8216;Your_table_name_pkey&#8217;</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/04/crytal-syntax-and-semantics-part-2/">Crytal: Syntax and Semantics Part 2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/01/work-with-chef-server/">Work With Chef Server</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- codeforfoods -->
+	<ins class="adsbygoogle"
+	     style="display:inline-block;width:260px;height:260px"
+	     data-ad-client="ca-pub-4773765193389725"
+	     data-ad-slot="3148502299"></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+</section>
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/codeforfoods?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/codeforfoods">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/code.for.food.14?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - codeforfoods -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'codeforfoods';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://codeforfoods.net/blog/2014/12/18/rails-setup-rails-4-dot-1/';
+        var disqus_url = 'http://codeforfoods.net/blog/2014/12/18/rails-setup-rails-4-dot-1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=288370854684839&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

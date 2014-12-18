@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Chicken's Blog ^_^]]></title>
   <link href="http://codeforfoods.net/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://codeforfoods.net/"/>
-  <updated>2014-12-18T09:35:40+07:00</updated>
+  <updated>2014-12-18T09:58:15+07:00</updated>
   <id>http://codeforfoods.net/</id>
   <author>
     <name><![CDATA[codeforfoods]]></name>
@@ -12,6 +12,146 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[Rails] Setup Rails 4.1]]></title>
+    <link href="http://codeforfoods.net/blog/2014/12/18/rails-setup-rails-4-dot-1/"/>
+    <updated>2014-12-18T09:37:33+07:00</updated>
+    <id>http://codeforfoods.net/blog/2014/12/18/rails-setup-rails-4-dot-1</id>
+    <content type="html"><![CDATA[<h1>How to setup Rails 4.1 with Spring, RSpec and Guard</h1>
+
+<p>Rails 4.1 allows us to use <a href="https://github.com/rails/spring">Spring</a> to run our <code>rails</code> and <code>rake</code> commands quickly by running your application in the background and avoiding the rails startup time penalty. It took me a little while to find this information, so here is my guide to setting this up.</p>
+
+<p>I’m using the <a href="http://rspec.info/">RSpec</a> testing framework with the <a href="https://github.com/guard/guard">Guard</a> event watcher as the test runner. Spring allows us to watch the test run almost immediately after hitting save of a file in the editor.</p>
+
+<p>First, let’s start with a fresh app to understand things. Upgrading an existing app is straightforward with this technique as well. Note that I am using Rails 4.1.0.beta1 on Ruby 2.1.0p0.</p>
+
+<pre><code>    rails new myapp -T
+    cd myapp
+    vim Gemfile
+</code></pre>
+
+<p>After we open the <code>Gemfile</code> in our editor, we add the following gems</p>
+
+<ul>
+<li><a href="http://rubygems.org/gems/rspec-rails">rspec-rails</a> - The RSpec testing framework with Rails integrations</li>
+<li><a href="http://rubygems.org/gems/spring-commands-rspec">spring-commands-rspec</a> - Adds rspec command for spring. Includes a dependency for the spring Rails application preloader.</li>
+<li><a href="http://rubygems.org/gems/guard-rspec">guard-rspec</a> - The Guard file watcher for running rspec</li>
+<li><a href="http://rubygems.org/gems/rb-fsevent">rb-fsevent</a> - For OS/X only, waits for file changes from the Mac OS/X FSEvents API instead of polling the disk for changes.</li>
+</ul>
+
+
+<p>Add this block to the <code>Gemfile</code> (You may wish to add gem versions as well.)</p>
+
+<pre><code>    group :development, :test do
+      gem 'spring-commands-rspec'
+      gem 'rspec-rails'
+      gem 'guard-rspec'
+      gem 'rb-fsevent' if `uname` =~ /Darwin/
+    end 
+</code></pre>
+
+<p><code>Bundle</code> again after saving to install the dependent gems.</p>
+
+<pre><code>    bundle install
+</code></pre>
+
+<hr />
+
+<h3>Setup Spring</h3>
+
+<p>The <code>spring</code> command runs a command through the spring application runner. By default, it is configured to run <code>rails</code> and <code>rake</code> commands only. We added a plugin gem to allow it to run <code>rspec</code> for us.</p>
+
+<p>Spring has a <code>binstub</code> subcommand that updates the scripts in <code>myapp/bin</code> to load the spring runner. Run this command to configure these scripts (when converting to spring) and for the rspec command.</p>
+
+<pre><code>    % spring binstub --all
+    * bin/rake: spring already present
+    * bin/rspec: generated with spring
+    * bin/rails: spring already present
+</code></pre>
+
+<p>You can check if spring has your application running as a background process with the status subcommand. When you run a spring-enabled command, it will start the server.</p>
+
+<p>The startup for the first time will take a moment as rails initializes. Now that spring has started the app server for you, subsequent runs will use a forked process from this server instead and return faster.</p>
+
+<pre><code>    % spring status
+    Spring is not running.
+    % rails g
+    ...
+    % spring status
+    Spring is running:
+
+    89168 spring server | myapp | started 5 secs ago
+    89170 spring app    | myapp | started 5 secs ago | development mode
+</code></pre>
+
+<p>The spring server will shutdown automatically when your shell session is closed. You can shut it down yourself by:</p>
+
+<pre><code>    % spring stop
+    Spring stopped.
+</code></pre>
+
+<p>That’s about all you need to know to get started with spring.</p>
+
+<hr />
+
+<h3>Setting up RSpec and Guard</h3>
+
+<p>This process is the same as you normally would do:</p>
+
+<pre><code>    % rails g rspec:install
+      create  .rspec
+      create  spec
+      create  spec/spec_helper.rb
+    % guard init
+    11:32:14 - INFO - Writing new Guardfile to /Users/allen/src/myapp/Guardfile
+    11:32:14 - INFO - rspec guard added to Guardfile, feel free to edit it
+    % vim Guardfile
+</code></pre>
+
+<p>This sets up the files for rspec and guard. Now we have to tell guard to use the spring runner when using rspec. Edit your <code>Guardfile</code> and change the command for rspec to <code>spring rspec</code>. Change this line:</p>
+
+<pre><code>    guard :rspec do
+</code></pre>
+
+<p>to</p>
+
+<pre><code>    guard :rspec, cmd:"spring rspec" do
+</code></pre>
+
+<hr />
+
+<h3>Running</h3>
+
+<p>(Running with binstubs, shell extensions, alias, etc. may make executing these commands different on your system. You may need to <code>bundle exec rails</code> or <code>bin/rails</code>, or however your environment is setup.)</p>
+
+<p>Check out the time gains running rspec through spring, I’ll use the time command:</p>
+
+<pre><code>    % time spring rspec
+    ...
+    spring rspec  0.12s user 0.07s system 6% cpu 3.126 total
+
+    % time spring rspec
+    ...
+    spring rspec  0.12s user 0.06s system 30% cpu 0.600 total
+</code></pre>
+
+<p>This is on a minimal app with a single, scaffolded resource. As your app grows larger, the initial startup time will be longer, and your time savings will multiply accordingly. (Of course, you can just run the <code>spring rspec</code> command if you are more interested in the results rather than the timings.)</p>
+
+<p>To start TDD’ing, fire up guard in a terminal session.</p>
+
+<pre><code>    % guard
+    11:48:02 - INFO - Guard is using TerminalTitle to send notifications.
+    11:48:02 - INFO - Guard::RSpec is running
+    11:48:02 - INFO - Guard is now watching at '/Users/allen/src/myapp'
+    [1] guard(main)&gt;
+</code></pre>
+
+<p>This runs <code>guard</code> to watch your app files and kicks off the spring rspec command to run your changed spec file or suite.</p>
+
+<p>If you need to change something basic in your app, such as adding a gem, updating a local dependency that could be cached, you need to restart both guard (Ctrl-D at the console) (or a server or console process), and spring (<code>spring stop</code>). Restarting <code>guard</code> will restart spring as well, with your dependencies reloaded.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[Rails] How to Create a Rails App]]></title>
@@ -515,76 +655,6 @@ Skill.first.cached_grade
 </code></pre>
 
 <p>This approach helped us to reduce the load on RDS and make things pretty fast. I hope this will help you too. Let me know you feedback or some tips that made you system more faster</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[Rails] Get Youtube Download Link]]></title>
-    <link href="http://codeforfoods.net/blog/2014/11/19/rails-get-youtube-download-link/"/>
-    <updated>2014-11-19T08:39:56+07:00</updated>
-    <id>http://codeforfoods.net/blog/2014/11/19/rails-get-youtube-download-link</id>
-    <content type="html"><![CDATA[<h3>Installation:</h3>
-
-<pre><code>    gem install viddl-rb
-</code></pre>
-
-<h3>Usage:</h3>
-
-<p>Download a video: viddl-rb <a href="http://www.youtube.com/watch?v=QH2-TGUlwu4">http://www.youtube.com/watch?v=QH2-TGUlwu4</a>
-<br>
-Viddl-rb supports the following command line options:
-<code>
--e, --extract-audio              Extract the audio track of the download to a separate file
--a, --abort-on-failure           Abort if one of the videos in a list fails to download
--u, --url-only                   Just display the download url without downloading the file.
--t, --title-only                 Just display the title without downloading the file.
--f, --filter REGEX               Filters a video playlist according to the regex (Youtube only right now)
--s, --save-dir DIRECTORY         Specifies the directory where videos should be saved
--d, --downloader TOOL            Specifies the tool to download with. Supports 'wget', 'curl', 'aria2c' and 'net-http'
--q, --quality QUALITY            Specifies the video format and resolution in the following way: width:height:format (e.g. 1280:720:mp4)
-                                 The width, height and format may be omitted with a *.
-                                 For example, to match any quality with a height of 720 pixels in any format specify --quality *:720:*
--h, --help                       Displays the help screen
-</code></p>
-
-<h3>Library Usage:</h3>
-
-<pre><code>require 'viddl-rb'
-
-download_urls = ViddlRb.get_urls("http://www.youtube.com/watch?v=QH2-TGUlwu4")
-download_urls.first     # =&gt; "http://o-o.preferred.arn06s04.v3.lscac ..."
-</code></pre>
-
-<p>The ViddlRb module has the following module public methods:</p>
-
-<h4>get_urls_names(url)</h4>
-
-<p> &ndash; Returns an array of one or more hashes that has the keys :url which points to the download url and :name which points to the name (which is a filename safe version of the video title with a file extension). Returns nil if the url is not recognized by any plugins.</p>
-
-<h4>get_urls_exts(url)</h4>
-
-<p>&ndash; Same as get_urls_names but with just the file extension (for example &ldquo;.mp4&rdquo;) instead of the full filename, and the :name key is replaced with :ext. Returns nil if the url is not recognized by any plugins.</p>
-
-<h4>get_urls(url)</h4>
-
-<p>&ndash; Returns an array of download urls for the specified video url. Returns nil if the url is not recognized by any plugins.</p>
-
-<h4>get_names(url)</h4>
-
-<p>&ndash; Returns an array of filenames for the specified video url. Returns nil if the url is not recognized by any plugins.</p>
-
-<h4>io=(io_object)</h4>
-
-<p>&ndash; By default all plugin output to stdout will be suppressed when the library is used. If you are interested in the output of a plugin, you can set an IO object that will receive all plugin output using this method.</p>
-
-<h3>Requirements:</h3>
-
-<blockquote><ul>
-<li>curl/wget/aria2c or the progress bar gem</li>
-<li>Nokogiri</li>
-<li>ffmpeg if you want to extract audio tracks from the videos</li>
-</ul>
-</blockquote>
 ]]></content>
   </entry>
   
