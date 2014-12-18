@@ -4,7 +4,7 @@
   <title><![CDATA[Chicken's Blog ^_^]]></title>
   <link href="http://codeforfoods.net/atom.xml" rel="self"/>
   <link href="http://codeforfoods.net/"/>
-  <updated>2014-12-18T09:58:15+07:00</updated>
+  <updated>2014-12-18T09:59:41+07:00</updated>
   <id>http://codeforfoods.net/</id>
   <author>
     <name><![CDATA[codeforfoods]]></name>
@@ -14,13 +14,11 @@
 
   
   <entry>
-    <title type="html"><![CDATA[[Rails] Setup Rails 4.1]]></title>
+    <title type="html"><![CDATA[[Rails] Setup Rails 4.1 With Spring, RSpec and Guard]]></title>
     <link href="http://codeforfoods.net/blog/2014/12/18/rails-setup-rails-4-dot-1/"/>
     <updated>2014-12-18T09:37:33+07:00</updated>
     <id>http://codeforfoods.net/blog/2014/12/18/rails-setup-rails-4-dot-1</id>
-    <content type="html"><![CDATA[<h1>How to setup Rails 4.1 with Spring, RSpec and Guard</h1>
-
-<p>Rails 4.1 allows us to use <a href="https://github.com/rails/spring">Spring</a> to run our <code>rails</code> and <code>rake</code> commands quickly by running your application in the background and avoiding the rails startup time penalty. It took me a little while to find this information, so here is my guide to setting this up.</p>
+    <content type="html"><![CDATA[<p>Rails 4.1 allows us to use <a href="https://github.com/rails/spring">Spring</a> to run our <code>rails</code> and <code>rake</code> commands quickly by running your application in the background and avoiding the rails startup time penalty. It took me a little while to find this information, so here is my guide to setting this up.</p>
 
 <p>I’m using the <a href="http://rspec.info/">RSpec</a> testing framework with the <a href="https://github.com/guard/guard">Guard</a> event watcher as the test runner. Spring allows us to watch the test run almost immediately after hitting save of a file in the editor.</p>
 
@@ -3390,7 +3388,7 @@ After having listed all known skills and talents, identify what skills will best
 <p>Welcome any comments, please contact me via</p>
 
 <ul>
-<li>Email: <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#x63;&#111;&#x64;&#101;&#x2e;&#102;&#x6f;&#114;&#x2e;&#102;&#x6f;&#111;&#x64;&#46;&#x31;&#x34;&#64;&#x67;&#109;&#97;&#105;&#108;&#46;&#x63;&#x6f;&#109;">&#x63;&#x6f;&#x64;&#x65;&#46;&#102;&#111;&#x72;&#46;&#x66;&#x6f;&#111;&#100;&#46;&#49;&#x34;&#64;&#x67;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;</a></li>
+<li>Email: <a href="&#x6d;&#97;&#x69;&#108;&#116;&#111;&#58;&#x63;&#111;&#100;&#101;&#46;&#102;&#x6f;&#x72;&#x2e;&#x66;&#111;&#x6f;&#x64;&#x2e;&#49;&#52;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#111;&#x6d;">&#99;&#x6f;&#x64;&#101;&#x2e;&#102;&#111;&#x72;&#46;&#x66;&#x6f;&#x6f;&#100;&#x2e;&#x31;&#x34;&#64;&#103;&#109;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;</a></li>
 </ul>
 
 ]]></content>

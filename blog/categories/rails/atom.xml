@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Chicken's Blog ^_^]]></title>
   <link href="http://codeforfoods.net/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://codeforfoods.net/"/>
-  <updated>2014-12-18T09:58:15+07:00</updated>
+  <updated>2014-12-18T09:59:41+07:00</updated>
   <id>http://codeforfoods.net/</id>
   <author>
     <name><![CDATA[codeforfoods]]></name>
@@ -14,13 +14,11 @@
 
   
   <entry>
-    <title type="html"><![CDATA[[Rails] Setup Rails 4.1]]></title>
+    <title type="html"><![CDATA[[Rails] Setup Rails 4.1 With Spring, RSpec and Guard]]></title>
     <link href="http://codeforfoods.net/blog/2014/12/18/rails-setup-rails-4-dot-1/"/>
     <updated>2014-12-18T09:37:33+07:00</updated>
     <id>http://codeforfoods.net/blog/2014/12/18/rails-setup-rails-4-dot-1</id>
-    <content type="html"><![CDATA[<h1>How to setup Rails 4.1 with Spring, RSpec and Guard</h1>
-
-<p>Rails 4.1 allows us to use <a href="https://github.com/rails/spring">Spring</a> to run our <code>rails</code> and <code>rake</code> commands quickly by running your application in the background and avoiding the rails startup time penalty. It took me a little while to find this information, so here is my guide to setting this up.</p>
+    <content type="html"><![CDATA[<p>Rails 4.1 allows us to use <a href="https://github.com/rails/spring">Spring</a> to run our <code>rails</code> and <code>rake</code> commands quickly by running your application in the background and avoiding the rails startup time penalty. It took me a little while to find this information, so here is my guide to setting this up.</p>
 
 <p>I’m using the <a href="http://rspec.info/">RSpec</a> testing framework with the <a href="https://github.com/guard/guard">Guard</a> event watcher as the test runner. Spring allows us to watch the test run almost immediately after hitting save of a file in the editor.</p>
 
